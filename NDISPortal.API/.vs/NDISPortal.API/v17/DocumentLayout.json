@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\controllers\\servicecategoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:controllers\\servicecategoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -90,16 +94,33 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-15T07:20:06.689Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "NDISPortal.API",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj",
               "RelativeDocumentMoniker": "NDISPortal.API.csproj",
-              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj*",
-              "RelativeToolTip": "NDISPortal.API.csproj*",
+              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj",
+              "RelativeToolTip": "NDISPortal.API.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-04-15T05:32:37.652Z",
@@ -107,7 +128,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
@@ -120,7 +141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "SupportWorkersController.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\SupportWorkersController.cs",
               "RelativeDocumentMoniker": "Controllers\\SupportWorkersController.cs",
@@ -133,7 +154,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ServiceCategoriesController.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\ServiceCategoriesController.cs",
               "RelativeDocumentMoniker": "Controllers\\ServiceCategoriesController.cs",
@@ -146,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "IChatService.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\IChatService.cs",
               "RelativeDocumentMoniker": "Services\\IChatService.cs",
@@ -159,7 +180,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ErrorHandlingMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Middleware\\ErrorHandlingMiddleware.cs",
               "RelativeDocumentMoniker": "Middleware\\ErrorHandlingMiddleware.cs",
@@ -172,7 +193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ChatService.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\ChatService.cs",
               "RelativeDocumentMoniker": "Services\\ChatService.cs",
@@ -185,7 +206,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "BookingService.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\BookingService.cs",
               "RelativeDocumentMoniker": "Services\\BookingService.cs",
@@ -198,7 +219,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "IBookingService.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\IBookingService.cs",
               "RelativeDocumentMoniker": "Services\\IBookingService.cs",
@@ -211,7 +232,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Services\\AuthService.cs",
@@ -224,7 +245,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\IAuthService.cs",
               "RelativeDocumentMoniker": "Services\\IAuthService.cs",
@@ -237,7 +258,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "SupportWorker.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Models\\SupportWorker.cs",
               "RelativeDocumentMoniker": "Models\\SupportWorker.cs",
@@ -250,7 +271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Booking.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Models\\Booking.cs",
               "RelativeDocumentMoniker": "Models\\Booking.cs",
@@ -263,7 +284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "ServiceCategory.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Models\\ServiceCategory.cs",
               "RelativeDocumentMoniker": "Models\\ServiceCategory.cs",
@@ -276,7 +297,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "Service.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Models\\Service.cs",
               "RelativeDocumentMoniker": "Models\\Service.cs",
@@ -289,7 +310,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Models\\User.cs",
               "RelativeDocumentMoniker": "Models\\User.cs",
@@ -302,7 +323,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "ChatController.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\ChatController.cs",
               "RelativeDocumentMoniker": "Controllers\\ChatController.cs",
@@ -315,7 +336,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "BookingsController.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\BookingsController.cs",
               "RelativeDocumentMoniker": "Controllers\\BookingsController.cs",
@@ -328,7 +349,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "ServicesController.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\ServicesController.cs",
               "RelativeDocumentMoniker": "Controllers\\ServicesController.cs",
@@ -341,7 +362,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
@@ -351,10 +372,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-15T05:37:06.298Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }
