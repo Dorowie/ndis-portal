@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NDISPortal.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a5d76012a504f0d62061e3022c5eab18f975590a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75672f1ef2baa7afdf9b8214fd49b8053d32699a")]
 [assembly: System.Reflection.AssemblyProductAttribute("NDISPortal.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NDISPortal.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

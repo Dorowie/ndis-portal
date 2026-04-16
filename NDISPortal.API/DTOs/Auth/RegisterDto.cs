@@ -6,12 +6,12 @@ namespace NDISPortal.API.DTOs.Auth
     {
         [Required(ErrorMessage = "First name is required.")]
         [MaxLength(50, ErrorMessage = "First name must not exceed 50 characters.")]
-        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "First name must contain only letters.")]
+        [RegularExpression("^[a-zA-Z]+( [a-zA-Z]+)*$", ErrorMessage = "First name must contain only letters.")]
         public string FirstName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Last name is required.")]
         [MaxLength(50, ErrorMessage = "Last name must not exceed 50 characters.")]
-        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Last name must contain only letters.")]
+        [RegularExpression("^[a-zA-Z]+( [a-zA-Z]+)*$", ErrorMessage = "Last name must contain only letters.")]
         public string LastName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Email is required.")]

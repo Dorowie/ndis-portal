@@ -3,72 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\ndisportal.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:ndisportal.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\models\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:models\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\ndisportal.api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:ndisportal.api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\dtos\\auth\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:dtos\\auth\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\dtos\\auth\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:dtos\\auth\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\dtos\\auth\\authresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:dtos\\auth\\authresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\dtos\\auth\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:dtos\\auth\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\controllers\\servicecategoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:controllers\\servicecategoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\controllers\\supportworkerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:controllers\\supportworkerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\services\\ichatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:services\\ichatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\middleware\\errorhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -77,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\services\\chatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:services\\chatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\services\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:services\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\jonh axcel\\desktop\\ndis-portal\\ndisportal.api\\services\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -118,7 +78,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -126,111 +86,85 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
               "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\appsettings.json",
               "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-04-16T04:30:56.528Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "NDISPortal.API.http",
-              "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\NDISPortal.API.http",
-              "RelativeDocumentMoniker": "NDISPortal.API.http",
-              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\NDISPortal.API.http",
-              "RelativeToolTip": "NDISPortal.API.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2026-04-16T04:14:23.868Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 0,
               "Title": "RegisterDto.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\DTOs\\Auth\\RegisterDto.cs",
               "RelativeDocumentMoniker": "DTOs\\Auth\\RegisterDto.cs",
               "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\DTOs\\Auth\\RegisterDto.cs",
               "RelativeToolTip": "DTOs\\Auth\\RegisterDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-16T00:25:22.354Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-15T23:56:46.585Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\IAuthService.cs",
               "RelativeDocumentMoniker": "Services\\IAuthService.cs",
               "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\IAuthService.cs",
               "RelativeToolTip": "Services\\IAuthService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-15T05:40:49.549Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 2,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\AuthController.cs",
               "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAADIAAAAAAAAAAAAkwFgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-15T05:37:06.298Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Services\\AuthService.cs",
               "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\AuthService.cs",
               "RelativeToolTip": "Services\\AuthService.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwC4AAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-15T05:40:58.697Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Properties\\launchSettings.json",
-              "RelativeToolTip": "Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-04-15T07:20:06.689Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 6,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Models\\User.cs",
               "RelativeDocumentMoniker": "Models\\User.cs",
@@ -243,94 +177,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "AuthResponseDto.cs",
-              "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\DTOs\\Auth\\AuthResponseDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\Auth\\AuthResponseDto.cs",
-              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\DTOs\\Auth\\AuthResponseDto.cs",
-              "RelativeToolTip": "DTOs\\Auth\\AuthResponseDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T01:05:19.879Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Service.cs",
-              "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Models\\Service.cs",
-              "RelativeDocumentMoniker": "Models\\Service.cs",
-              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Models\\Service.cs",
-              "RelativeToolTip": "Models\\Service.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:39:52.879Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "NDISPortal.API.csproj",
-              "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj",
-              "RelativeDocumentMoniker": "NDISPortal.API.csproj",
-              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj",
-              "RelativeToolTip": "NDISPortal.API.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-04-15T05:32:37.652Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T04:26:24.624Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "LoginDto.cs",
-              "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\DTOs\\Auth\\LoginDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\Auth\\LoginDto.cs",
-              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\DTOs\\Auth\\LoginDto.cs",
-              "RelativeToolTip": "DTOs\\Auth\\LoginDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T01:04:34.609Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "IChatService.cs",
-              "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\IChatService.cs",
-              "RelativeDocumentMoniker": "Services\\IChatService.cs",
-              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\IChatService.cs",
-              "RelativeToolTip": "Services\\IChatService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:43:58.993Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "ServiceCategoriesController.cs",
-              "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\ServiceCategoriesController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ServiceCategoriesController.cs",
-              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\ServiceCategoriesController.cs",
-              "RelativeToolTip": "Controllers\\ServiceCategoriesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:38:21.842Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 8,
               "Title": "ErrorHandlingMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Middleware\\ErrorHandlingMiddleware.cs",
               "RelativeDocumentMoniker": "Middleware\\ErrorHandlingMiddleware.cs",
@@ -338,11 +185,12 @@
               "RelativeToolTip": "Middleware\\ErrorHandlingMiddleware.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:44:26.166Z"
+              "WhenOpened": "2026-04-15T05:44:26.166Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 7,
               "Title": "SupportWorkersController.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\SupportWorkersController.cs",
               "RelativeDocumentMoniker": "Controllers\\SupportWorkersController.cs",
@@ -350,11 +198,12 @@
               "RelativeToolTip": "Controllers\\SupportWorkersController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:38:59.547Z"
+              "WhenOpened": "2026-04-15T05:38:59.547Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 9,
               "Title": "ChatService.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\ChatService.cs",
               "RelativeDocumentMoniker": "Services\\ChatService.cs",
@@ -362,23 +211,12 @@
               "RelativeToolTip": "Services\\ChatService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:44:08.765Z"
+              "WhenOpened": "2026-04-15T05:44:08.765Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "BookingService.cs",
-              "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\BookingService.cs",
-              "RelativeDocumentMoniker": "Services\\BookingService.cs",
-              "ToolTip": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\BookingService.cs",
-              "RelativeToolTip": "Services\\BookingService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:43:47.932Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 10,
               "Title": "IBookingService.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Services\\IBookingService.cs",
               "RelativeDocumentMoniker": "Services\\IBookingService.cs",
@@ -386,11 +224,12 @@
               "RelativeToolTip": "Services\\IBookingService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:43:38.503Z"
+              "WhenOpened": "2026-04-15T05:43:38.503Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 11,
               "Title": "SupportWorker.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Models\\SupportWorker.cs",
               "RelativeDocumentMoniker": "Models\\SupportWorker.cs",
@@ -398,11 +237,12 @@
               "RelativeToolTip": "Models\\SupportWorker.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:40:25.623Z"
+              "WhenOpened": "2026-04-15T05:40:25.623Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 12,
               "Title": "Booking.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Models\\Booking.cs",
               "RelativeDocumentMoniker": "Models\\Booking.cs",
@@ -410,11 +250,12 @@
               "RelativeToolTip": "Models\\Booking.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:40:14.08Z"
+              "WhenOpened": "2026-04-15T05:40:14.08Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 13,
               "Title": "ServiceCategory.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Models\\ServiceCategory.cs",
               "RelativeDocumentMoniker": "Models\\ServiceCategory.cs",
@@ -422,11 +263,12 @@
               "RelativeToolTip": "Models\\ServiceCategory.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:40:03.706Z"
+              "WhenOpened": "2026-04-15T05:40:03.706Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 14,
               "Title": "ChatController.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\ChatController.cs",
               "RelativeDocumentMoniker": "Controllers\\ChatController.cs",
@@ -434,11 +276,12 @@
               "RelativeToolTip": "Controllers\\ChatController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:39:24.145Z"
+              "WhenOpened": "2026-04-15T05:39:24.145Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 15,
               "Title": "BookingsController.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\BookingsController.cs",
               "RelativeDocumentMoniker": "Controllers\\BookingsController.cs",
@@ -446,11 +289,12 @@
               "RelativeToolTip": "Controllers\\BookingsController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:38:35.956Z"
+              "WhenOpened": "2026-04-15T05:38:35.956Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 16,
               "Title": "ServicesController.cs",
               "DocumentMoniker": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\Controllers\\ServicesController.cs",
               "RelativeDocumentMoniker": "Controllers\\ServicesController.cs",
@@ -458,7 +302,8 @@
               "RelativeToolTip": "Controllers\\ServicesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:37:47.172Z"
+              "WhenOpened": "2026-04-15T05:37:47.172Z",
+              "EditorCaption": ""
             }
           ]
         }

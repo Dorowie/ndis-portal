@@ -146,3 +146,4 @@ C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\obj\Debug\net8.0\NDISPort
 C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\obj\Debug\net8.0\NDISPortal.API.genruntimeconfig.cache
 C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\obj\Debug\net8.0\ref\NDISPortal.API.dll
 C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -53,5 +53,39 @@ namespace NDISPortal.API.Controllers
                 message = "User registered successfully."
             });
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Validation failed.",
+                    errors = ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage)
+                });
+            }
+
+            var result = await _authService.LoginAsync(dto);
+
+            if (result == null)
+            {
+                return Unauthorized(new
+                {
+                    success = false,
+                    message = "Invalid email or password."
+                });
+            }
+
+            return Ok(new
+            {
+                success = true,
+                data = result,
+                message = "Login successful."
+            });
+        }
     }
 }
