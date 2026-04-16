@@ -1,7 +1,5 @@
 C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\bin\Debug\net8.0\appsettings.json
-C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\bin\Debug\net8.0\appsettingsDevelopment.Development.json
-C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\bin\Debug\net8.0\appsettingsDevelopment.json
 C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\bin\Debug\net8.0\NDISPortal.API.staticwebassets.endpoints.json
 C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\bin\Debug\net8.0\NDISPortal.API.exe
 C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\bin\Debug\net8.0\NDISPortal.API.deps.json
@@ -147,3 +145,4 @@ C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\obj\Debug\net8.0\refint\N
 C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\obj\Debug\net8.0\NDISPortal.API.pdb
 C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\obj\Debug\net8.0\NDISPortal.API.genruntimeconfig.cache
 C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\obj\Debug\net8.0\ref\NDISPortal.API.dll
+C:\Users\Jonh Axcel\Desktop\ndis-portal\NDISPortal.API\bin\Debug\net8.0\BCrypt.Net-Next.dll
