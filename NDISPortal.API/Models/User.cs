@@ -33,6 +33,6 @@ namespace NDISPortal.API.Models
 
         public DateTime modified_date { get; set; }
 
-        //public ICollection<Booking> bookings { get; set; } = new List<Booking>();
+        public virtual ICollection<Booking> bookings { get; set; } = new List<Booking>();
     }
 }

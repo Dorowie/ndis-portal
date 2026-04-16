@@ -1,6 +1,11 @@
-﻿namespace NDISPortal.API.Services
+﻿using NDISPortal.API.DTOs.Bookings;
+
+namespace NDISPortal.API.Services
 {
-    public class IBookingService
+    public interface IBookingService
     {
+        Task<BookingResponseDto> CreateBookingAsync(int userId, BookingCreateDto dto);
+        Task<BookingResponseDto?> UpdateBookingStatusAsync(int bookingId, byte status);
+        Task<BookingResponseDto?> GetBookingByIdAsync(int bookingId);
     }
 }
