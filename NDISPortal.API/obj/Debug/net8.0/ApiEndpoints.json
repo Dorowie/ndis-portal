@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "NDISPortal.API.Controllers.SupportWorkersController",
+    "Method": "GetAll",
+    "RelativePath": "api/support-workers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NDISPortal.API.Controllers.SupportWorkersController",
+    "Method": "Create",
+    "RelativePath": "api/support-workers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "NDISPortal.API.Controllers.CreateSupportWorkerRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj": {}
+    "C:\\Users\\FUJITSU\\Source\\Repos\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj": {
+    "C:\\Users\\FUJITSU\\Source\\Repos\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj",
+        "projectUniqueName": "C:\\Users\\FUJITSU\\Source\\Repos\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj",
         "projectName": "NDISPortal.API",
-        "projectPath": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj",
-        "packagesPath": "C:\\Users\\Jonh Axcel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jonh Axcel\\Desktop\\ndis-portal\\NDISPortal.API\\obj\\",
+        "projectPath": "C:\\Users\\FUJITSU\\Source\\Repos\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj",
+        "packagesPath": "C:\\Users\\FUJITSU\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\FUJITSU\\Source\\Repos\\ndis-portal\\NDISPortal.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Jonh Axcel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\FUJITSU\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

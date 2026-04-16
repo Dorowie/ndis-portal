@@ -25,7 +25,6 @@
     <Folder Include="DTOs\Bookings\" />
     <Folder Include="DTOs\Chat\" />
     <Folder Include="DTOs\Services\" />
-    <Folder Include="DTOs\" />
   </ItemGroup>
 
 </Project>
