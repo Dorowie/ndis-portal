@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NDISPortal.API.Data;
 using NDISPortal.API.Models;
+using NDISPortal.API.DTOs.SupportWorker;
 
 namespace NDISPortal.API.Controllers
 {
@@ -22,12 +23,12 @@ namespace NDISPortal.API.Controllers
         {
             var workers = await _context.SupportWorkers
                 .Include(w => w.Service)
-                .Select(w => new
+                .Select(w => new SupportWorkerResponseDto
                 {
-                    w.Id,
+                    Id = w.Id,
                     FullName = w.FirstName + " " + w.LastName,
-                    w.Email,
-                    w.Phone,
+                    Email = w.Email,
+                    Phone = w.Phone,
                     ServiceName = w.Service != null ? w.Service.Name : ""
                 })
                 .ToListAsync();
@@ -35,19 +36,17 @@ namespace NDISPortal.API.Controllers
             return Ok(workers);
         }
 
-        
+       
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateSupportWorkerRequest body)
+        public async Task<IActionResult> Create([FromBody] CreateSupportWorkerDto body)
         {
             if (body == null)
                 return BadRequest("Invalid data");
 
-            
             var service = await _context.Services.FindAsync(body.AssignedServiceId);
             if (service == null)
                 return BadRequest("Service not found");
 
-            
             var names = body.FullName.Trim().Split(' ', 2);
 
             var worker = new SupportWorker
@@ -64,24 +63,16 @@ namespace NDISPortal.API.Controllers
             _context.SupportWorkers.Add(worker);
             await _context.SaveChangesAsync();
 
-            
-            return StatusCode(201, new
+            var response = new SupportWorkerResponseDto
             {
-                worker.Id,
+                Id = worker.Id,
                 FullName = worker.FirstName + " " + worker.LastName,
-                worker.Email,
-                worker.Phone,
+                Email = worker.Email,
+                Phone = worker.Phone,
                 ServiceName = service.Name
-            });
-        }
-    }
+            };
 
-    
-    public class CreateSupportWorkerRequest
-    {
-        public string FullName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string? Phone { get; set; }
-        public int AssignedServiceId { get; set; }
+            return StatusCode(201, response);
+        }
     }
 }

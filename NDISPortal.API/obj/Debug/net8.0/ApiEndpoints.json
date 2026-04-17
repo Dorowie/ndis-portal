@@ -19,7 +19,7 @@
     "Parameters": [
       {
         "Name": "body",
-        "Type": "NDISPortal.API.Controllers.CreateSupportWorkerRequest",
+        "Type": "NDISPortal.API.DTOs.SupportWorker.CreateSupportWorkerDto",
         "IsRequired": true
       }
     ],

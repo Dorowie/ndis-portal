@@ -24,17 +24,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSupportWorkerRequest"
+                "$ref": "#/components/schemas/CreateSupportWorkerDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSupportWorkerRequest"
+                "$ref": "#/components/schemas/CreateSupportWorkerDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSupportWorkerRequest"
+                "$ref": "#/components/schemas/CreateSupportWorkerDto"
               }
             }
           }
@@ -49,7 +49,7 @@
   },
   "components": {
     "schemas": {
-      "CreateSupportWorkerRequest": {
+      "CreateSupportWorkerDto": {
         "type": "object",
         "properties": {
           "fullName": {
