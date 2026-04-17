@@ -36,25 +36,25 @@ namespace NDISPortal.API.Controllers
             return Ok(workers);
         }
 
-       
+        
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateSupportWorkerDto body)
         {
-            if (body == null)
-                return BadRequest("Invalid data");
+            
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+           
             var service = await _context.Services.FindAsync(body.AssignedServiceId);
             if (service == null)
                 return BadRequest("Service not found");
 
-            var names = body.FullName.Trim().Split(' ', 2);
-
             var worker = new SupportWorker
             {
-                FirstName = names.Length > 0 ? names[0] : "",
-                LastName = names.Length > 1 ? names[1] : "",
-                Email = body.Email ?? "",
-                Phone = body.Phone ?? "",
+                FirstName = body.FirstName,
+                LastName = body.LastName,
+                Email = body.Email,
+                Phone = body.Phone,
                 ServiceId = body.AssignedServiceId,
                 CreatedDate = DateTime.UtcNow,
                 ModifiedDate = DateTime.UtcNow
@@ -63,6 +63,7 @@ namespace NDISPortal.API.Controllers
             _context.SupportWorkers.Add(worker);
             await _context.SaveChangesAsync();
 
+            
             var response = new SupportWorkerResponseDto
             {
                 Id = worker.Id,

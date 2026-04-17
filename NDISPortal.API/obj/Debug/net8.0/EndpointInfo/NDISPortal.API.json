@@ -50,21 +50,41 @@
   "components": {
     "schemas": {
       "CreateSupportWorkerDto": {
+        "required": [
+          "assignedServiceId",
+          "email",
+          "firstName",
+          "lastName",
+          "phone"
+        ],
         "type": "object",
         "properties": {
-          "fullName": {
-            "type": "string",
-            "nullable": true
+          "firstName": {
+            "maxLength": 20,
+            "minLength": 0,
+            "pattern": "^[a-zA-Z\\s]+$",
+            "type": "string"
+          },
+          "lastName": {
+            "maxLength": 30,
+            "minLength": 0,
+            "pattern": "^[a-zA-Z\\s]+$",
+            "type": "string"
           },
           "email": {
+            "maxLength": 20,
+            "minLength": 0,
             "type": "string",
-            "nullable": true
+            "format": "email"
           },
           "phone": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "pattern": "^\\d{10,15}$",
+            "type": "string"
           },
           "assignedServiceId": {
+            "maximum": 2147483647,
+            "minimum": 1,
             "type": "integer",
             "format": "int32"
           }

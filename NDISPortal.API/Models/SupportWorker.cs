@@ -13,21 +13,21 @@ namespace NDISPortal.API.Models
         public Service? Service { get; set; }
 
         [Column("first_name")]
-        public string FirstName { get; set; } = "";
+        public string FirstName { get; set; } = string.Empty;
 
-        [Column("last_name")]   
-        public string LastName { get; set; } = "";
-            
+        [Column("last_name")]
+        public string LastName { get; set; } = string.Empty;
+
         [Column("email")]
-        public string Email { get; set; } = "";
+        public string Email { get; set; } = string.Empty;
 
         [Column("phone")]
-        public string Phone { get; set; } = "";
+        public string? Phone { get; set; }
 
         [Column("created_date")]
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         [Column("modified_date")]
-        public DateTime ModifiedDate { get; set; } = DateTime.Now;
+        public DateTime ModifiedDate { get; set; } = DateTime.UtcNow;
     }
 }
