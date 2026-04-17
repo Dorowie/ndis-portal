@@ -60,19 +60,19 @@
         "type": "object",
         "properties": {
           "firstName": {
-            "maxLength": 20,
+            "maxLength": 50,
             "minLength": 0,
             "pattern": "^[a-zA-Z\\s]+$",
             "type": "string"
           },
           "lastName": {
-            "maxLength": 30,
+            "maxLength": 50,
             "minLength": 0,
             "pattern": "^[a-zA-Z\\s]+$",
             "type": "string"
           },
           "email": {
-            "maxLength": 20,
+            "maxLength": 150,
             "minLength": 0,
             "type": "string",
             "format": "email"

@@ -3,28 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\controllers\\supportworkerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:controllers\\supportworkerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\models\\supportworker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:models\\supportworker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\models\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:models\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\dtos\\supportworker\\createsupportworkerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:dtos\\supportworker\\createsupportworkerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\controllers\\supportworkerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:controllers\\supportworkerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\dtos\\supportworker\\supportworkerresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:dtos\\supportworker\\supportworkerresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\models\\servicecategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:models\\servicecategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\models\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:models\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\services\\chatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,10 +51,6 @@
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -53,10 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\models\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:models\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\controllers\\servicecategoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -93,10 +97,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\services\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:services\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|c:\\users\\fujitsu\\source\\repos\\ndis-portal\\ndisportal.api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8704FAF2-3B01-4C8C-95BF-546A029E7B38}|NDISPortal.API.csproj|solutionrelative:services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -106,49 +106,51 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 5,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "SupportWorkerResponse.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\DTOs\\SupportWorker\\SupportWorkerResponse.cs",
               "RelativeDocumentMoniker": "DTOs\\SupportWorker\\SupportWorkerResponse.cs",
               "ToolTip": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\DTOs\\SupportWorker\\SupportWorkerResponse.cs",
               "RelativeToolTip": "DTOs\\SupportWorker\\SupportWorkerResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T01:27:45.014Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-17T01:27:45.014Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "CreateSupportWorkerDto.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\DTOs\\SupportWorker\\CreateSupportWorkerDto.cs",
               "RelativeDocumentMoniker": "DTOs\\SupportWorker\\CreateSupportWorkerDto.cs",
               "ToolTip": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\DTOs\\SupportWorker\\CreateSupportWorkerDto.cs",
               "RelativeToolTip": "DTOs\\SupportWorker\\CreateSupportWorkerDto.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAA7wAwAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwBoAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T01:26:44.15Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-17T01:26:44.15Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 1,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
               "ToolTip": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Data\\ApplicationDbContext.cs",
               "RelativeToolTip": "Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAzwBcAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-15T17:48:53.141Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "ServiceCategoriesController.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Controllers\\ServiceCategoriesController.cs",
               "RelativeDocumentMoniker": "Controllers\\ServiceCategoriesController.cs",
@@ -160,20 +162,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "SupportWorkersController.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Controllers\\SupportWorkersController.cs",
               "RelativeDocumentMoniker": "Controllers\\SupportWorkersController.cs",
               "ToolTip": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Controllers\\SupportWorkersController.cs",
               "RelativeToolTip": "Controllers\\SupportWorkersController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAqwB0AAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAgwCYAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-15T05:38:59.547Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -185,7 +187,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -197,33 +199,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Service.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Models\\Service.cs",
               "RelativeDocumentMoniker": "Models\\Service.cs",
               "ToolTip": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Models\\Service.cs",
               "RelativeToolTip": "Models\\Service.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:39:52.879Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-15T05:39:52.879Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "SupportWorker.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Models\\SupportWorker.cs",
               "RelativeDocumentMoniker": "Models\\SupportWorker.cs",
-              "ToolTip": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Models\\SupportWorker.cs*",
-              "RelativeToolTip": "Models\\SupportWorker.cs*",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAgwCAAAAABAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Models\\SupportWorker.cs",
+              "RelativeToolTip": "Models\\SupportWorker.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:40:25.623Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-15T05:40:25.623Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "BookingsController.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Controllers\\BookingsController.cs",
               "RelativeDocumentMoniker": "Controllers\\BookingsController.cs",
@@ -235,7 +235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "ChatController.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Controllers\\ChatController.cs",
               "RelativeDocumentMoniker": "Controllers\\ChatController.cs",
@@ -247,7 +247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "ErrorHandlingMiddleware.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Middleware\\ErrorHandlingMiddleware.cs",
               "RelativeDocumentMoniker": "Middleware\\ErrorHandlingMiddleware.cs",
@@ -259,7 +259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "ServicesController.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Controllers\\ServicesController.cs",
               "RelativeDocumentMoniker": "Controllers\\ServicesController.cs",
@@ -271,7 +271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "appsettingsDevelopment.json",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\appsettingsDevelopment.json",
               "RelativeDocumentMoniker": "appsettingsDevelopment.json",
@@ -283,7 +283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "NDISPortal.API.csproj",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\Source\\Repos\\ndis-portal\\NDISPortal.API\\NDISPortal.API.csproj",
               "RelativeDocumentMoniker": "NDISPortal.API.csproj",
@@ -295,7 +295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "IChatService.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Services\\IChatService.cs",
               "RelativeDocumentMoniker": "Services\\IChatService.cs",
@@ -307,7 +307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "ChatService.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Services\\ChatService.cs",
               "RelativeDocumentMoniker": "Services\\ChatService.cs",
@@ -315,12 +315,11 @@
               "RelativeToolTip": "Services\\ChatService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:44:08.765Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-15T05:44:08.765Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "BookingService.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Services\\BookingService.cs",
               "RelativeDocumentMoniker": "Services\\BookingService.cs",
@@ -332,7 +331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "IBookingService.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Services\\IBookingService.cs",
               "RelativeDocumentMoniker": "Services\\IBookingService.cs",
@@ -344,7 +343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 8,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Services\\AuthService.cs",
@@ -356,7 +355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Services\\IAuthService.cs",
               "RelativeDocumentMoniker": "Services\\IAuthService.cs",
@@ -368,7 +367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "Booking.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Models\\Booking.cs",
               "RelativeDocumentMoniker": "Models\\Booking.cs",
@@ -380,7 +379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "ServiceCategory.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Models\\ServiceCategory.cs",
               "RelativeDocumentMoniker": "Models\\ServiceCategory.cs",
@@ -388,12 +387,11 @@
               "RelativeToolTip": "Models\\ServiceCategory.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T05:40:03.706Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-15T05:40:03.706Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 6,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\FUJITSU\\source\\repos\\ndis-portal\\NDISPortal.API\\Models\\User.cs",
               "RelativeDocumentMoniker": "Models\\User.cs",
