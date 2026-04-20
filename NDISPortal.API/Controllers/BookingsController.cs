@@ -28,13 +28,17 @@ namespace NDISPortal.API.Controllers
         [Authorize]
         public async Task<IActionResult> GetBookings([FromQuery] string? status = null)
         {
-            var userIdClaim = User.FindFirst("userId")?.Value;
-            if (userIdClaim == null || !int.TryParse(userIdClaim, out int userId))
+            // Try multiple ways to get user ID from JWT claims
+            var userIdClaim = User.FindFirst("userId")?.Value ?? 
+                             User.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
+                             User.FindFirst("sub")?.Value;
+                             
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
                 return Unauthorized(new
                 {
                     success = false,
-                    message = "Invalid user token."
+                    message = "Invalid user token - userId claim not found."
                 });
             }
 
@@ -132,13 +136,17 @@ namespace NDISPortal.API.Controllers
                 });
             }
 
-            var userIdClaim = User.FindFirst("userId")?.Value;
-            if (userIdClaim == null || !int.TryParse(userIdClaim, out int userId))
+            // Try multiple ways to get user ID from JWT claims
+            var userIdClaim = User.FindFirst("userId")?.Value ?? 
+                             User.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
+                             User.FindFirst("sub")?.Value;
+                             
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
                 return Unauthorized(new
                 {
                     success = false,
-                    message = "Invalid user token."
+                    message = "Invalid user token - userId claim not found."
                 });
             }
 
@@ -269,13 +277,17 @@ namespace NDISPortal.API.Controllers
         [Authorize(Roles = "Participant")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
-            var userIdClaim = User.FindFirst("userId")?.Value;
-            if (userIdClaim == null || !int.TryParse(userIdClaim, out int userId))
+            // Try multiple ways to get user ID from JWT claims
+            var userIdClaim = User.FindFirst("userId")?.Value ?? 
+                             User.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
+                             User.FindFirst("sub")?.Value;
+                             
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
                 return Unauthorized(new
                 {
                     success = false,
-                    message = "Invalid user token."
+                    message = "Invalid user token - userId claim not found."
                 });
             }
 
