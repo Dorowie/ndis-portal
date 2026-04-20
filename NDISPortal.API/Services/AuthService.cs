@@ -22,7 +22,7 @@ namespace NDISPortal.API.Services
         }
 
         //REGISTRATION
-        public async Task<(bool Success, int? UserId, string? Email)> RegisterAsync(RegisterDto dto)
+        public async Task<AuthResponseDto?> RegisterAsync(RegisterDto dto)
         {
 
             var emailExists = await _context.Users
@@ -30,7 +30,7 @@ namespace NDISPortal.API.Services
 
             if (emailExists)
             {
-                return (false,null,null);
+                return null;
             }
 
 
@@ -50,7 +50,15 @@ namespace NDISPortal.API.Services
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return (true,user.id,user.email);
+            var token = GenerateJwtToken(user);
+
+            return new AuthResponseDto
+            {
+                UserId = user.id,
+                Email = user.email,
+                Role = user.role,
+                Token = token
+            };
         }
 
         //LOGIN 

@@ -35,7 +35,7 @@ namespace NDISPortal.API.Controllers
 
             var result = await _authService.RegisterAsync(dto);
 
-            if (!result.Success)
+            if (result == null)
             {
                 return BadRequest(new
                 {
@@ -47,11 +47,7 @@ namespace NDISPortal.API.Controllers
             return StatusCode(201, new
             {
                 success = true,
-                data = new
-                {
-                    user_id = result.UserId,
-                    email = result.Email,
-                },
+                data = result,
                 message = "User registered successfully."
             });
         }
