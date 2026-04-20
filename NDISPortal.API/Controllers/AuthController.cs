@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NDISPortal.API.DTOs.Auth;
 using NDISPortal.API.Services;
@@ -7,6 +8,7 @@ namespace NDISPortal.API.Controllers
 {
     [Route("api/auth")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -47,7 +49,7 @@ namespace NDISPortal.API.Controllers
                 success = true,
                 data = new
                 {
-                    userId = result.UserId,
+                    user_id = result.UserId,
                     email = result.Email,
                 },
                 message = "User registered successfully."

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NDISPortal.API.Data;
@@ -8,6 +9,7 @@ namespace NDISPortal.API.Controllers
 {
     [Route("api/categories")]
     [ApiController]
+    [AllowAnonymous]
     public class ServiceCategoriesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
