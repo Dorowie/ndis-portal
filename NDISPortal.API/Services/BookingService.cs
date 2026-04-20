@@ -20,9 +20,10 @@ namespace NDISPortal.API.Services
             {
                 user_id = userId,
                 service_id = dto.ServiceId,
-                booking_date = dto.BookingDate,
+                booking_date = dto.PreferredDate,
                 notes = dto.Notes,
                 status = 0,
+                status_label = "Pending",
                 created_date = DateTime.UtcNow,
                 modified_date = DateTime.UtcNow
             };
@@ -33,7 +34,7 @@ namespace NDISPortal.API.Services
             return await MapToResponseDto(booking);
         }
 
-        public async Task<BookingResponseDto?> UpdateBookingStatusAsync(int bookingId, byte status)
+        public async Task<BookingResponseDto?> UpdateBookingStatusAsync(int bookingId, string status)
         {
             var booking = await _context.Bookings
                 .Include(b => b.Service)
@@ -45,7 +46,13 @@ namespace NDISPortal.API.Services
                 return null;
             }
 
-            booking.status = status;
+            booking.status_label = status;
+            booking.status = status switch
+            {
+                "Approved" => (byte)1,
+                "Cancelled" => (byte)2,
+                _ => (byte)0 // Pending
+            };
             booking.modified_date = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
