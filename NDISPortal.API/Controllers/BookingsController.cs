@@ -60,31 +60,59 @@ namespace NDISPortal.API.Controllers
             }
             // Coordinators see all bookings (no additional filter needed)
 
-            var bookings = await query
-                .OrderByDescending(b => b.created_date)
-                .Select(b => new
-                {
-                    booking_id = b.id,
-                    user_id = b.user_id,
-                    participant_name = userRole == "Coordinator" ? 
-                        (b.User.first_name + " " + b.User.last_name).Trim() : null,
-                    service_id = b.service_id,
-                    service_name = b.Service.name,
-                    category_name = b.Service.Category.name,
-                    preferred_date = b.booking_date,
-                    status = b.status_label,
-                    notes = b.notes,
-                    created_date = b.created_date,
-                    modified_date = b.modified_date
-                })
-                .ToListAsync();
-
-            return Ok(new
+            if (userRole == "Participant")
             {
-                success = true,
-                data = bookings,
-                count = bookings.Count
-            });
+                // Participant response: only their own bookings
+                var participantBookings = await query
+                    .OrderByDescending(b => b.created_date)
+                    .Select(b => new
+                    {
+                        booking_id = b.id,
+                        service_id = b.service_id,
+                        service_name = b.Service.name,
+                        preferred_date = b.booking_date,
+                        status = b.status_label,
+                        notes = b.notes,
+                        created_date = b.created_date,
+                        modified_date = b.modified_date
+                    })
+                    .ToListAsync();
+
+                return Ok(new
+                {
+                    success = true,
+                    data = participantBookings,
+                    count = participantBookings.Count
+                });
+            }
+            else
+            {
+                // Coordinator response: all bookings with participant names
+                var coordinatorBookings = await query
+                    .OrderByDescending(b => b.created_date)
+                    .Select(b => new
+                    {
+                        booking_id = b.id,
+                        user_id = b.user_id,
+                        participant_name = (b.User.first_name + " " + b.User.last_name).Trim(),
+                        service_id = b.service_id,
+                        service_name = b.Service.name,
+                        category_name = b.Service.Category.name,
+                        preferred_date = b.booking_date,
+                        status = b.status_label,
+                        notes = b.notes,
+                        created_date = b.created_date,
+                        modified_date = b.modified_date
+                    })
+                    .ToListAsync();
+
+                return Ok(new
+                {
+                    success = true,
+                    data = coordinatorBookings,
+                    count = coordinatorBookings.Count
+                });
+            }
         }
 
         // POST /api/bookings - Create booking (Participant only)
@@ -139,10 +167,28 @@ namespace NDISPortal.API.Controllers
 
             var result = await _bookingService.CreateBookingAsync(userId, dto);
 
+            // Get the created booking with full details
+            var createdBooking = await _context.Bookings
+                .Include(b => b.Service)
+                .ThenInclude(s => s.Category)
+                .Where(b => b.id == result.Id)
+                .Select(b => new
+                {
+                    booking_id = b.id,
+                    service_id = b.service_id,
+                    service_name = b.Service.name,
+                    preferred_date = b.booking_date,
+                    status = b.status_label,
+                    notes = b.notes,
+                    created_date = b.created_date,
+                    modified_date = b.modified_date
+                })
+                .FirstOrDefaultAsync();
+
             return StatusCode(201, new
             {
                 success = true,
-                data = result,
+                data = createdBooking,
                 message = "Booking created successfully."
             });
         }
