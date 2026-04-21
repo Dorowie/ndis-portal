@@ -306,8 +306,8 @@ namespace NDISPortal.API.Controllers
                 return Forbid();
             }
 
-            // Check if booking is still Pending
-            if (booking.status_label != "Pending")
+            // Check if booking is still Pending (status 0 = Pending)
+            if (booking.status != 0)
             {
                 return BadRequest(new
                 {
