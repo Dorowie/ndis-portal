@@ -273,7 +273,7 @@ namespace NDISPortal.API.Controllers
 
         // DELETE /api/bookings/{id} - Delete booking (Participant only, own bookings, Pending only)
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Participant")]
+        [Authorize(Roles = "Participant,Coordinator")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
             // Debug: Log all available claims
@@ -309,21 +309,28 @@ namespace NDISPortal.API.Controllers
                 });
             }
 
-            // Check if booking belongs to the participant
-            if (booking.user_id != userId)
-            {
-                return Forbid();
-            }
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty;
 
-            // Check if booking is still Pending (status 0 = Pending)
-            if (booking.status != 0)
+            // Different rules for different roles
+            if (userRole == "Participant")
             {
-                return BadRequest(new
+                // Participants can only delete their own bookings
+                if (booking.user_id != userId)
                 {
-                    success = false,
-                    message = "Can only delete bookings with Pending status."
-                });
+                    return Forbid();
+                }
+
+                // Participants can only delete Pending bookings
+                if (booking.status != 0)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Can only delete bookings with Pending status."
+                    });
+                }
             }
+            // Coordinators can delete any booking (no additional restrictions needed)
 
             try
             {
