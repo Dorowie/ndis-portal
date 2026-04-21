@@ -276,6 +276,9 @@ namespace NDISPortal.API.Controllers
         [Authorize(Roles = "Participant")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
+            // Debug: Log all available claims
+            var availableClaims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
+            
             // Try multiple ways to get user ID from JWT claims
             var userIdClaim = User.FindFirst("userId")?.Value ?? 
                              User.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
@@ -286,7 +289,13 @@ namespace NDISPortal.API.Controllers
                 return Unauthorized(new
                 {
                     success = false,
-                    message = "Invalid user token - userId claim not found."
+                    message = "Invalid user token - userId claim not found.",
+                    debug = new
+                    {
+                        availableClaims = availableClaims,
+                        userIdClaim = userIdClaim,
+                        userRole = User.FindFirst(ClaimTypes.Role)?.Value
+                    }
                 });
             }
 
@@ -316,10 +325,21 @@ namespace NDISPortal.API.Controllers
                 });
             }
 
-            _context.Bookings.Remove(booking);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            try
+            {
+                _context.Bookings.Remove(booking);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = $"Error deleting booking: {ex.Message}",
+                    details = ex.InnerException?.Message
+                });
+            }
         }
     }
 }
