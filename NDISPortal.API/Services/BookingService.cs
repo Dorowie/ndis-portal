@@ -23,7 +23,6 @@ namespace NDISPortal.API.Services
                 booking_date = dto.PreferredDate,
                 notes = dto.Notes,
                 status = 0,
-                status_label = "Pending",
                 created_date = DateTime.UtcNow,
                 modified_date = DateTime.UtcNow
             };
@@ -46,7 +45,6 @@ namespace NDISPortal.API.Services
                 return null;
             }
 
-            booking.status_label = status;
             booking.status = status switch
             {
                 "Approved" => (byte)1,

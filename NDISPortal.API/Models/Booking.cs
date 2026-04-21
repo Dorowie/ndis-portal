@@ -23,8 +23,14 @@ namespace NDISPortal.API.Models
 
         public byte status { get; set; } = 0;
 
-        [MaxLength(20)]
-        public string status_label { get; set; } = "Pending";
+        [NotMapped]
+        public string status_label => status switch
+        {
+            0 => "Pending",
+            1 => "Approved", 
+            2 => "Cancelled",
+            _ => "Pending"
+        };
 
         public DateTime created_date { get; set; }
 

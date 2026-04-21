@@ -229,7 +229,6 @@ namespace NDISPortal.API.Controllers
             }
 
             // Update status and timestamp
-            booking.status_label = dto.Status;
             booking.modified_date = DateTime.UtcNow;
 
             // Convert string status to byte for database
