@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>716cc717-f20b-405d-8c03-68e4c38a61bd</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="DTOs\Bookings\" />
-    <Folder Include="DTOs\Chat\" />
     <Folder Include="DTOs\Services\" />
   </ItemGroup>
 
