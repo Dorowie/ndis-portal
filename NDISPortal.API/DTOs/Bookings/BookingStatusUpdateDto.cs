@@ -6,8 +6,8 @@ namespace NDISPortal.API.DTOs.Bookings
     public class BookingStatusUpdateDto
     {
         [Required(ErrorMessage = "Status is required.")]
-        [RegularExpression("^(Approved|Cancelled)$", ErrorMessage = "Status must be 'Approved' or 'Cancelled'.")]
+        [Range(0, 2, ErrorMessage = "Status must be 0 (Pending), 1 (Approved), or 2 (Cancelled).")]
         [JsonPropertyName("status")]
-        public string Status { get; set; } = string.Empty;
+        public byte Status { get; set; }
     }
 }

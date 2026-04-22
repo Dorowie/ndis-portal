@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NDISPortal.API.Data;
+using NDISPortal.API.DTOs;
 using NDISPortal.API.DTOs.Services;
 
 namespace NDISPortal.API.Controllers
@@ -38,12 +39,12 @@ namespace NDISPortal.API.Controllers
                 })
                 .ToListAsync();
 
-            return Ok(new
-            {
-                success = true,
-                data = services,
-                count = services.Count
-            });
+            return Ok(new ApiResponse<List<ServiceResponseDto>>(
+                success: true,
+                data: services,
+                message: "Services retrieved successfully.",
+                count: services.Count
+            ));
         }
 
         // 2. GET /api/services/{id} - Get service by ID (public)
@@ -67,18 +68,17 @@ namespace NDISPortal.API.Controllers
 
             if (service == null)
             {
-                return NotFound(new
-                {
-                    success = false,
-                    message = "Service not found."
-                });
+                return NotFound(new ApiResponse<object>(
+                    success: false,
+                    message: "Service not found. Please check the service ID and try again."
+                ));
             }
 
-            return Ok(new
-            {
-                success = true,
-                data = service
-            });
+            return Ok(new ApiResponse<ServiceResponseDto>(
+                success: true,
+                data: service,
+                message: "Service retrieved successfully."
+            ));
         }
 
         // 3. POST /api/services - Create new service (Coordinator only)
@@ -88,25 +88,26 @@ namespace NDISPortal.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Validation failed.",
-                    errors = ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .Select(e => e.ErrorMessage)
-                });
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Validation failed. Please check your input.",
+                    errors: errors
+                ));
             }
 
             // Verify category exists
             var categoryExists = await _context.ServiceCategories.AnyAsync(c => c.id == dto.CategoryId);
             if (!categoryExists)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Category not found."
-                });
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Category not found. Please select a valid category."
+                ));
             }
 
             var service = new NDISPortal.API.Models.Service
@@ -132,12 +133,11 @@ namespace NDISPortal.API.Controllers
                 CategoryName = (await _context.ServiceCategories.FindAsync(service.category_id))?.name ?? string.Empty
             };
 
-            return StatusCode(201, new
-            {
-                success = true,
-                data = response,
-                message = "Service created successfully."
-            });
+            return StatusCode(201, new ApiResponse<ServiceResponseDto>(
+                success: true,
+                data: response,
+                message: "Service created successfully."
+            ));
         }
 
         // 4. PUT /api/services/{id} - Update service (Coordinator only)
@@ -147,35 +147,35 @@ namespace NDISPortal.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Validation failed.",
-                    errors = ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .Select(e => e.ErrorMessage)
-                });
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Validation failed. Please check your input.",
+                    errors: errors
+                ));
             }
 
             var service = await _context.Services.FindAsync(id);
             if (service == null)
             {
-                return NotFound(new
-                {
-                    success = false,
-                    message = "Service not found."
-                });
+                return NotFound(new ApiResponse<object>(
+                    success: false,
+                    message: "Service not found. Please check the service ID and try again."
+                ));
             }
 
             // Verify category exists
             var categoryExists = await _context.ServiceCategories.AnyAsync(c => c.id == dto.CategoryId);
             if (!categoryExists)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Category not found."
-                });
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Category not found. Please select a valid category."
+                ));
             }
 
             service.category_id = dto.CategoryId;
@@ -196,12 +196,11 @@ namespace NDISPortal.API.Controllers
                 CategoryName = (await _context.ServiceCategories.FindAsync(service.category_id))?.name ?? string.Empty
             };
 
-            return Ok(new
-            {
-                success = true,
-                data = response,
-                message = "Service updated successfully."
-            });
+            return Ok(new ApiResponse<ServiceResponseDto>(
+                success: true,
+                data: response,
+                message: "Service updated successfully."
+            ));
         }
 
         // 5. DELETE /api/services/{id} - Soft delete service (Coordinator only)
@@ -212,11 +211,10 @@ namespace NDISPortal.API.Controllers
             var service = await _context.Services.FindAsync(id);
             if (service == null)
             {
-                return NotFound(new
-                {
-                    success = false,
-                    message = "Service not found."
-                });
+                return NotFound(new ApiResponse<object>(
+                    success: false,
+                    message: "Service not found. Please check the service ID and try again."
+                ));
             }
 
             service.is_active = false;
@@ -224,11 +222,10 @@ namespace NDISPortal.API.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(new
-            {
-                success = true,
-                message = "Service deleted successfully."
-            });
+            return Ok(new ApiResponse<object>(
+                success: true,
+                message: "Service deleted successfully."
+            ));
         }
     }
 }

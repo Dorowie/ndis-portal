@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NDISPortal.API.DTOs;
 using NDISPortal.API.DTOs.Auth;
 using NDISPortal.API.Services;
 
@@ -23,37 +24,39 @@ namespace NDISPortal.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Validation failed.",
-                    errors = ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .Select(e => e.ErrorMessage)
-                });
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Validation failed. Please check your input.",
+                    errors: errors
+                ));
             }
 
             var result = await _authService.RegisterAsync(dto);
 
             if (!result.Success)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Email already exists."
-                });
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Email already exists. Please use a different email address."
+                ));
             }
 
-            return StatusCode(201, new
+            var userData = new
             {
-                success = true,
-                data = new
-                {
-                    user_id = result.UserId,
-                    email = result.Email,
-                },
-                message = "User registered successfully."
-            });
+                user_id = result.UserId,
+                email = result.Email,
+            };
+
+            return StatusCode(201, new ApiResponse<object>(
+                success: true,
+                data: userData,
+                message: "User registered successfully. Please login to continue."
+            ));
         }
 
         [HttpPost("login")]
@@ -61,33 +64,33 @@ namespace NDISPortal.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Validation failed.",
-                    errors = ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .Select(e => e.ErrorMessage)
-                });
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Validation failed. Please check your input.",
+                    errors: errors
+                ));
             }
 
             var result = await _authService.LoginAsync(dto);
 
             if (result == null)
             {
-                return Unauthorized(new
-                {
-                    success = false,
-                    message = "Invalid email or password."
-                });
+                return Unauthorized(new ApiResponse<object>(
+                    success: false,
+                    message: "Invalid email or password. Please check your credentials and try again."
+                ));
             }
 
-            return Ok(new
-            {
-                success = true,
-                data = result,
-                message = "Login successful."
-            });
+            return Ok(new ApiResponse<AuthResponseDto>(
+                success: true,
+                data: result,
+                message: "Login successful. Welcome back!"
+            ));
         }
     }
 }

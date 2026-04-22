@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NDISPortal.API.Data;
+using NDISPortal.API.DTOs;
 using NDISPortal.API.DTOs.Bookings;
 using NDISPortal.API.Models;
 using NDISPortal.API.Services;
@@ -35,11 +36,10 @@ namespace NDISPortal.API.Controllers
                              
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
-                return Unauthorized(new
-                {
-                    success = false,
-                    message = "Invalid user token - userId claim not found."
-                });
+                return Unauthorized(new ApiResponse<object>(
+                    success: false,
+                    message: "Invalid user token. Please login again."
+                ));
             }
 
             var userRole = User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty;
@@ -50,10 +50,17 @@ namespace NDISPortal.API.Controllers
                 .Include(b => b.User)
                 .AsQueryable();
 
-            // Filter by status if provided
+            // Filter by status if provided (convert string to byte)
             if (!string.IsNullOrEmpty(status))
             {
-                query = query.Where(b => b.status_label == status);
+                byte statusValue = status.ToLower() switch
+                {
+                    "pending" => 0,
+                    "approved" => 1,
+                    "cancelled" => 2,
+                    _ => 0
+                };
+                query = query.Where(b => b.status == statusValue);
             }
 
             // Role-based filtering
@@ -64,59 +71,53 @@ namespace NDISPortal.API.Controllers
             }
             // Coordinators see all bookings (no additional filter needed)
 
+            var bookings = await query
+                .OrderByDescending(b => b.created_date)
+                .Select(b => new
+                {
+                    booking_id = b.id,
+                    user_id = b.user_id,
+                    participant_name = b.User != null ? (b.User.first_name + " " + b.User.last_name).Trim() : "Unknown User",
+                    service_id = b.service_id,
+                    service_name = b.Service != null ? b.Service.name : "Unknown Service",
+                    category_name = b.Service != null && b.Service.Category != null ? b.Service.Category.name : "Unknown Category",
+                    preferred_date = b.booking_date,
+                    status = b.status_label,
+                    notes = b.notes,
+                    created_date = b.created_date,
+                    modified_date = b.modified_date
+                })
+                .ToListAsync();
+
+            // Remove participant_name for participants
             if (userRole == "Participant")
             {
-                // Participant response: only their own bookings
-                var participantBookings = await query
-                    .OrderByDescending(b => b.created_date)
-                    .Select(b => new
-                    {
-                        booking_id = b.id,
-                        service_id = b.service_id,
-                        service_name = b.Service.name,
-                        preferred_date = b.booking_date,
-                        status = b.status_label,
-                        notes = b.notes,
-                        created_date = b.created_date,
-                        modified_date = b.modified_date
-                    })
-                    .ToListAsync();
-
-                return Ok(new
+                var participantBookings = bookings.Select(b => new
                 {
-                    success = true,
-                    data = participantBookings,
-                    count = participantBookings.Count
-                });
-            }
-            else
-            {
-                // Coordinator response: all bookings with participant names
-                var coordinatorBookings = await query
-                    .OrderByDescending(b => b.created_date)
-                    .Select(b => new
-                    {
-                        booking_id = b.id,
-                        user_id = b.user_id,
-                        participant_name = (b.User.first_name + " " + b.User.last_name).Trim(),
-                        service_id = b.service_id,
-                        service_name = b.Service.name,
-                        category_name = b.Service.Category.name,
-                        preferred_date = b.booking_date,
-                        status = b.status_label,
-                        notes = b.notes,
-                        created_date = b.created_date,
-                        modified_date = b.modified_date
-                    })
-                    .ToListAsync();
+                    booking_id = b.booking_id,
+                    service_id = b.service_id,
+                    service_name = b.service_name,
+                    preferred_date = b.preferred_date,
+                    status = b.status,
+                    notes = b.notes,
+                    created_date = b.created_date,
+                    modified_date = b.modified_date
+                }).ToList();
 
-                return Ok(new
-                {
-                    success = true,
-                    data = coordinatorBookings,
-                    count = coordinatorBookings.Count
-                });
+                return Ok(new ApiResponse<object>(
+                    success: true,
+                    data: participantBookings,
+                    message: "Bookings retrieved successfully.",
+                    count: participantBookings.Count
+                ));
             }
+
+            return Ok(new ApiResponse<object>(
+                success: true,
+                data: bookings,
+                message: "All bookings retrieved successfully.",
+                count: bookings.Count
+            ));
         }
 
         // POST /api/bookings - Create booking (Participant only)
@@ -126,14 +127,16 @@ namespace NDISPortal.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Validation failed.",
-                    errors = ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .Select(e => e.ErrorMessage)
-                });
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Validation failed. Please check your input.",
+                    errors: errors
+                ));
             }
 
             // Try multiple ways to get user ID from JWT claims
@@ -143,21 +146,19 @@ namespace NDISPortal.API.Controllers
                              
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
-                return Unauthorized(new
-                {
-                    success = false,
-                    message = "Invalid user token - userId claim not found."
-                });
+                return Unauthorized(new ApiResponse<object>(
+                    success: false,
+                    message: "Invalid user token. Please login again."
+                ));
             }
 
             // Validation: Preferred date must be today or future
             if (dto.PreferredDate.Date < DateTime.UtcNow.Date)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Preferred date must be today or in the future."
-                });
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Preferred date must be today or in the future. Please select a valid date."
+                ));
             }
 
             // Validation: Service must exist and be active
@@ -166,11 +167,10 @@ namespace NDISPortal.API.Controllers
             
             if (service == null)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Service not found or inactive."
-                });
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Service not found or inactive. Please select an active service."
+                ));
             }
 
             var result = await _bookingService.CreateBookingAsync(userId, dto);
@@ -193,12 +193,11 @@ namespace NDISPortal.API.Controllers
                 })
                 .FirstOrDefaultAsync();
 
-            return StatusCode(201, new
-            {
-                success = true,
-                data = createdBooking,
-                message = "Booking created successfully."
-            });
+            return StatusCode(201, new ApiResponse<object>(
+                success: true,
+                data: createdBooking,
+                message: "Booking created successfully. Your booking is now pending approval."
+            ));
         }
 
         // PUT /api/bookings/{id}/status - Update booking status (Coordinator only)
@@ -208,36 +207,30 @@ namespace NDISPortal.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Validation failed.",
-                    errors = ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .Select(e => e.ErrorMessage)
-                });
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Validation failed. Please check your input.",
+                    errors: errors
+                ));
             }
 
             var booking = await _context.Bookings.FindAsync(id);
             if (booking == null)
             {
-                return NotFound(new
-                {
-                    success = false,
-                    message = "Booking not found."
-                });
+                return NotFound(new ApiResponse<object>(
+                    success: false,
+                    message: "Booking not found. Please check the booking ID and try again."
+                ));
             }
 
             // Update status and timestamp
             booking.modified_date = DateTime.UtcNow;
-
-            // Convert string status to byte for database
-            booking.status = dto.Status switch
-            {
-                "Approved" => (byte)1,
-                "Cancelled" => (byte)2,
-                _ => (byte)0 // Pending
-            };
+            booking.status = dto.Status;
 
             await _context.SaveChangesAsync();
 
@@ -263,12 +256,11 @@ namespace NDISPortal.API.Controllers
                 })
                 .FirstOrDefaultAsync();
 
-            return Ok(new
-            {
-                success = true,
-                data = updatedBooking,
-                message = "Booking status updated successfully."
-            });
+            return Ok(new ApiResponse<object>(
+                success: true,
+                data: updatedBooking,
+                message: $"Booking status updated to {updatedBooking?.status} successfully."
+            ));
         }
 
         // DELETE /api/bookings/{id} - Delete booking (Participant only, own bookings, Pending only)
@@ -276,9 +268,6 @@ namespace NDISPortal.API.Controllers
         [Authorize(Roles = "Participant,Coordinator")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
-            // Debug: Log all available claims
-            var availableClaims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
-            
             // Try multiple ways to get user ID from JWT claims
             var userIdClaim = User.FindFirst("userId")?.Value ?? 
                              User.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
@@ -286,27 +275,19 @@ namespace NDISPortal.API.Controllers
                              
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
-                return Unauthorized(new
-                {
-                    success = false,
-                    message = "Invalid user token - userId claim not found.",
-                    debug = new
-                    {
-                        availableClaims = availableClaims,
-                        userIdClaim = userIdClaim,
-                        userRole = User.FindFirst(ClaimTypes.Role)?.Value
-                    }
-                });
+                return Unauthorized(new ApiResponse<object>(
+                    success: false,
+                    message: "Invalid user token. Please login again."
+                ));
             }
 
             var booking = await _context.Bookings.FindAsync(id);
             if (booking == null)
             {
-                return NotFound(new
-                {
-                    success = false,
-                    message = "Booking not found."
-                });
+                return NotFound(new ApiResponse<object>(
+                    success: false,
+                    message: "Booking not found. Please check the booking ID and try again."
+                ));
             }
 
             var userRole = User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty;
@@ -323,11 +304,10 @@ namespace NDISPortal.API.Controllers
                 // Participants can only delete Pending bookings
                 if (booking.status != 0)
                 {
-                    return BadRequest(new
-                    {
-                        success = false,
-                        message = "Can only delete bookings with Pending status."
-                    });
+                    return BadRequest(new ApiResponse<object>(
+                        success: false,
+                        message: "Can only delete bookings with Pending status. Approved or Cancelled bookings cannot be deleted."
+                    ));
                 }
             }
             // Coordinators can delete any booking (no additional restrictions needed)
@@ -340,12 +320,11 @@ namespace NDISPortal.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = $"Error deleting booking: {ex.Message}",
-                    details = ex.InnerException?.Message
-                });
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Error deleting booking. Please try again.",
+                    errors: new List<string> { ex.Message, ex.InnerException?.Message ?? "" }
+                ));
             }
         }
     }
