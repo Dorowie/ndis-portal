@@ -1,0 +1,75 @@
+<!-- services-list.component.html -->
+<div class="services-page">
+  <aside class="sidebar">
+    <div class="logo">NDIS Care Portal</div>
+
+    <nav class="nav-menu">
+      <a class="nav-item active" routerLink="/services">Services</a>
+      <a class="nav-item" routerLink="/bookings">My Booking</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="top-bar">
+      <div class="heading-block">
+        <h1>Service Selection</h1>
+        <p>Choose a support category that best fits your requirements today.</p>
+      </div>
+
+      <div class="right-controls">
+        <div class="profile-avatar">
+    <img
+  src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200"
+  alt="Profile"
+/>
+        </div>
+
+        <div class="category-dropdown">
+          <span class="material-icons dropdown-icon">tune</span>
+          <select (change)="onCategoryChange($event)">
+            <option *ngFor="let category of categories" [value]="category">
+              {{ category }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-state" data-testid="loading-spinner">
+      Loading services...
+    </div>
+
+    <div
+      *ngIf="!isLoading && filteredServices.length === 0"
+      class="empty-state"
+      data-testid="empty-state"
+    >
+      No services match the selected category.
+    </div>
+
+    <div class="cards-grid" *ngIf="!isLoading && filteredServices.length > 0">
+      <div
+        class="service-card"
+        *ngFor="let service of filteredServices"
+        [style.border-left-color]="service.accent"
+        (click)="openService(service)"
+        data-testid="service-card"
+      >
+        <div class="icon-circle">
+          <span class="material-icons">{{ service.icon }}</span>
+        </div>
+
+        <h3>{{ service.name }}</h3>
+        <p>{{ service.description }}</p>
+
+        <button
+          type="button"
+          class="select-btn"
+          (click)="openService(service); $event.stopPropagation()"
+        >
+          Select
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
