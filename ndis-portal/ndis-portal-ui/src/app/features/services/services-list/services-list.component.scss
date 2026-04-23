@@ -1,72 +1,10 @@
-/* services-list.component.scss */
-* {
-  box-sizing: border-box;
-}
-
-.services-page {
-  display: flex;
-  min-height: 100vh;
-  background: #f7f2f8;
-}
-
-.sidebar {
-  width: 250px;
-  background: #f1eaf4;
-  padding: 24px 18px;
-  border-right: 1px solid #e5d9eb;
-}
-
-.logo {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #6f2da8;
-  margin-bottom: 36px;
-}
-
-.nav-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.nav-item {
-  text-decoration: none;
-  color: #4b3f52;
-  padding: 12px 14px;
-  border-radius: 10px;
-  font-weight: 600;
-  background: transparent;
-}
-
-.nav-item.active {
-  background: #ffffff;
-  color: #6f2da8;
-  border-left: 4px solid #6f2da8;
-}
-
-.main-content {
-  flex: 1;
-  padding: 28px 32px;
-}
-
+/* Specific layout for the Services Header Area */
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 18px;
   margin-bottom: 28px;
-}
-
-.heading-block h1 {
-  margin: 0 0 8px;
-  font-size: 2rem;
-  color: #222;
-}
-
-.heading-block p {
-  margin: 0;
-  color: #666;
-  font-size: 0.96rem;
 }
 
 .right-controls {
@@ -119,13 +57,11 @@
   display: block;
 }
 
+/* Service States & Grid */
 .loading-state,
 .empty-state {
-  background: #fff;
-  border-radius: 14px;
   padding: 22px;
   color: #666;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
 }
 
 .cards-grid {
@@ -135,11 +71,8 @@
 }
 
 .service-card {
-  background: #fff;
-  border-radius: 14px;
   padding: 22px 18px;
-  border-left: 4px solid #6f2da8;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+  border-left: 4px solid #6f2da8; /* Overridden dynamically in HTML */
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -195,6 +128,7 @@
   background: #e6d8ef;
 }
 
+/* Responsive Overrides Specific to Services Page */
 @media (max-width: 1100px) {
   .cards-grid {
     grid-template-columns: repeat(2, minmax(220px, 1fr));
@@ -202,18 +136,6 @@
 }
 
 @media (max-width: 768px) {
-  .services-page {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-  }
-
-  .main-content {
-    padding: 20px 16px;
-  }
-
   .top-bar {
     flex-direction: column;
     align-items: flex-start;
@@ -222,6 +144,10 @@
   .right-controls {
     width: 100%;
     align-items: flex-start;
+  }
+
+  .category-dropdown {
+    width: 100%;
   }
 
   .cards-grid {

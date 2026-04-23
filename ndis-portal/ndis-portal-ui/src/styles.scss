@@ -1,39 +1,228 @@
 // Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
 html {
   height: 100%;
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
+  overflow-y: scroll;
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
   color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
+  background-color: #f7f2f8;
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
   margin: 0;
   height: 100%;
 }
-/* You can add global styles to this file, and also import other style files */
+
+* {
+  box-sizing: border-box;
+}
+
+/* =========================================
+   1. UNIVERSAL APP LAYOUT
+   ========================================= */
+.app-page-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f7f2f8;
+}
+
+.app-sidebar {
+  width: 250px;
+  min-width: 250px;
+  background: #f1eaf4;
+  padding: 24px 18px;
+  border-right: 1px solid #e5d9eb;
+}
+
+.app-logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #6f2da8;
+  margin-bottom: 36px;
+}
+
+.app-nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app-nav-item {
+  text-decoration: none;
+  color: #4b3f52;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-nav-item.active {
+  background: #ffffff;
+  color: #6f2da8;
+  border-left: 4px solid #6f2da8;
+}
+
+.app-main-content {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  max-width: 100vw;   
+  overflow-x: hidden; 
+  padding: 24px 36px;
+  box-sizing: border-box;
+}
+
+.app-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 22px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+}
+
+.app-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.app-back-btn { background: #efe5f5; color: #6f2da8; }
+.app-logout-btn { background: #6f2da8; color: #ffffff; }
+
+.app-surface {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+}
+
+/* =========================================
+   2. UNIVERSAL AUTO-GRIDS (Magic Layout)
+   Applicable to BOTH Services and Bookings
+   ========================================= */
+/* Ang 'auto-fit' ang bahalang mag-adjust ng columns depende sa screen size! */
+.stats-row, 
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Universal Table Wrapper para hindi lumagpas sa mobile */
+.table-card {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+}
+
+/* =========================================
+   3. UNIVERSAL MOBILE OVERRIDES
+   ========================================= */
+
+/* Para sa Tablets (iPad) */
+@media (max-width: 900px) {
+  .app-page-layout { flex-direction: column; }
+
+  /* Universal Horizontal Header */
+  .app-sidebar {
+    width: 100%;
+    min-width: 100%;
+    padding: 16px 24px;
+    border-right: none;
+    border-bottom: 1px solid #e5d9eb;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    z-index: 10;
+  }
+
+  .app-logo { margin-bottom: 0; }
+
+  .app-nav-menu {
+    flex-direction: row;
+    width: auto;
+  }
+
+  .app-nav-item.active {
+    border-left: none;
+    border-bottom: 3px solid #6f2da8;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .app-main-content { padding: 20px; }
+}
+
+/* Para sa Mobile Phones (iPhone/Android) */
+@media (max-width: 600px) {
+  /* Gawing mas compact ang Top Sidebar */
+  .app-sidebar {
+    flex-direction: column;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .app-logo { font-size: 1.3rem; }
+
+  .app-nav-menu {
+    width: 100%;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  /* Gawing App-like Tabs ang menu (Icon sa taas, text sa baba) */
+  .app-nav-item {
+    flex: 1;
+    flex-direction: column;
+    padding: 8px;
+    gap: 4px;
+  }
+  .app-nav-item span:not(.material-icons) { font-size: 0.75rem; }
+
+  /* Compact Back & Logout buttons */
+  .app-navbar {
+    padding: 10px;
+    gap: 12px;
+    border-radius: 12px;
+  }
+  .app-nav-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .app-main-content { padding: 16px 12px; }
+
+  /* Paliitin ng konti ang universal font sizes sa mobile */
+  h1, .app-section-title { font-size: 1.6rem !important; }
+  
+  /* Paliitin ang Stats value sa Booking per mobile */
+  .stat-value { font-size: 1.6rem !important; }
+}

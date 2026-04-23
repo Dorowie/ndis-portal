@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
 interface ServiceItem {
@@ -99,7 +99,10 @@ export class ServicesListComponent {
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private location: Location
+  ) {}
 
   get filteredServices(): ServiceItem[] {
     if (this.selectedCategory === 'Category') {
@@ -118,5 +121,15 @@ export class ServicesListComponent {
 
   openService(service: ServiceItem): void {
     this.router.navigate(['/services', service.id]);
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
   }
 }

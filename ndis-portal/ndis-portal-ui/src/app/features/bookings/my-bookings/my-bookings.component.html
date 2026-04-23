@@ -1,0 +1,179 @@
+<div class="my-bookings-page">
+  <aside class="sidebar">
+    <div class="logo">NDIS Care Portal</div>
+
+    <nav class="nav-menu">
+      <a class="nav-item" routerLink="/services">
+        <span class="material-icons nav-icon">widgets</span>
+        <span>Services</span>
+      </a>
+
+      <a class="nav-item active" routerLink="/bookings">
+        <span class="material-icons nav-icon">calendar_month</span>
+        <span>My Booking</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="app-navbar">
+      <button type="button" class="app-nav-btn app-back-btn" (click)="goBack()">
+        <span class="material-icons">arrow_back</span>
+        <span>Back</span>
+      </button>
+
+      <button type="button" class="app-nav-btn app-logout-btn" (click)="logout()">
+        <span class="material-icons">logout</span>
+        <span>Logout</span>
+      </button>
+    </header>
+
+    <div class="page-header">
+      <div class="header-left">
+        <div>
+          <h1>My Bookings</h1>
+          <p>
+            Review and manage your scheduled healthcare services. We ensure your
+            care transitions remain smooth and easy to track.
+          </p>
+        </div>
+      </div>
+
+      <div class="next-session-card">
+        <div class="session-label">NEXT SESSION</div>
+        <div class="session-date">Oct 24, 2026</div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">TOTAL SERVICES</div>
+        <div class="stat-value">{{ totalServices }}</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">ACTIVE HOURS</div>
+        <div class="stat-value">{{ activeHours }}</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">UPCOMING</div>
+        <div class="stat-value">{{ upcomingCount }}</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2>Scheduled Care Plan</h2>
+
+      <div class="filter-box">
+        <span class="material-icons">filter_list</span>
+        <select (change)="setFilter(($any($event.target)).value)">
+          <option value="All">All</option>
+          <option value="Pending">Pending</option>
+          <option value="Approved">Approved</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="filteredBookings.length === 0" class="empty-state" data-testid="empty-state">
+      <h3>No bookings found</h3>
+      <p>There are no bookings matching the selected filter.</p>
+    </div>
+
+    <div *ngIf="filteredBookings.length > 0" class="table-card">
+      <table class="bookings-table" data-testid="bookings-table">
+        <thead>
+          <tr>
+            <th>SERVICE NAME</th>
+            <th>CATEGORY</th>
+            <th>DATE & TIME</th>
+            <th>NOTES</th>
+            <th>STATUS</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let booking of filteredBookings">
+            <td>
+              <div class="service-name">{{ booking.serviceName }}</div>
+              <div class="provider-name">{{ booking.providerName }}</div>
+            </td>
+
+            <td>
+              <span class="category-pill" [ngClass]="getCategoryClass(booking.category)">
+                {{ booking.category }}
+              </span>
+            </td>
+
+            <td>
+              <div class="date-block">{{ formatDate(booking.preferredDate) }}</div>
+              <div class="time-block">{{ booking.timeRange }}</div>
+            </td>
+
+            <td class="notes-cell">{{ booking.notes }}</td>
+
+            <td>
+              <span
+                class="status-badge"
+                [ngClass]="getStatusClass(booking.status)"
+                data-testid="status-badge"
+              >
+                {{ booking.status }}
+              </span>
+            </td>
+
+            <td>
+              <button
+                *ngIf="booking.status === 'Pending'"
+                class="cancel-btn"
+                data-testid="cancel-btn"
+                (click)="openCancelDialog(booking.id)"
+              >
+                Cancel
+              </button>
+
+              <button *ngIf="booking.status !== 'Pending'" class="menu-btn" type="button">
+                <span class="material-icons">more_vert</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-footer">
+        <div class="footer-text">
+          Showing {{ filteredBookings.length }} of {{ bookings.length }} bookings
+        </div>
+
+        <div class="pagination">
+          <button type="button">‹</button>
+          <button type="button" class="active">1</button>
+          <button type="button">2</button>
+          <button type="button">›</button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="confirmDialogOpen"
+      class="dialog-backdrop"
+      data-testid="confirm-dialog"
+    >
+      <div class="dialog-card">
+        <h3>Cancel Booking?</h3>
+        <p>Are you sure you want to cancel this pending booking request?</p>
+
+        <div class="dialog-actions">
+          <button type="button" class="secondary-btn" (click)="closeCancelDialog()">
+            Dismiss
+          </button>
+          <button type="button" class="danger-btn" (click)="confirmCancel()">
+            Confirm Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
