@@ -30,7 +30,7 @@ namespace NDISPortal.API.Services
 
             if (emailExists)
             {
-                return (false,null,null);
+                return (false, null, null);
             }
 
 
@@ -50,7 +50,7 @@ namespace NDISPortal.API.Services
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return (true,user.id,user.email);
+            return (true, user.id, user.email);
         }
 
         //LOGIN 

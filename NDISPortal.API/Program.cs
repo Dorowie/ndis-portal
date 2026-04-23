@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NDISPortal.API.Data;
+using NDISPortal.API.Middleware;
 using NDISPortal.API.Services;
 using System.Text;
 
@@ -73,6 +74,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+// Global Error Handling Middleware - Must be first to catch all exceptions
+app.UseGlobalErrorHandling();
 
 // Move these two lines below the 'if' block so they always run
 app.UseSwagger();

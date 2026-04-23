@@ -6,12 +6,12 @@ namespace NDISPortal.API.DTOs.Bookings
     public class BookingCreateDto
     {
         [Required(ErrorMessage = "Service ID is required.")]
-        [JsonPropertyName("service_id")]
+        [JsonPropertyName("serviceId")]
         public int ServiceId { get; set; }
 
-        [Required(ErrorMessage = "Booking date is required.")]
-        [JsonPropertyName("booking_date")]
-        public DateTime BookingDate { get; set; }
+        [Required(ErrorMessage = "Preferred date is required.")]
+        [JsonPropertyName("preferredDate")]
+        public DateTime PreferredDate { get; set; }
 
         [MaxLength(500, ErrorMessage = "Notes must not exceed 500 characters.")]
         [JsonPropertyName("notes")]

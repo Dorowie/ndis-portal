@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NDISPortal.API.Data;
+using NDISPortal.API.DTOs;
 using NDISPortal.API.DTOs.Services;
 
 namespace NDISPortal.API.Controllers
 {
     [Route("api/categories")]
     [ApiController]
+    [AllowAnonymous]
     public class ServiceCategoriesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -42,18 +45,17 @@ namespace NDISPortal.API.Controllers
 
             if (category == null)
             {
-                return NotFound(new
-                {
-                    success = false,
-                    message = "Category not found."
-                });
+                return NotFound(new ApiResponse<object>(
+                    success: false,
+                    message: "Category not found. Please check the category ID and try again."
+                ));
             }
 
-            return Ok(new
-            {
-                success = true,
-                data = category
-            });
+            return Ok(new ApiResponse<ServiceCategoryResponseDto>(
+                success: true,
+                data: category,
+                message: "Category retrieved successfully."
+            ));
         }
 
         [HttpGet]
@@ -68,12 +70,12 @@ namespace NDISPortal.API.Controllers
                 })
                 .ToListAsync();
 
-            return Ok(new
-            {
-                success = true,
-                data = categories,
-                count = categories.Count
-            });
+            return Ok(new ApiResponse<object>(
+                success: true,
+                data: categories,
+                message: "Categories retrieved successfully.",
+                count: categories.Count
+            ));
         }
     }
 }
