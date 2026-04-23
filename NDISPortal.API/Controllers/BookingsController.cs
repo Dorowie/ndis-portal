@@ -265,14 +265,14 @@ namespace NDISPortal.API.Controllers
 
         // DELETE /api/bookings/{id} - Delete booking (Participant only, own bookings, Pending only)
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Participant,Coordinator")]
+        [Authorize(Roles = "Participant")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
             // Try multiple ways to get user ID from JWT claims
-            var userIdClaim = User.FindFirst("userId")?.Value ?? 
+            var userIdClaim = User.FindFirst("userId")?.Value ??
                              User.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
                              User.FindFirst("sub")?.Value;
-                             
+
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
                 return Unauthorized(new ApiResponse<object>(
@@ -290,27 +290,20 @@ namespace NDISPortal.API.Controllers
                 ));
             }
 
-            var userRole = User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty;
-
-            // Different rules for different roles
-            if (userRole == "Participant")
+            // Participants can only delete their own bookings
+            if (booking.user_id != userId)
             {
-                // Participants can only delete their own bookings
-                if (booking.user_id != userId)
-                {
-                    return Forbid();
-                }
-
-                // Participants can only delete Pending bookings
-                if (booking.status != 0)
-                {
-                    return BadRequest(new ApiResponse<object>(
-                        success: false,
-                        message: "Can only delete bookings with Pending status. Approved or Cancelled bookings cannot be deleted."
-                    ));
-                }
+                return Forbid();
             }
-            // Coordinators can delete any booking (no additional restrictions needed)
+
+            // Participants can only delete Pending bookings
+            if (booking.status != 0)
+            {
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Can only delete bookings with Pending status. Approved or Cancelled bookings cannot be deleted."
+                ));
+            }
 
             try
             {
