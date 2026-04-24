@@ -12,7 +12,7 @@
 .branding-section {
   position: relative;
   flex: 1;
-  background: url('https://images.pexels.com/photos/7551681/pexels-photo-7551681.jpeg?auto=compress&cs=tinysrgb&w=1200')
+  background: url('../../../../assets/login-image.jpg')
     center center / cover no-repeat;
   display: flex;
   align-items: flex-end;
@@ -71,39 +71,40 @@
 
 .form-container {
   width: 100%;
-  max-width: 460px;
+  max-width: 550px;
   background: #ffffff;
-  padding: 42px;
+  padding: 56px;
   border-radius: 18px;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
 }
 
 .form-header {
-  margin-bottom: 28px;
+  margin-bottom: 36px;
 }
 
 .title {
-  margin: 0 0 18px;
-  font-size: 3rem;
-  line-height: 1.1;
+  margin: 0 0 24px;
+  font-size: 3.5rem;
+  line-height: 1.15;
   font-weight: 800;
   color: #6f2da8;
 }
 
 .subtitle {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
+  line-height: 1.6;
   color: #555;
 }
 
 .input-group {
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 
 .input-group label {
   display: block;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
   font-weight: 600;
   color: #333;
 }
@@ -111,11 +112,11 @@
 .custom-input {
   display: flex;
   align-items: center;
-  height: 54px;
+  height: 62px;
   background: #f1ebf3;
   border: 1px solid transparent;
   border-radius: 12px;
-  padding: 0 14px;
+  padding: 0 18px;
   transition: 0.2s ease;
 }
 
@@ -139,7 +140,7 @@
   border: none;
   outline: none;
   background: transparent;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #333;
 }
 
@@ -174,12 +175,12 @@
 .extra-links {
   display: flex;
   justify-content: flex-end;
-  margin-top: -6px;
-  margin-bottom: 18px;
+  margin-top: -8px;
+  margin-bottom: 24px;
 }
 
 .extra-links a {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #6f2da8;
   text-decoration: none;
   font-weight: 600;
@@ -191,12 +192,12 @@
 
 .submit-btn {
   width: 100%;
-  height: 54px;
+  height: 62px;
   border: none;
   border-radius: 12px;
   background: linear-gradient(135deg, #8e5cc7, #6f2da8);
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 8px 18px rgba(111, 45, 168, 0.25);
@@ -214,9 +215,9 @@
 }
 
 .register-link {
-  margin-top: 24px;
+  margin-top: 32px;
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: #555;
 }
 

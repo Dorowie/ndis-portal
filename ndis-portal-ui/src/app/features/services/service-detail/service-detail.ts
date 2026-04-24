@@ -46,7 +46,19 @@ export class ServiceDetail implements OnInit {
     });
   }
 
+  bookService(): void {
+    if (this.service) {
+      this.router.navigate(['/bookings/new'], { queryParams: { serviceId: this.service.id } });
+    }
+  }
+
   goBack(): void {
     this.router.navigate(['/services']);
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
   }
 }

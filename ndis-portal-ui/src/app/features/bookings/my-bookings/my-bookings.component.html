@@ -59,18 +59,26 @@
       </div>
     </div>
 
-    <div *ngIf="filteredBookings.length === 0" class="empty-state" data-testid="empty-state">
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading bookings...</p>
+    </div>
+
+    <div *ngIf="error" class="error-state">
+      <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="!isLoading && !error && filteredBookings.length === 0" class="empty-state" data-testid="empty-state">
       <h3>No bookings found</h3>
       <p>There are no bookings matching the selected filter.</p>
     </div>
 
-    <div *ngIf="filteredBookings.length > 0" class="table-card">
+    <div *ngIf="!isLoading && !error && filteredBookings.length > 0" class="table-card">
       <table class="bookings-table" data-testid="bookings-table">
         <thead>
           <tr>
-            <th>SERVICE NAME</th>
-            <th>CATEGORY</th>
-            <th>DATE & TIME</th>
+            <th>SERVICE</th>
+            <th>BOOKING DATE</th>
             <th>NOTES</th>
             <th>STATUS</th>
             <th>ACTIONS</th>
@@ -80,22 +88,14 @@
         <tbody>
           <tr *ngFor="let booking of filteredBookings">
             <td>
-              <div class="service-name">{{ booking.serviceName }}</div>
-              <div class="provider-name">{{ booking.providerName }}</div>
+              <div class="service-name">{{ booking.service_name || 'Service' }}</div>
             </td>
 
             <td>
-              <span class="category-pill" [ngClass]="getCategoryClass(booking.category)">
-                {{ booking.category }}
-              </span>
+              <div class="date-block">{{ formatDate(booking.preferred_date) }}</div>
             </td>
 
-            <td>
-              <div class="date-block">{{ formatDate(booking.preferredDate) }}</div>
-              <div class="time-block">{{ booking.timeRange }}</div>
-            </td>
-
-            <td class="notes-cell">{{ booking.notes }}</td>
+            <td class="notes-cell">{{ booking.notes || '-' }}</td>
 
             <td>
               <span
@@ -112,12 +112,12 @@
                 *ngIf="booking.status === 'Pending'"
                 class="cancel-btn"
                 data-testid="cancel-btn"
-                (click)="openCancelDialog(booking.id)"
+                (click)="openCancelDialog(booking.booking_id)"
               >
                 Cancel
               </button>
 
-              <button *ngIf="booking.status !== 'Pending'" class="menu-btn" type="button">
+              <button *ngIf="booking.status !== 'Pending'" class="menu-btn" type="button" disabled>
                 <span class="material-icons">more_vert</span>
               </button>
             </td>
@@ -128,13 +128,6 @@
       <div class="table-footer">
         <div class="footer-text">
           Showing {{ filteredBookings.length }} of {{ bookings.length }} bookings
-        </div>
-
-        <div class="pagination">
-          <button type="button">‹</button>
-          <button type="button" class="active">1</button>
-          <button type="button">2</button>
-          <button type="button">›</button>
         </div>
       </div>
     </div>

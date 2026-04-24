@@ -4,7 +4,7 @@ namespace NDISPortal.API.DTOs.Services
 {
     public class ServiceResponseDto
     {
-        [JsonPropertyName("service_id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
         [JsonPropertyName("category_id")]

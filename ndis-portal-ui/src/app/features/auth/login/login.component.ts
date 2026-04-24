@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -45,16 +47,28 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm.value;
 
-   
-    setTimeout(() => {
-      this.isLoading = false;
-
-      if (email && password) {
-        alert('Login successful!');
-        this.router.navigate(['/services']); // change this if needed
-      } else {
-        this.apiError = 'Invalid login credentials.';
+    this.authService.login(email, password).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          const token = response.data.token;
+          localStorage.setItem('token', token);
+          
+          const userRole = this.authService.getUserRole(token);
+          if (userRole === 'Coordinator') {
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.router.navigate(['/services']);
+          }
+        } else {
+          this.apiError = response.message || 'Login failed';
+          this.isLoading = false;
+        }
+      },
+      error: (error) => {
+        console.error('Login error:', error);
+        this.apiError = error.error?.message || 'Invalid login credentials';
+        this.isLoading = false;
       }
-    }, 1000);
+    });
   }
 }

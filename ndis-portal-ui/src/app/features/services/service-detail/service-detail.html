@@ -1,1 +1,72 @@
-<p>service-detail works!</p>
+<div class="app-page-layout">
+  <aside class="app-sidebar">
+    <div class="app-logo">NDIS Care Portal</div>
+
+    <nav class="app-nav-menu">
+      <a class="app-nav-item" routerLink="/services">
+        <span class="material-icons app-nav-icon">widgets</span>
+        <span>Services</span>
+      </a>
+
+      <a class="app-nav-item" routerLink="/bookings">
+        <span class="material-icons app-nav-icon">calendar_month</span>
+        <span>My Booking</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="app-main-content">
+    <header class="app-navbar">
+      <button type="button" class="app-nav-btn app-back-btn" (click)="goBack()">
+        <span class="material-icons">arrow_back</span>
+        <span>Back</span>
+      </button>
+
+      <button type="button" class="app-nav-btn app-logout-btn" (click)="logout()">
+        <span class="material-icons">logout</span>
+        <span>Logout</span>
+      </button>
+    </header>
+
+    <div *ngIf="isLoading" class="loading-state app-surface">
+      Loading service details...
+    </div>
+
+    <div *ngIf="error" class="error-state app-surface">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!isLoading && !error && service" class="service-detail-container">
+      <div class="service-detail-header">
+        <h1 class="app-section-title">{{ service.name }}</h1>
+        <span class="category-badge">{{ service.category_name }}</span>
+      </div>
+
+      <div class="service-detail-content app-surface">
+        <h2>Description</h2>
+        <p>{{ service.description }}</p>
+
+        <div class="service-meta">
+          <div class="meta-item">
+            <span class="material-icons">category</span>
+            <span>Category: {{ service.category_name }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="material-icons">check_circle</span>
+            <span>Status: {{ service.is_active ? 'Active' : 'Inactive' }}</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="book-btn"
+          (click)="bookService()"
+          [disabled]="!service.is_active"
+        >
+          <span class="material-icons">calendar_today</span>
+          Book This Service
+        </button>
+      </div>
+    </div>
+  </main>
+</div>

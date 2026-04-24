@@ -2,7 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ServicesService, ServiceItem } from '../../../core/services/services';
-import { timeout, catchError, of } from 'rxjs';
+
+// Map category names to accent colors and icons for display
+const CATEGORY_STYLES: Record<string, { accent: string; icon: string }> = {
+  'Daily Personal Activities': { accent: '#d9534f', icon: 'self_improvement' },
+  'Community Access': { accent: '#b59b00', icon: 'groups' },
+  'Therapy Supports': { accent: '#2f5bd3', icon: 'healing' },
+  'Respite Care': { accent: '#7a3db8', icon: 'hotel' },
+  'Support Coordination': { accent: '#7d7d7d', icon: 'assignment' }
+};
+
+interface DisplayService extends ServiceItem {
+  accent: string;
+  icon: string;
+}
 
 @Component({
   selector: 'app-services-list',
@@ -25,72 +38,7 @@ export class ServicesListComponent implements OnInit {
 
   selectedCategory = 'Category';
 
-  services: ServiceItem[] = [
-    {
-      id: 1,
-      name: 'Personal Hygiene Assistance',
-      category: 'Daily Personal Activities',
-      description: 'Support with personal hygiene tasks',
-      accent: '#d9534f',
-      icon: 'self_improvement'
-    },
-    {
-      id: 2,
-      name: 'Meal Preparation Support',
-      category: 'Daily Personal Activities',
-      description: 'Assistance in preparing daily meals',
-      accent: '#d9534f',
-      icon: 'restaurant'
-    },
-    {
-      id: 3,
-      name: 'Community Participation Program',
-      category: 'Community Access',
-      description: 'Programs for community involvement',
-      accent: '#b59b00',
-      icon: 'groups'
-    },
-    {
-      id: 4,
-      name: 'Social Skills Group',
-      category: 'Community Access',
-      description: 'Group sessions for social skill development',
-      accent: '#b59b00',
-      icon: 'diversity_3'
-    },
-    {
-      id: 5,
-      name: 'Occupational Therapy',
-      category: 'Therapy Supports',
-      description: 'Therapy for daily living and work skills',
-      accent: '#2f5bd3',
-      icon: 'healing'
-    },
-    {
-      id: 6,
-      name: 'Speech Therapy',
-      category: 'Therapy Supports',
-      description: 'Speech and communication therapy',
-      accent: '#2f5bd3',
-      icon: 'record_voice_over'
-    },
-    {
-      id: 7,
-      name: 'Short Term Respite Accommodation',
-      category: 'Respite Care',
-      description: 'Temporary accommodation support',
-      accent: '#7a3db8',
-      icon: 'hotel'
-    },
-    {
-      id: 8,
-      name: 'Plan Management & Coordination',
-      category: 'Support Coordination',
-      description: 'Managing and coordinating support plans',
-      accent: '#7d7d7d',
-      icon: 'assignment'
-    }
-  ];
+  services: DisplayService[] = [];
 
   constructor(
     private router: Router,
@@ -106,7 +54,15 @@ export class ServicesListComponent implements OnInit {
     this.isLoading = true;
     this.servicesService.getServices().subscribe({
       next: (data) => {
-        this.services = data;
+        this.services = data.map(service => {
+          const categoryName = service.category_name || 'Support Coordination';
+          const style = CATEGORY_STYLES[categoryName] || { accent: '#7d7d7d', icon: 'assignment' };
+          return {
+            ...service,
+            accent: style.accent,
+            icon: style.icon
+          };
+        });
         this.isLoading = false;
       },
       error: (error) => {
@@ -116,13 +72,13 @@ export class ServicesListComponent implements OnInit {
     });
   }
 
-  get filteredServices(): ServiceItem[] {
+  get filteredServices(): DisplayService[] {
     if (this.selectedCategory === 'Category') {
       return this.services;
     }
 
     return this.services.filter(
-      service => service.category === this.selectedCategory
+      service => (service.category_name || '') === this.selectedCategory
     );
   }
 
@@ -131,7 +87,7 @@ export class ServicesListComponent implements OnInit {
     this.selectedCategory = target.value;
   }
 
-  openService(service: ServiceItem): void {
+  openService(service: DisplayService): void {
     this.router.navigate(['/services', service.id]);
   }
 

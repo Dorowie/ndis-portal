@@ -1,3 +1,8 @@
+:root {
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Poppins', sans-serif;
+}
+
 html {
   height: 100%;
   overflow-y: scroll;
@@ -7,9 +12,15 @@ body {
   color-scheme: light;
   background-color: #f7f2f8;
   color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+  font-family: var(--font-body);
+  font-weight: 400;
   margin: 0;
   height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
 }
 
 * {

@@ -5,9 +5,7 @@ import { ServicesListComponent } from './features/services/services-list/service
 import { BookServiceComponent } from './features/bookings/book-service/book-service.component';
 import { MyBookingsComponent } from './features/bookings/my-bookings/my-bookings.component';
 import { ServiceDetail } from './features/services/service-detail/service-detail';
-// import { DashboardComponent } from './features/coordinator/dashboard/dashboard.component';
-// import { authGuard } from './core/guards/auth.guard';
-// import { roleGuard } from './core/guards/role.guard';
+import { DashboardComponent } from './features/coordinator/dashboard/dashboard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -19,7 +17,7 @@ export const routes: Routes = [
   { path: 'bookings/new', component: BookServiceComponent },
   { path: 'bookings', component: MyBookingsComponent },
 
-  // { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard, roleGuard], data: { role: 'Coordinator' } },
+  { path: 'dashboard', component: DashboardComponent },
 
   { path: '', redirectTo: 'services', pathMatch: 'full' },
   { path: '**', redirectTo: 'services' }

@@ -1,45 +1,56 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-
-interface ServiceOption {
-  id: number;
-  name: string;
-  category: string;
-}
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { BookingsService, BookingCreateDto } from '../../../core/services/bookings';
+import { ServicesService, ServiceItem } from '../../../core/services/services';
 
 @Component({
   selector: 'app-book-service',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './book-service.component.html',
-  styleUrl: './book-service.component.css'
+  styleUrls: ['./book-service.component.css']
 })
-export class BookServiceComponent {
+export class BookServiceComponent implements OnInit {
   bookForm: FormGroup;
   isLoading = false;
   apiError: string | null = null;
-
-  services: ServiceOption[] = [
-    { id: 1, name: 'Personal Hygiene Assistance', category: 'Daily Personal Activities' },
-    { id: 2, name: 'Meal Preparation Support', category: 'Daily Personal Activities' },
-    { id: 3, name: 'Community Participation Program', category: 'Community Access' },
-    { id: 4, name: 'Social Skills Group', category: 'Community Access' },
-    { id: 5, name: 'Occupational Therapy', category: 'Therapy Supports' },
-    { id: 6, name: 'Speech Therapy', category: 'Therapy Supports' },
-    { id: 7, name: 'Short Term Respite Accommodation', category: 'Respite Care' },
-    { id: 8, name: 'Plan Management & Coordination', category: 'Support Coordination' }
-  ];
+  services: ServiceItem[] = [];
+  selectedService: ServiceItem | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private bookingsService: BookingsService,
+    private servicesService: ServicesService
   ) {
     this.bookForm = this.fb.group({
       serviceId: ['', Validators.required],
-      preferredDate: ['', Validators.required],
+      bookingDate: ['', Validators.required],
       notes: ['']
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadServices();
+    this.route.queryParams.subscribe(params => {
+      const serviceId = params['serviceId'];
+      if (serviceId) {
+        this.bookForm.patchValue({ serviceId: Number(serviceId) });
+      }
+    });
+  }
+
+  loadServices(): void {
+    this.servicesService.getServices().subscribe({
+      next: (data) => {
+        this.services = data;
+      },
+      error: (error) => {
+        console.error('Error loading services:', error);
+      }
     });
   }
 
@@ -51,10 +62,11 @@ export class BookServiceComponent {
     return `${year}-${month}-${day}`;
   }
 
-  get selectedServiceCategory(): string {
+  get selectedServiceName(): string {
     const selectedId = Number(this.bookForm.get('serviceId')?.value);
     const service = this.services.find(s => s.id === selectedId);
-    return service ? service.category : '';
+    this.selectedService = service || null;
+    return service ? service.name : '';
   }
 
   isPastDate(value: string): boolean {
@@ -75,19 +87,32 @@ export class BookServiceComponent {
       return;
     }
 
-    const preferredDate = this.bookForm.get('preferredDate')?.value;
-    if (this.isPastDate(preferredDate)) {
-      this.apiError = 'Preferred date must not be in the past.';
+    const bookingDate = this.bookForm.get('bookingDate')?.value;
+    if (this.isPastDate(bookingDate)) {
+      this.apiError = 'Booking date must not be in the past.';
       return;
     }
 
     this.isLoading = true;
     this.apiError = null;
 
-    setTimeout(() => {
-      this.isLoading = false;
-      alert('Booking submitted successfully!');
-      this.router.navigate(['/bookings']);
-    }, 1000);
+    const booking: BookingCreateDto = {
+      serviceId: Number(this.bookForm.get('serviceId')?.value),
+      preferredDate: bookingDate,
+      notes: this.bookForm.get('notes')?.value || undefined
+    };
+
+    this.bookingsService.createBooking(booking).subscribe({
+      next: () => {
+        this.isLoading = false;
+        alert('Booking submitted successfully!');
+        this.router.navigate(['/bookings']);
+      },
+      error: (error) => {
+        console.error('Error creating booking:', error);
+        this.apiError = 'Failed to create booking. Please try again.';
+        this.isLoading = false;
+      }
+    });
   }
 }

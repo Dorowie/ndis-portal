@@ -1,17 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { BookingsService, Booking } from '../../../core/services/bookings';
 
 type BookingStatus = 'Pending' | 'Approved' | 'Cancelled';
 
-interface BookingItem {
-  id: number;
-  serviceName: string;
-  providerName: string;
-  category: string;
-  preferredDate: string;
-  timeRange: string;
-  notes: string;
+interface BookingItem extends Booking {
   status: BookingStatus;
 }
 
@@ -20,61 +14,48 @@ interface BookingItem {
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './my-bookings.component.html',
-  styleUrl: './my-bookings.component.css'
+  styleUrls: ['./my-bookings.component.css']
 })
-export class MyBookingsComponent {
+export class MyBookingsComponent implements OnInit {
   selectedFilter: 'All' | BookingStatus = 'All';
-
-  bookings: BookingItem[] = [
-    {
-      id: 1,
-      serviceName: 'Occupational Therapy Session',
-      providerName: 'Dr. Sarah Jenkins',
-      category: 'Therapy Support',
-      preferredDate: '2026-10-28',
-      timeRange: '09:00 AM - 12:00 PM',
-      notes: 'Initial assessment',
-      status: 'Pending'
-    },
-    {
-      id: 2,
-      serviceName: 'Weekly Community Access',
-      providerName: 'Support Worker: Mark Thompson',
-      category: 'Community Access',
-      preferredDate: '2026-10-24',
-      timeRange: '09:00 AM - 12:00 PM',
-      notes: 'Transport to activity center',
-      status: 'Approved'
-    },
-    {
-      id: 3,
-      serviceName: 'Physiotherapy Follow-up',
-      providerName: 'Peak Performance Clinic',
-      category: 'Therapy Support',
-      preferredDate: '2026-10-19',
-      timeRange: '11:00 AM - 12:00 PM',
-      notes: 'Cancelled due to schedule conflict',
-      status: 'Cancelled'
-    },
-    {
-      id: 4,
-      serviceName: 'Personal Care Assistance',
-      providerName: 'CarePlus Agency',
-      category: 'Daily Personal Activities',
-      preferredDate: '2026-10-25',
-      timeRange: '07:00 AM - 08:30 AM',
-      notes: 'Morning routine support',
-      status: 'Approved'
-    }
-  ];
+  bookings: BookingItem[] = [];
+  isLoading = true;
+  error: string | null = null;
 
   confirmDialogOpen = false;
   selectedBookingId: number | null = null;
 
   constructor(
     private router: Router,
-    private location: Location
+    private location: Location,
+    private bookingsService: BookingsService
   ) {}
+
+  ngOnInit(): void {
+    this.loadBookings();
+  }
+
+  loadBookings(): void {
+    this.isLoading = true;
+    this.bookingsService.getMyBookings().subscribe({
+      next: (data) => {
+        this.bookings = data.map(booking => ({
+          ...booking,
+          status: this.capitalizeStatus(booking.status)
+        }));
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading bookings:', error);
+        this.error = 'Failed to load bookings';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  capitalizeStatus(status: string): BookingStatus {
+    return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() as BookingStatus;
+  }
 
   get filteredBookings(): BookingItem[] {
     if (this.selectedFilter === 'All') {
@@ -134,13 +115,20 @@ export class MyBookingsComponent {
   confirmCancel(): void {
     if (this.selectedBookingId === null) return;
 
-    this.bookings = this.bookings.map(booking =>
-      booking.id === this.selectedBookingId
-        ? { ...booking, status: 'Cancelled' }
-        : booking
-    );
-
-    this.closeCancelDialog();
+    this.bookingsService.updateBookingStatus(this.selectedBookingId, 'Cancelled').subscribe({
+      next: () => {
+        this.bookings = this.bookings.map(booking =>
+          booking.booking_id === this.selectedBookingId
+            ? { ...booking, status: 'Cancelled' }
+            : booking
+        );
+        this.closeCancelDialog();
+      },
+      error: (error) => {
+        console.error('Error cancelling booking:', error);
+        alert('Failed to cancel booking');
+      }
+    });
   }
 
   goBack(): void {

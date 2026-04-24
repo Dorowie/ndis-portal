@@ -45,34 +45,34 @@
           </small>
         </div>
 
-        <div class="input-group" *ngIf="selectedServiceCategory">
+        <div class="input-group" *ngIf="selectedService">
           <label>Category</label>
-          <div class="readonly-box">{{ selectedServiceCategory }}</div>
+          <div class="readonly-box">{{ selectedService.category_name }}</div>
         </div>
 
         <div class="two-column">
           <div class="input-group">
-            <label for="preferredDate">Preferred Date</label>
+            <label for="bookingDate">Preferred Date</label>
             <div class="custom-input-wrapper">
               <input
-                id="preferredDate"
+                id="bookingDate"
                 type="date"
                 [min]="minDate"
-                formControlName="preferredDate"
+                formControlName="bookingDate"
                 data-testid="date-input"
               />
             </div>
 
             <small
               class="field-error"
-              *ngIf="bookForm.get('preferredDate')?.hasError('required') && bookForm.get('preferredDate')?.touched"
+              *ngIf="bookForm.get('bookingDate')?.hasError('required') && bookForm.get('bookingDate')?.touched"
             >
               Preferred date is required
             </small>
 
             <small
               class="field-error"
-              *ngIf="bookForm.get('preferredDate')?.value && isPastDate(bookForm.get('preferredDate')?.value)"
+              *ngIf="bookForm.get('bookingDate')?.value && isPastDate(bookForm.get('bookingDate')?.value)"
             >
               Preferred date must not be in the past
             </small>
@@ -102,7 +102,7 @@
           <button
             type="submit"
             class="submit-btn"
-            [disabled]="bookForm.invalid || isLoading || isPastDate(bookForm.get('preferredDate')?.value)"
+            [disabled]="bookForm.invalid || isLoading || isPastDate(bookForm.get('bookingDate')?.value)"
             data-testid="submit-btn"
           >
             <span *ngIf="!isLoading">Submit Booking</span>
