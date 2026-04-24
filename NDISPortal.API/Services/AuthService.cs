@@ -75,9 +75,6 @@ namespace NDISPortal.API.Services
 
             return new AuthResponseDto
             {
-                UserId = user.id,
-                Email = user.email,
-                Role = user.role,
                 Token = token
             };
         }

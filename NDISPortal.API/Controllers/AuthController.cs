@@ -54,7 +54,7 @@ namespace NDISPortal.API.Controllers
 
             return StatusCode(201, new ApiResponse<object>(
                 success: true,
-                data: userData,
+                data: "",
                 message: "User registered successfully. Please login to continue."
             ));
         }

@@ -1,6 +1,9 @@
-﻿namespace NDISPortal.API.Services
+﻿using NDISPortal.API.DTOs.Chat;
+
+namespace NDISPortal.API.Services
 {
-    public class IChatService
+    public interface IChatService
     {
+        Task<ChatResponseDto> GetReplyAsync(ChatRequestDto request);
     }
 }
