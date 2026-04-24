@@ -1,25 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-
-interface ServiceItem {
-  id: number;
-  name: string;
-  category: string;
-  description: string;
-  accent: string;
-  icon: string;
-}
+import { ServicesService, ServiceItem } from '../../../core/services/services';
+import { timeout, catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-services-list',
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './services-list.component.html',
-  styleUrl: './services-list.component.scss'
+  styleUrl: './services-list.component.css'
 })
-export class ServicesListComponent {
-  isLoading = false;
+export class ServicesListComponent implements OnInit {
+  isLoading = true;
 
   categories: string[] = [
     'Category',
@@ -101,8 +94,27 @@ export class ServicesListComponent {
 
   constructor(
     private router: Router,
-    private location: Location
+    private location: Location,
+    private servicesService: ServicesService
   ) {}
+
+  ngOnInit(): void {
+    this.loadServices();
+  }
+
+  loadServices(): void {
+    this.isLoading = true;
+    this.servicesService.getServices().subscribe({
+      next: (data) => {
+        this.services = data;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading services:', error);
+        this.isLoading = false;
+      }
+    });
+  }
 
   get filteredServices(): ServiceItem[] {
     if (this.selectedCategory === 'Category') {

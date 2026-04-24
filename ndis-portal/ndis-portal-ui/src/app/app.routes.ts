@@ -4,7 +4,7 @@ import { RegisterComponent } from './features/auth/register/register.component';
 import { ServicesListComponent } from './features/services/services-list/services-list.component';
 import { BookServiceComponent } from './features/bookings/book-service/book-service.component';
 import { MyBookingsComponent } from './features/bookings/my-bookings/my-bookings.component';
-// import { ServiceDetailComponent } from './features/services/service-detail/service-detail.component';
+import { ServiceDetail } from './features/services/service-detail/service-detail';
 // import { DashboardComponent } from './features/coordinator/dashboard/dashboard.component';
 // import { authGuard } from './core/guards/auth.guard';
 // import { roleGuard } from './core/guards/role.guard';
@@ -14,7 +14,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
 
   { path: 'services', component: ServicesListComponent },
-  // { path: 'services/:id', component: ServiceDetailComponent },
+  { path: 'services/:id', component: ServiceDetail },
 
   { path: 'bookings/new', component: BookServiceComponent },
   { path: 'bookings', component: MyBookingsComponent },

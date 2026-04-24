@@ -7,6 +7,6 @@ import { RouterOutlet } from '@angular/router'; // <-- 1. Add this
   standalone: true,
   imports: [CommonModule, RouterOutlet], // <-- 2. Add it here too
   templateUrl: './app-layout.component.html',
-  styleUrl: './app-layout.component.scss'
+  styleUrl: './app-layout.component.css'
 })
 export class AppLayoutComponent { }

@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-confirm-dialog',
   imports: [],
   templateUrl: './confirm-dialog.html',
-  styleUrl: './confirm-dialog.scss',
+  styleUrl: './confirm-dialog.css',
 })
 export class ConfirmDialog {}

@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-empty-state',
   imports: [],
   templateUrl: './empty-state.html',
-  styleUrl: './empty-state.scss',
+  styleUrl: './empty-state.css',
 })
 export class EmptyState {}

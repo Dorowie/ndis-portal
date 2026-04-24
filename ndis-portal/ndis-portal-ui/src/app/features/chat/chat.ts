@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-chat',
   imports: [],
   templateUrl: './chat.html',
-  styleUrl: './chat.scss',
+  styleUrl: './chat.css',
 })
 export class Chat {}

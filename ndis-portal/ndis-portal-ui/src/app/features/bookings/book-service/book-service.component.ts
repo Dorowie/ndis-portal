@@ -14,7 +14,7 @@ interface ServiceOption {
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './book-service.component.html',
-  styleUrl: './book-service.component.scss'
+  styleUrl: './book-service.component.css'
 })
 export class BookServiceComponent {
   bookForm: FormGroup;

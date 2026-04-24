@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-manage-services',
   imports: [],
   templateUrl: './manage-services.html',
-  styleUrl: './manage-services.scss',
+  styleUrl: './manage-services.css',
 })
 export class ManageServices {}

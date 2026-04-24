@@ -1,9 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ServicesService, ServiceItem } from '../../../core/services/services';
 
 @Component({
   selector: 'app-service-detail',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './service-detail.html',
-  styleUrl: './service-detail.scss',
+  styleUrl: './service-detail.css',
 })
-export class ServiceDetail {}
+export class ServiceDetail implements OnInit {
+  service: ServiceItem | null = null;
+  isLoading = true;
+  error: string | null = null;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private servicesService: ServicesService
+  ) {}
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
+        this.loadService(id);
+      }
+    });
+  }
+
+  loadService(id: number): void {
+    this.isLoading = true;
+    this.error = null;
+    this.servicesService.getService(id).subscribe({
+      next: (data) => {
+        this.service = data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading service:', err);
+        this.error = 'Failed to load service details';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  goBack(): void {
+    this.router.navigate(['/services']);
+  }
+}

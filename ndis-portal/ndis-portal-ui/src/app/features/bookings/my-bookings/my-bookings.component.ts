@@ -20,7 +20,7 @@ interface BookingItem {
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './my-bookings.component.html',
-  styleUrl: './my-bookings.component.scss'
+  styleUrl: './my-bookings.component.css'
 })
 export class MyBookingsComponent {
   selectedFilter: 'All' | BookingStatus = 'All';
@@ -81,20 +81,6 @@ export class MyBookingsComponent {
       return this.bookings;
     }
     return this.bookings.filter(b => b.status === this.selectedFilter);
-  }
-
-  get totalServices(): number {
-    return 12;
-  }
-
-  get activeHours(): number {
-    return 48.5;
-  }
-
-  get upcomingCount(): number {
-    return this.bookings.filter(
-      b => b.status === 'Pending' || b.status === 'Approved'
-    ).length;
   }
 
   formatDate(date: string): string {
