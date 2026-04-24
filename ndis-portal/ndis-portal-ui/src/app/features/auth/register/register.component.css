@@ -1,0 +1,364 @@
+* {
+  box-sizing: border-box;
+}
+
+.register-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: #f8f5fa;
+}
+
+.branding-section {
+  flex: 1;
+  position: relative;
+  background-image: url('https://images.pexels.com/photos/7551678/pexels-photo-7551678.jpeg?auto=compress&cs=tinysrgb&w=1200');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+  padding: 50px;
+  overflow: hidden;
+}
+
+.branding-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(111, 45, 168, 0.25),
+    rgba(111, 45, 168, 0.95)
+  );
+}
+
+.branding-content {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  color: #fff;
+}
+
+.branding-content h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 12px;
+}
+
+.branding-content p {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 0 0 16px;
+  opacity: 0.9;
+}
+
+.yellow-line {
+  width: 50px;
+  height: 4px;
+  border-radius: 10px;
+  background: #f2d21b;
+}
+
+.form-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8f5fa;
+  padding: 20px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 460px;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.form-header {
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0 0 4px;
+  font-size: 2rem;
+  line-height: 1.1;
+  font-weight: 800;
+  color: #6f2da8;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.name-group {
+  display: flex;
+  gap: 12px;
+}
+
+.name-group .input-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.input-group {
+  margin-bottom: 14px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #444;
+}
+
+.custom-input-wrapper {
+  background: #f3eff5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.custom-input-wrapper input {
+  width: 100%;
+  height: 42px;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0 12px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.custom-input-wrapper input:-webkit-autofill,
+.custom-input-wrapper input:-webkit-autofill:hover,
+.custom-input-wrapper input:-webkit-autofill:focus,
+.custom-input-wrapper input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #f3eff5 inset !important;
+  -webkit-text-fill-color: #333 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.custom-input-wrapper input::placeholder {
+  color: #999;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  background: #f3eff5;
+  border-radius: 8px;
+}
+
+.custom-select-wrapper select {
+  width: 100%;
+  height: 42px;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0 36px 0 12px;
+  font-size: 0.9rem;
+  color: #333;
+  appearance: none;
+}
+
+.custom-select-wrapper select:invalid,
+.custom-select-wrapper select[value=""] {
+  color: #999;
+}
+
+.custom-select-wrapper .select-chevron {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+.password-input-container .custom-input-wrapper input {
+  padding-right: 40px;
+}
+
+.password-input-container .eye-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.password-input-container .eye-btn:hover {
+  color: #6f2da8;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-top: 4px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-top: 2px;
+  accent-color: #6f2da8;
+  flex-shrink: 0;
+}
+
+.checkbox-group label {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #666;
+}
+
+.checkbox-group label span {
+  color: #6f2da8;
+  font-weight: 700;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 44px;
+  border: none;
+  border-radius: 8px;
+  background: #6f2da8;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.submit-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-link {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.login-link a {
+  color: #6f2da8;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 992px) {
+  .register-layout {
+    flex-direction: column;
+  }
+
+  .branding-section {
+    min-height: 240px;
+    flex: unset;
+    padding: 28px;
+  }
+
+  .branding-content {
+    max-width: 100%;
+  }
+
+  .branding-content h1 {
+    font-size: 2.3rem;
+  }
+
+  .branding-content p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .form-section {
+    padding: 20px 16px;
+  }
+
+  .form-container {
+    max-width: 100%;
+    padding: 28px 22px;
+  }
+}
+
+@media (max-width: 576px) {
+  .branding-section {
+    min-height: 180px;
+    padding: 20px;
+  }
+
+  .branding-content h1 {
+    font-size: 1.8rem;
+    line-height: 1.1;
+  }
+
+  .branding-content p {
+    font-size: 0.9rem;
+  }
+
+  .form-section {
+    padding: 14px 10px;
+  }
+
+  .form-container {
+    padding: 20px 14px;
+    border-radius: 14px;
+  }
+
+  .title {
+    font-size: 1.7rem;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+  }
+
+  .name-group {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .custom-input-wrapper input,
+  .custom-select-wrapper select {
+    height: 44px;
+    font-size: 0.9rem;
+  }
+
+  .submit-btn {
+    height: 44px;
+    font-size: 0.92rem;
+  }
+
+  .checkbox-group label,
+  .login-link {
+    font-size: 0.8rem;
+  }
+}

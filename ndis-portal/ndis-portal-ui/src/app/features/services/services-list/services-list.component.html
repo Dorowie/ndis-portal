@@ -1,0 +1,85 @@
+<div class="app-page-layout">
+  <aside class="app-sidebar">
+    <div class="app-logo">NDIS Care Portal</div>
+
+    <nav class="app-nav-menu">
+      <a class="app-nav-item active" routerLink="/services">
+        <span class="material-icons app-nav-icon">widgets</span>
+        <span>Services</span>
+      </a>
+
+      <a class="app-nav-item" routerLink="/bookings">
+        <span class="material-icons app-nav-icon">calendar_month</span>
+        <span>My Booking</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="app-main-content">
+    <header class="app-navbar">
+      <button type="button" class="app-nav-btn app-back-btn" (click)="goBack()">
+        <span class="material-icons">arrow_back</span>
+        <span>Back</span>
+      </button>
+
+      <button type="button" class="app-nav-btn app-logout-btn" (click)="logout()">
+        <span class="material-icons">logout</span>
+        <span>Logout</span>
+      </button>
+    </header>
+    <div class="top-bar">
+      <div class="heading-block">
+        <h1 class="app-section-title">Service Selection</h1>
+        <p class="app-section-subtitle">Choose a support category that best fits your requirements today.</p>
+      </div>
+
+      <div class="right-controls">
+        <div class="category-dropdown">
+          <span class="material-icons dropdown-icon">tune</span>
+          <select (change)="onCategoryChange($event)">
+            <option *ngFor="let category of categories" [value]="category">
+              {{ category }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-state app-surface" data-testid="loading-spinner">
+      Loading services...
+    </div>
+
+    <div
+      *ngIf="!isLoading && filteredServices.length === 0"
+      class="empty-state app-surface"
+      data-testid="empty-state"
+    >
+      No services match the selected category.
+    </div>
+
+    <div class="cards-grid" *ngIf="!isLoading && filteredServices.length > 0">
+      <div
+        class="service-card app-surface"
+        *ngFor="let service of filteredServices"
+        [style.border-left-color]="service.accent"
+        (click)="openService(service)"
+        data-testid="service-card"
+      >
+        <div class="icon-circle">
+          <span class="material-icons">{{ service.icon }}</span>
+        </div>
+
+        <h3>{{ service.name }}</h3>
+        <p>{{ service.description }}</p>
+
+        <button
+          type="button"
+          class="select-btn"
+          (click)="openService(service); $event.stopPropagation()"
+        >
+          Select
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
