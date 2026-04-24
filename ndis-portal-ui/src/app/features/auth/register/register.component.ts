@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.css'
 })
 export class RegisterComponent {
   registerForm: FormGroup;
@@ -17,47 +16,38 @@ export class RegisterComponent {
   apiError: string | null = null;
   isLoading = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder) {
+    
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      agreeToTerms: [false, Validators.requiredTrue]
+      agreeToTerms: [false, Validators.requiredTrue] // Dapat naka-check ito!
     });
   }
 
-
+  
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
 
+ 
+  onSubmit() {
+    if (this.registerForm.valid) {
+      this.isLoading = true;
+      console.log('Form Data Ready for API:', this.registerForm.value);
+      
+     
+      setTimeout(() => {
+        this.isLoading = false;
+        alert('Form is valid and ready to submit to backend!');
+      }, 1000);
 
-  onSubmit(): void {
-    if (this.registerForm.invalid) {
+    } else {
+      
       this.registerForm.markAllAsTouched();
-      return;
     }
-
-    this.isLoading = true;
-    this.apiError = null;
-
-    const { firstName, lastName, email, role, password } = this.registerForm.value;
-
-    this.authService.register({ firstName, lastName, email, role, password }).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.router.navigate(['/login']);
-      },
-      error: (err) => {
-        this.isLoading = false;
-        this.apiError = err.message || 'Registration failed. Please try again.';
-      }
-    });
   }
 }
