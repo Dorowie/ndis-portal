@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NDISPortal.API.Data;
+using NDISPortal.API.Configuration;
 using NDISPortal.API.Middleware;
 using NDISPortal.API.Services;
 using System.Text;
@@ -74,21 +75,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 // Configure CORS Policy for Angular Frontend
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAngularDev", policy =>
-    {
-        policy.WithOrigins(
-                "http://localhost:4200",  // Default Angular port
-                "http://localhost:5200",  // Alternative Angular port
-                "https://localhost:4200",
-                "https://localhost:5200"
-            )
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
-    });
-});
+builder.Services.AddCorsConfiguration();
 
 var app = builder.Build();
 
@@ -106,7 +93,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Apply CORS Policy before Authentication
-app.UseCors("AllowAngularDev");
+app.UseCorsConfiguration();
 
 app.UseAuthentication();
 app.UseAuthorization();
