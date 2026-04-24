@@ -73,6 +73,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+// Configure CORS Policy for Angular Frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDev", policy =>
+    {
+        policy.WithOrigins(
+                "http://localhost:4200",  // Default Angular port
+                "http://localhost:5200",  // Alternative Angular port
+                "https://localhost:4200",
+                "https://localhost:5200"
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 // Global Error Handling Middleware - Must be first to catch all exceptions
@@ -87,6 +104,9 @@ if (app.Environment.IsDevelopment())
     // empty or keep other dev-only tools here
 }
 app.UseHttpsRedirection();
+
+// Apply CORS Policy before Authentication
+app.UseCors("AllowAngularDev");
 
 app.UseAuthentication();
 app.UseAuthorization();
