@@ -74,10 +74,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+// CORS for Angular frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDev", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 // Global Error Handling Middleware - Must be first to catch all exceptions
 app.UseGlobalErrorHandling();
+
+// Enable CORS
+app.UseCors("AllowAngularDev");
 
 // Move these two lines below the 'if' block so they always run
 app.UseSwagger();
