@@ -24,7 +24,7 @@
               <img src="assets/icon-chat.png" alt="Bot" class="msg-avatar">
             }
             <div class="bubble" [class.bot-bubble]="msg.sender === 'bot'" [class.user-bubble]="msg.sender === 'user'">
-              {{ msg.text }}
+              <markdown [data]="msg.text"></markdown>
             </div>
           </div>
         }

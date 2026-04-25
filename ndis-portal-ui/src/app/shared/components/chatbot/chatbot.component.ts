@@ -1,6 +1,8 @@
-import { Component, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewChecked, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MarkdownModule } from 'ngx-markdown';
+import { ChatbotService, ChatPayload, ChatHistoryItem } from '../../../core/services/chatbot.services'; // Adjust path as needed
 
 interface ChatMessage {
   text: string;
@@ -10,25 +12,28 @@ interface ChatMessage {
 @Component({
   selector: 'app-chatbot',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MarkdownModule],
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.scss']
 })
 export class ChatbotComponent implements AfterViewChecked {
   @ViewChild('chatBody') private chatBody!: ElementRef;
 
-  isOpen = false; // FIX: Starts closed on page refresh
-  showTooltip = true; // Tooltip shows initially
-  isTyping = false; // Controls the typing animation
+  private chatbotService = inject(ChatbotService);
+
+  isOpen = false; 
+  showTooltip = true; 
+  isTyping = false; 
   userInput = '';
 
+  // The UI state (includes the initial greeting)
   messages: ChatMessage[] = [
     { text: "Hi! I'm here to help 😉 What can I do for you today?", sender: 'bot' }
   ];
 
   toggleChat() {
     this.isOpen = !this.isOpen;
-    this.showTooltip = false; // Once interacted, hide the tooltip permanently
+    this.showTooltip = false; 
   }
 
   closeTooltip(event: Event) {
@@ -37,22 +42,48 @@ export class ChatbotComponent implements AfterViewChecked {
   }
 
   sendMessage() {
-    if (!this.userInput.trim()) return;
+    const textToSend = this.userInput.trim();
+    if (!textToSend) return;
 
-    // Add user message
-    this.messages.push({ text: this.userInput, sender: 'user' });
+    // 1. Build the conversation history from current messages
+    // We map 'bot' to 'assistant' and 'user' to 'user' to match your API schema
+    const history: ChatHistoryItem[] = this.messages.map(msg => ({
+      role: msg.sender === 'bot' ? 'assistant' : 'user',
+      content: msg.text
+    }));
+
+    // 2. Create the exact payload your API requires
+    const payload: ChatPayload = {
+      message: textToSend,
+      conversationHistory: history
+    };
+
+    // 3. Immediately update the UI with the new user message
+    this.messages.push({ text: textToSend, sender: 'user' });
     this.userInput = '';
     
-    // Show typing indicator
+    // 4. Show typing indicator and scroll down
     this.isTyping = true;
     this.scrollToBottom();
 
-    // Mock backend delay (1.5 seconds)
-    setTimeout(() => {
-      this.isTyping = false; // Hide typing indicator
-      this.messages.push({ text: "This is a mockup response! Backend integration pending.", sender: 'bot' });
-      this.scrollToBottom();
-    }, 1500);
+    // 5. Send the payload to the backend
+    this.chatbotService.sendMessageToApi(payload).subscribe({
+      next: (response) => {
+        this.isTyping = false;
+        // Append the backend's "reply" to our UI messages
+        this.messages.push({ text: response.reply, sender: 'bot' });
+        this.scrollToBottom();
+      },
+      error: (err) => {
+        this.isTyping = false;
+        console.error('Chat API Error:', err);
+        this.messages.push({ 
+          text: "Sorry, I'm having trouble connecting right now. Please try again later.", 
+          sender: 'bot' 
+        });
+        this.scrollToBottom();
+      }
+    });
   }
 
   ngAfterViewChecked() {

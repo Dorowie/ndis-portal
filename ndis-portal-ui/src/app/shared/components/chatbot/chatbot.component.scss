@@ -90,11 +90,13 @@
         }
 
         .bubble {
-          padding: 12px 16px;
+          padding: 12px 16px !important; /* The !important forces the padding to come back */
           border-radius: 16px;
           font-size: 14px;
-          line-height: 1.4;
+          line-height: 1.5;
           word-wrap: break-word;
+          white-space: normal; /* Let markdown handle the line breaks naturally */
+          max-width: 100%;
         }
 
         .bot-bubble {
@@ -241,4 +243,23 @@
   } 40% { 
     transform: scale(1);
   }
+}
+
+::ng-deep .bubble markdown p {
+  margin-top: 0 !important;
+  margin-bottom: 8px !important;
+}
+
+::ng-deep .bubble markdown p:last-child {
+  margin-bottom: 0 !important;
+  /* Keeps the bottom of the bubble snug against the text */
+}
+
+/* --- FIX FOR BULLET POINT SPACING --- */
+::ng-deep .bubble markdown ul,
+::ng-deep .bubble markdown ol {
+  margin-top: 4px !important;
+  margin-bottom: 8px !important;
+  padding-left: 24px !important;
+  /* Indents the bullets neatly */
 }

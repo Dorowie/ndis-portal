@@ -5,6 +5,7 @@ using NDISPortal.API.Data;
 using NDISPortal.API.Middleware;
 using NDISPortal.API.Services;
 using System.Text;
+using NDISPortal.API.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCorsConfiguration();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -87,6 +89,7 @@ if (app.Environment.IsDevelopment())
 {
     // empty or keep other dev-only tools here
 }
+app.UseCorsConfiguration();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
