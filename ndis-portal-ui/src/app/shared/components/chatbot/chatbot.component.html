@@ -1,0 +1,70 @@
+<div class="chatbot-container">
+  
+  @if (isOpen) {
+    <div class="chat-window">
+      <div class="chat-header">
+        <div class="header-left">
+          <img src="assets/icon-chat.png" alt="Bot" class="header-avatar">
+          <span class="header-name">Just Tell</span>
+        </div>
+        <div class="header-right">
+          <button class="control-btn" (click)="toggleChat()" title="Minimize">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <button class="control-btn" (click)="toggleChat()" title="Close">×</button>
+        </div>
+      </div>
+
+      <div class="chat-body" #chatBody>
+        @for (msg of messages; track msg) {
+          <div class="message-wrapper" [class.user-message]="msg.sender === 'user'">
+            @if (msg.sender === 'bot') {
+              <img src="assets/icon-chat.png" alt="Bot" class="msg-avatar">
+            }
+            <div class="bubble" [class.bot-bubble]="msg.sender === 'bot'" [class.user-bubble]="msg.sender === 'user'">
+              {{ msg.text }}
+            </div>
+          </div>
+        }
+
+        @if (isTyping) {
+          <div class="message-wrapper">
+            <img src="assets/icon-chat.png" alt="Bot" class="msg-avatar">
+            <div class="bubble bot-bubble typing-indicator">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="chat-footer">
+        <div class="input-box">
+          <input 
+            type="text" 
+            [(ngModel)]="userInput" 
+            (keyup.enter)="sendMessage()" 
+            placeholder="Type a message..."
+            [disabled]="isTyping"
+          >
+          <button class="send-btn" (click)="sendMessage()" [disabled]="isTyping">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (!isOpen) {
+    @if (showTooltip) {
+      <div class="chat-tooltip">
+        Need assistance? Just Tell me.
+        <button class="close-tooltip" (click)="closeTooltip($event)">×</button>
+      </div>
+    }
+    <img src="assets/chatbot.png" alt="Chatbot Support" class="chat-image-only" (click)="toggleChat()">
+  }
+</div>
