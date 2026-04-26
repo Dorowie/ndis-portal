@@ -1,0 +1,146 @@
+/* Service Detail Styles */
+.service-detail-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.service-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.service-detail-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #222;
+  flex: 1;
+}
+
+.category-badge {
+  background: linear-gradient(135deg, #6f2da8 0%, #8b5cf6 100%);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.service-detail-content {
+  padding: 32px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.service-detail-content h2 {
+  margin: 0 0 16px;
+  font-size: 1.4rem;
+  color: #222;
+  font-weight: 600;
+}
+
+.service-detail-content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.service-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+  padding: 20px;
+  background: #f8f5fa;
+  border-radius: 12px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.meta-item .material-icons {
+  font-size: 24px;
+  color: #6f2da8;
+}
+
+.book-btn {
+  width: 100%;
+  max-width: 300px;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6f2da8 0%, #8b5cf6 100%);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(111, 45, 168, 0.3);
+}
+
+.book-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(111, 45, 168, 0.4);
+  background: linear-gradient(135deg, #5b2590 0%, #7c4fd6 100%);
+}
+
+.book-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.book-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.book-btn .material-icons {
+  font-size: 22px;
+}
+
+.loading-state,
+.error-state {
+  padding: 40px;
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.error-state {
+  color: #d32f2f;
+  background: #ffebee;
+  border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+  .service-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .service-detail-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .service-detail-content {
+    padding: 24px;
+  }
+
+  .service-meta {
+    grid-template-columns: 1fr;
+  }
+}

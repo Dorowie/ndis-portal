@@ -1,6 +1,7 @@
 <header class="header-nav">
   <div class="spacer"></div>
-  <button class="logout-btn">
+  
+  <button class="logout-btn" (click)="openLogoutModal()">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2">
       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
       <polyline points="16 17 21 12 16 7"></polyline>
@@ -8,3 +9,18 @@
     </svg>
   </button>
 </header>
+
+<div class="modal-backdrop" *ngIf="showLogoutModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <span class="material-icons warning-icon">help_outline</span>
+      <h3>Confirm Logout</h3>
+    </div>
+    <p>Are you sure you want to log out of your NDIS Care Portal account?</p>
+    
+    <div class="modal-actions">
+      <button class="btn-secondary" (click)="cancelLogout()">Cancel</button>
+      <button class="btn-danger" (click)="confirmLogout()">Log Out</button>
+    </div>
+  </div>
+</div>

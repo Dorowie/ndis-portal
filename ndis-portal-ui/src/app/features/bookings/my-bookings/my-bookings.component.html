@@ -1,0 +1,123 @@
+<div class="page-header">
+  <div class="header-left">
+    <div>
+      <h1>My Bookings</h1>
+      <p>
+        Review and manage your scheduled healthcare services. We ensure your
+        care transitions remain smooth and easy to track.
+      </p>
+    </div>
+  </div>
+
+  <div class="next-session-card">
+    <div class="session-label">NEXT SESSION</div>
+    <div class="session-date">Oct 24, 2026</div>
+  </div>
+</div>
+
+<div class="section-header">
+  <h2>Scheduled Care Plan</h2>
+
+  <div class="filter-box">
+    <span class="material-icons">filter_list</span>
+    <select (change)="setFilter(($any($event.target)).value)">
+      <option value="All">All</option>
+      <option value="Pending">Pending</option>
+      <option value="Approved">Approved</option>
+      <option value="Cancelled">Cancelled</option>
+    </select>
+  </div>
+</div>
+
+<div *ngIf="isLoading" class="loading-state">
+  <div class="spinner"></div>
+  <p>Loading bookings...</p>
+</div>
+
+<div *ngIf="error" class="error-state">
+  <p>{{ error }}</p>
+</div>
+
+<div *ngIf="!isLoading && !error && filteredBookings.length === 0" class="empty-state" data-testid="empty-state">
+  <h3>No bookings found</h3>
+  <p>There are no bookings matching the selected filter.</p>
+</div>
+
+<div *ngIf="!isLoading && !error && filteredBookings.length > 0" class="table-card">
+  <table class="bookings-table" data-testid="bookings-table">
+    <thead>
+      <tr>
+        <th>SERVICE</th>
+        <th>BOOKING DATE</th>
+        <th>NOTES</th>
+        <th>STATUS</th>
+        <th>ACTIONS</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let booking of filteredBookings">
+        <td>
+          <div class="service-name">{{ booking.service_name || 'Service' }}</div>
+        </td>
+
+        <td>
+          <div class="date-block">{{ formatDate(booking.preferred_date) }}</div>
+        </td>
+
+        <td class="notes-cell">{{ booking.notes || '-' }}</td>
+
+        <td>
+          <span
+            class="status-badge"
+            [ngClass]="getStatusClass(booking.status)"
+            data-testid="status-badge"
+          >
+            {{ booking.status }}
+          </span>
+        </td>
+
+        <td>
+          <button
+            *ngIf="booking.status === 'Pending'"
+            class="cancel-btn"
+            data-testid="cancel-btn"
+            (click)="openCancelDialog(booking.booking_id)"
+          >
+            Cancel
+          </button>
+
+          <button *ngIf="booking.status !== 'Pending'" class="menu-btn" type="button" disabled>
+            <span class="material-icons">more_vert</span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="table-footer">
+    <div class="footer-text">
+      Showing {{ filteredBookings.length }} of {{ bookings.length }} bookings
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="confirmDialogOpen"
+  class="dialog-backdrop"
+  data-testid="confirm-dialog"
+>
+  <div class="dialog-card">
+    <h3>Cancel Booking?</h3>
+    <p>Are you sure you want to cancel this pending booking request?</p>
+
+    <div class="dialog-actions">
+      <button type="button" class="secondary-btn" (click)="closeCancelDialog()">
+        Dismiss
+      </button>
+      <button type="button" class="danger-btn" (click)="confirmCancel()">
+        Confirm Cancel
+      </button>
+    </div>
+  </div>
+</div>

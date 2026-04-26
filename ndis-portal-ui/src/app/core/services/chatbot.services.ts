@@ -1,20 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// 1. Define the exact shape your API expects for history
+// --- Interfaces ---
 export interface ChatHistoryItem {
   role: 'user' | 'assistant';
   content: string;
 }
 
-// 2. Define the full request payload
 export interface ChatPayload {
   message: string;
   conversationHistory: ChatHistoryItem[];
 }
 
-// 3. Define the response
 export interface BotResponse {
   reply: string;
 }
@@ -23,11 +21,13 @@ export interface BotResponse {
   providedIn: 'root'
 })
 export class ChatbotService {
-  // TODO: Replace this with your actual backend endpoint
-  private apiUrl = 'https://localhost:7113/api/chat'; 
+  private http = inject(HttpClient);
+  private readonly apiUrl = 'https://localhost:7113/api/chat'; 
 
-  constructor(private http: HttpClient) {}
-
+  /**
+   * Sends the user message and history to the backend.
+   * The authInterceptor will automatically attach the JWT token.
+   */
   sendMessageToApi(payload: ChatPayload): Observable<BotResponse> {
     return this.http.post<BotResponse>(this.apiUrl, payload);
   }

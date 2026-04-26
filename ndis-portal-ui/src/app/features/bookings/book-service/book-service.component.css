@@ -1,0 +1,246 @@
+* {
+  box-sizing: border-box;
+}
+
+.book-service-page {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8f3f9 0%, #f6f0f7 100%);
+}
+
+.sidebar {
+  width: 250px;
+  background: #f3ebf5;
+  padding: 28px 18px;
+  border-right: 1px solid #e7dceb;
+}
+
+.logo {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #6f2da8;
+  margin-bottom: 42px;
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #4b3f52;
+  padding: 13px 16px;
+  border-radius: 14px;
+  font-weight: 600;
+  background: transparent;
+  transition: 0.2s ease;
+}
+
+.nav-item:hover {
+  background: #ffffff;
+}
+
+.nav-item.active {
+  background: #ffffff;
+  color: #6f2da8;
+  border-left: 4px solid #6f2da8;
+  box-shadow: 0 6px 16px rgba(111, 45, 168, 0.08);
+}
+
+.main-content {
+  flex: 1;
+  padding: 36px 42px;
+}
+
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  margin: 0 0 10px;
+  font-size: 2.5rem;
+  line-height: 1.05;
+  color: #1f1a24;
+  font-weight: 800;
+}
+
+.page-header p {
+  margin: 0;
+  color: #6d6672;
+  font-size: 1.02rem;
+}
+
+.form-card {
+  max-width: 780px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 14px 36px rgba(46, 24, 62, 0.08);
+  border: 1px solid rgba(111, 45, 168, 0.06);
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2f2a34;
+}
+
+.custom-select-wrapper,
+.custom-input-wrapper,
+.custom-textarea-wrapper,
+.readonly-box {
+  background: #f5eff7;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  transition: 0.2s ease;
+}
+
+.custom-select-wrapper:focus-within,
+.custom-input-wrapper:focus-within,
+.custom-textarea-wrapper:focus-within {
+  border-color: #6f2da8;
+  background: #fbf8fc;
+  box-shadow: 0 0 0 4px rgba(111, 45, 168, 0.08);
+}
+
+.custom-select-wrapper select,
+.custom-input-wrapper input,
+.custom-textarea-wrapper textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #333;
+  font-size: 0.97rem;
+  padding: 15px 16px;
+  font-family: inherit;
+}
+
+.custom-select-wrapper select {
+  cursor: pointer;
+}
+
+.custom-textarea-wrapper textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.readonly-box {
+  padding: 15px 16px;
+  color: #5a5560;
+  font-size: 0.96rem;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.info-box {
+  margin-top: 6px;
+  margin-bottom: 22px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #f3ebf9;
+  color: #5f4777;
+  font-size: 0.92rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.back-link {
+  color: #6f2da8;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.submit-btn {
+  min-width: 210px;
+  height: 50px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #9c73d3, #6f2da8);
+  color: #fff;
+  font-size: 0.98rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(111, 45, 168, 0.22);
+  transition: all 0.2s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(111, 45, 168, 0.28);
+}
+
+.submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.error-message,
+.field-error {
+  display: block;
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin-top: 6px;
+}
+
+.error-message {
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  background: #fdecec;
+  border: 1px solid #f4c7c7;
+  border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+  .book-service-page {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .main-content {
+    padding: 20px 16px;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+  }
+
+  .form-card {
+    padding: 22px 16px;
+    border-radius: 18px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+}

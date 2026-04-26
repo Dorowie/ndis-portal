@@ -1,0 +1,102 @@
+<div class="page-header">
+  <div>
+    <h1>Book a Service</h1>
+    <p>Select a service and preferred date to submit your booking request.</p>
+  </div>
+</div>
+
+<div class="form-card">
+  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="apiError" class="error-message" data-testid="error-message">
+      {{ apiError }}
+    </div>
+
+    <div class="input-group">
+      <label for="serviceId">Service</label>
+      <div class="custom-select-wrapper">
+        <select
+          id="serviceId"
+          formControlName="serviceId"
+          data-testid="service-select"
+        >
+          <option value="" disabled selected>Select a service</option>
+          <option *ngFor="let service of services" [value]="service.id">
+            {{ service.name }}
+          </option>
+        </select>
+      </div>
+
+      <small
+        class="field-error"
+        *ngIf="bookForm.get('serviceId')?.hasError('required') && bookForm.get('serviceId')?.touched"
+      >
+        Service is required
+      </small>
+    </div>
+
+    <div class="input-group" *ngIf="selectedService">
+      <label>Category</label>
+      <div class="readonly-box">{{ selectedService.category_name }}</div>
+    </div>
+
+    <div class="two-column">
+      <div class="input-group">
+        <label for="bookingDate">Preferred Date</label>
+        <div class="custom-input-wrapper">
+          <input
+            id="bookingDate"
+            type="date"
+            [min]="minDate"
+            formControlName="bookingDate"
+            data-testid="date-input"
+          />
+        </div>
+
+        <small
+          class="field-error"
+          *ngIf="bookForm.get('bookingDate')?.hasError('required') && bookForm.get('bookingDate')?.touched"
+        >
+          Preferred date is required
+        </small>
+
+        <small
+          class="field-error"
+          *ngIf="bookForm.get('bookingDate')?.value && isPastDate(bookForm.get('bookingDate')?.value)"
+        >
+          Preferred date must not be in the past
+        </small>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="notes">Notes</label>
+      <div class="custom-textarea-wrapper">
+        <textarea
+          id="notes"
+          rows="5"
+          formControlName="notes"
+          placeholder="Add optional notes here..."
+          data-testid="notes-input"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="info-box">
+      Your booking request will be reviewed before approval.
+    </div>
+
+    <div class="actions">
+      <a class="back-link" routerLink="/services">← Back to Services</a>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="bookForm.invalid || isLoading || isPastDate(bookForm.get('bookingDate')?.value)"
+        data-testid="submit-btn"
+      >
+        <span *ngIf="!isLoading">Submit Booking</span>
+        <span *ngIf="isLoading">Submitting...</span>
+      </button>
+    </div>
+  </form>
+</div>

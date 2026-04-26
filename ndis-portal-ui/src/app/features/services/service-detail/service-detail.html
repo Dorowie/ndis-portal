@@ -1,0 +1,41 @@
+<div *ngIf="isLoading" class="loading-state">
+  Loading service details...
+</div>
+
+<div *ngIf="error" class="error-state">
+  {{ error }}
+</div>
+
+<div *ngIf="!isLoading && !error && service" class="service-detail-container">
+  
+  <div class="service-detail-header">
+    <h1>{{ service.name }}</h1>
+    <span class="category-badge">{{ service.category_name }}</span>
+  </div>
+
+  <div class="service-detail-content">
+    <h2>Description</h2>
+    <p>{{ service.description }}</p>
+
+    <div class="service-meta">
+      <div class="meta-item">
+        <span class="material-icons">category</span>
+        <span>Category: {{ service.category_name }}</span>
+      </div>
+      <div class="meta-item">
+        <span class="material-icons">check_circle</span>
+        <span>Status: {{ service.is_active ? 'Active' : 'Inactive' }}</span>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="book-btn"
+      (click)="bookService()"
+      [disabled]="!service.is_active"
+    >
+      <span class="material-icons">calendar_today</span>
+      Book This Service
+    </button>
+  </div>
+</div>

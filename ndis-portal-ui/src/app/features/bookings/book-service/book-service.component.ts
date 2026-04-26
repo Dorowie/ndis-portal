@@ -1,0 +1,118 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { BookingsService, BookingCreateDto } from '../../../core/services/bookings';
+import { ServicesService, ServiceItem } from '../../../core/services/services';
+
+@Component({
+  selector: 'app-book-service',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  templateUrl: './book-service.component.html',
+  styleUrls: ['./book-service.component.scss']
+})
+export class BookServiceComponent implements OnInit {
+  bookForm: FormGroup;
+  isLoading = false;
+  apiError: string | null = null;
+  services: ServiceItem[] = [];
+  selectedService: ServiceItem | null = null;
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private bookingsService: BookingsService,
+    private servicesService: ServicesService
+  ) {
+    this.bookForm = this.fb.group({
+      serviceId: ['', Validators.required],
+      bookingDate: ['', Validators.required],
+      notes: ['']
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadServices();
+    this.route.queryParams.subscribe(params => {
+      const serviceId = params['serviceId'];
+      if (serviceId) {
+        this.bookForm.patchValue({ serviceId: Number(serviceId) });
+      }
+    });
+  }
+
+  loadServices(): void {
+    this.servicesService.getServices().subscribe({
+      next: (data) => {
+        this.services = data;
+      },
+      error: (error) => {
+        console.error('Error loading services:', error);
+      }
+    });
+  }
+
+  get minDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  get selectedServiceName(): string {
+    const selectedId = Number(this.bookForm.get('serviceId')?.value);
+    const service = this.services.find(s => s.id === selectedId);
+    this.selectedService = service || null;
+    return service ? service.name : '';
+  }
+
+  isPastDate(value: string): boolean {
+    if (!value) return false;
+
+    const selected = new Date(value);
+    const today = new Date();
+
+    selected.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    return selected < today;
+  }
+
+  onSubmit(): void {
+    if (this.bookForm.invalid) {
+      this.bookForm.markAllAsTouched();
+      return;
+    }
+
+    const bookingDate = this.bookForm.get('bookingDate')?.value;
+    if (this.isPastDate(bookingDate)) {
+      this.apiError = 'Booking date must not be in the past.';
+      return;
+    }
+
+    this.isLoading = true;
+    this.apiError = null;
+
+    const booking: BookingCreateDto = {
+      serviceId: Number(this.bookForm.get('serviceId')?.value),
+      preferredDate: bookingDate,
+      notes: this.bookForm.get('notes')?.value || undefined
+    };
+
+    this.bookingsService.createBooking(booking).subscribe({
+      next: () => {
+        this.isLoading = false;
+        alert('Booking submitted successfully!');
+        this.router.navigate(['/bookings']);
+      },
+      error: (error) => {
+        console.error('Error creating booking:', error);
+        this.apiError = 'Failed to create booking. Please try again.';
+        this.isLoading = false;
+      }
+    });
+  }
+}

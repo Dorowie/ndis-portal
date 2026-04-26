@@ -7,7 +7,7 @@ namespace NDISPortal.API.Controllers
 {
     [Route("api/chat")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ChatController : ControllerBase
     {
         private readonly IChatService _chatService;
