@@ -1,25 +1,64 @@
 .header-nav {
-  position: sticky; /* Makes it fixed at the top of the scrollable area */
-  top: 0;
-  z-index: 100;
-  width: 100%;
-  height: 60px;
-  background-color: var(--color-nav-white);
-  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
-  padding: 0 24px;
-  justify-content: flex-end;
-  border-bottom: 1px solid rgba(0,0,0,0.03); /* Subtle line to detach it from the background */
+  padding: 16px 24px;
+  background: transparent; /* Or whatever your top nav background is */
+  
+  /* Make sure spacer pushes elements to the sides */
+  .spacer {
+    flex: 1;
+  }
+}
 
-  .spacer { flex: 1; }
+.logout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent; /* Removes the ugly default background */
+  border: none;            /* Removes the harsh border */
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text-muted); /* Sets the default color of the SVG */
+  transition: all 0.2s ease;
 
-  .logout-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
+  &:hover {
+    background: #f1eaf4; /* Soft purple hover, same as your hamburger menu */
+    color: var(--brand-purple); /* Makes the icon turn purple on hover */
+    transform: scale(1.05); /* Very subtle pop effect */
+  }
+
+  svg {
+    transition: stroke 0.2s ease;
+  }
+}
+
+/* --- Hamburger Button Styles --- */
+.hamburger-btn {
+  display: none; /* Hidden by default on Desktop */
+  background: #f1eaf4; /* Subtle purple background */
+  border: none;
+  cursor: pointer;
+  color: var(--brand-purple);
+  padding: 8px;
+  margin-right: 16px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #e5d9eb;
+  }
+
+  .material-icons {
+    font-size: 26px;
+    display: block; /* Removes weird spacing under icons */
+  }
+
+  /* Show the button ONLY when the screen is 900px or smaller */
+  @media (max-width: 900px) {
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
   }
 }
 

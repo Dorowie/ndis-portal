@@ -7,6 +7,12 @@
   align-items: flex-end;
   z-index: 1002;
 
+  /* Push the chat icon closer to the edge on mobile */
+  @media (max-width: 768px) {
+    bottom: 20px;
+    right: 20px;
+  }
+
   /* --- CHAT WINDOW --- */
   .chat-window {
     width: 350px;
@@ -19,6 +25,18 @@
     overflow: hidden;
     margin-bottom: 20px;
 
+    /* 🚀 MOBILE RESPONSIVENESS: Full screen mode */
+    @media (max-width: 768px) {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      border-radius: 0; /* Remove rounded corners for full screen */
+      z-index: 9999; /* Ensure it covers the top nav and sidebar */
+    }
+
     .chat-header {
       background-color: var(--color-primary); 
       padding: 12px 16px;
@@ -26,6 +44,11 @@
       justify-content: space-between;
       align-items: center;
       color: white;
+
+      /* Safely pad the top on iOS devices with notches */
+      @media (max-width: 768px) {
+        padding-top: max(12px, env(safe-area-inset-top));
+      }
 
       .header-left {
         display: flex;
@@ -36,7 +59,7 @@
           width: 32px;
           height: 32px;
           border-radius: 50%;
-          background-color: transparent; /* Set to transparent as requested */
+          background-color: transparent;
           object-fit: cover;
         }
 
@@ -54,7 +77,7 @@
           background: none;
           border: none;
           color: white;
-          font-size: 22px;
+          font-size: 28px; /* Slightly larger for easier tapping on mobile */
           cursor: pointer;
           opacity: 0.8;
           transition: opacity 0.2s;
@@ -81,6 +104,10 @@
         gap: 10px;
         max-width: 85%;
 
+        @media (max-width: 768px) {
+          max-width: 90%; /* Let messages span a bit wider on mobile */
+        }
+
         .msg-avatar {
           width: 30px;
           height: 30px;
@@ -90,12 +117,12 @@
         }
 
         .bubble {
-          padding: 12px 16px !important; /* The !important forces the padding to come back */
+          padding: 12px 16px !important; 
           border-radius: 16px;
           font-size: 14px;
           line-height: 1.5;
           word-wrap: break-word;
-          white-space: normal; /* Let markdown handle the line breaks naturally */
+          white-space: normal; 
           max-width: 100%;
         }
 
@@ -142,6 +169,11 @@
       padding: 16px;
       background-color: white;
       border-top: 1px solid #f0f0f0;
+
+      /* Safely pad the bottom on iOS devices with home indicators */
+      @media (max-width: 768px) {
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+      }
 
       .input-box {
         display: flex;
@@ -230,6 +262,10 @@
     height: auto;
     transition: transform 0.2s ease;
 
+    @media (max-width: 768px) {
+      max-width: 65px; /* Shrink the trigger icon slightly on mobile */
+    }
+
     &:hover {
       transform: scale(1.05);
     }
@@ -252,14 +288,11 @@
 
 ::ng-deep .bubble markdown p:last-child {
   margin-bottom: 0 !important;
-  /* Keeps the bottom of the bubble snug against the text */
 }
 
-/* --- FIX FOR BULLET POINT SPACING --- */
 ::ng-deep .bubble markdown ul,
 ::ng-deep .bubble markdown ol {
   margin-top: 4px !important;
   margin-bottom: 8px !important;
   padding-left: 24px !important;
-  /* Indents the bullets neatly */
 }

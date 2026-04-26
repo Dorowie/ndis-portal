@@ -1,10 +1,19 @@
 <div class="layout-container">
-  <app-sidebar></app-sidebar>
+  <app-sidebar [class.sidebar-open]="isSidebarOpen"></app-sidebar>
+
+  <div 
+    class="sidebar-backdrop" 
+    [class.visible]="isSidebarOpen" 
+    (click)="closeSidebar()">
+  </div>
+
   <div class="main-body">
-    <app-top-nav></app-top-nav>
+    <app-top-nav (toggle)="toggleSidebar()"></app-top-nav>
+    
     <main class="page-content">
       <router-outlet></router-outlet>
     </main>
   </div>
+  
   <app-chatbot></app-chatbot>
 </div>
