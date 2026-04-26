@@ -28,7 +28,7 @@ export class ChatbotComponent implements AfterViewChecked {
 
   // The UI state (includes the initial greeting)
   messages: ChatMessage[] = [
-    { text: "Hi! I'm here to help 😉 What can I do for you today?", sender: 'bot' }
+    { text: "Hi! I'm here to help What can I do for you today?", sender: 'bot' }
   ];
 
   toggleChat() {
