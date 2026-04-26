@@ -1,6 +1,6 @@
 <div class="top-bar">
   <div class="heading-block">
-    <h1 class="app-section-title">Service Selection</h1>
+    <h1 class="app-section-title" id="selection-page-title">Service Selection</h1>
     <p class="app-section-subtitle">Choose a support category that best fits your requirements today.</p>
   </div>
 
@@ -9,10 +9,10 @@
     <div class="category-dropdown">
       <span class="material-icons dropdown-icon">tune</span>
       
-      <select (change)="onCategoryChange($event)" [value]="selectedCategory">
+      <select id="category-filter-select" (change)="onCategoryChange($event)" [value]="selectedCategory">
         <option value="Category" hidden disabled selected>Category</option>
         
-        <option *ngFor="let category of categories" [value]="category">
+        <option *ngFor="let category of categories" [value]="category" [id]="'filter-option-' + category">
           {{ category }}
         </option>
       </select>
@@ -23,34 +23,35 @@
 
 </div>
 
-<div *ngIf="isLoading" class="loading-state app-surface" data-testid="loading-spinner">
+<div *ngIf="isLoading" class="loading-state app-surface" id="services-loading-spinner">
   Loading services...
 </div>
 
 <div
   *ngIf="!isLoading && filteredServices.length === 0"
   class="empty-state app-surface"
-  data-testid="empty-state"
+  id="services-empty-state"
 >
   No services match the selected category.
 </div>
 
-<div class="cards-grid" *ngIf="!isLoading && filteredServices.length > 0">
+<div class="cards-grid" *ngIf="!isLoading && filteredServices.length > 0" id="services-grid-container">
   <div
     class="service-card app-surface"
     *ngFor="let service of filteredServices"
+    [id]="'service-card-' + service.id"
     [style.border-left-color]="service.accent"
     (click)="openService(service)"
-    data-testid="service-card"
   >
     <div class="icon-circle">
-      <span class="material-icons">{{ service.icon }}</span>
+      <span class="material-icons" [id]="'service-icon-' + service.id">{{ service.icon }}</span>
     </div>
 
-    <h3>{{ service.name }}</h3>
-    <p>{{ service.description }}</p>
+    <h3 [id]="'service-name-' + service.id">{{ service.name }}</h3>
+    <p [id]="'service-desc-' + service.id">{{ service.description }}</p>
 
     <button
+      [id]="'btn-select-service-' + service.id"
       type="button"
       class="select-btn"
       (click)="openService(service); $event.stopPropagation()"

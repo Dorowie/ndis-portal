@@ -1,19 +1,26 @@
-<div class="layout-container">
-  <app-sidebar [class.sidebar-open]="isSidebarOpen"></app-sidebar>
+<div class="layout-container" id="main-layout-wrapper">
+  <app-sidebar 
+    id="app-sidebar-nav" 
+    [class.sidebar-open]="isSidebarOpen">
+  </app-sidebar>
 
   <div 
+    id="sidebar-overlay-backdrop"
     class="sidebar-backdrop" 
     [class.visible]="isSidebarOpen" 
     (click)="closeSidebar()">
   </div>
 
-  <div class="main-body">
-    <app-top-nav (toggle)="toggleSidebar()"></app-top-nav>
+  <div class="main-body" id="layout-main-section">
+    <app-top-nav 
+      id="app-top-navigation" 
+      (toggle)="toggleSidebar()">
+    </app-top-nav>
     
-    <main class="page-content">
+    <main class="page-content" id="router-content-area">
       <router-outlet></router-outlet>
     </main>
   </div>
   
-  <app-chatbot></app-chatbot>
+  <app-chatbot id="app-chatbot-component"></app-chatbot>
 </div>

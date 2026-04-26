@@ -1,11 +1,11 @@
-<header class="header-nav">
-  <button class="hamburger-btn" (click)="onToggle()">
+<header class="header-nav" id="top-navigation-bar">
+  <button id="btn-hamburger-menu" class="hamburger-btn" (click)="onToggle()">
     <span class="material-icons">menu</span>
   </button>
 
   <div class="spacer"></div>
   
-  <button class="logout-btn" (click)="openLogoutModal()">
+  <button id="btn-open-logout-modal" class="logout-btn" (click)="openLogoutModal()">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
       <polyline points="16 17 21 12 16 7"></polyline>
@@ -14,17 +14,17 @@
   </button>
 </header>
 
-<div class="modal-backdrop" *ngIf="showLogoutModal">
-  <div class="modal-card">
+<div class="modal-backdrop" *ngIf="showLogoutModal" id="logout-modal-backdrop">
+  <div class="modal-card" id="logout-modal-card">
     <div class="modal-header">
       <span class="material-icons warning-icon">help_outline</span>
-      <h3>Confirm Logout</h3>
+      <h3 id="logout-modal-title">Confirm Logout</h3>
     </div>
-    <p>Are you sure you want to log out of your NDIS Care Portal account?</p>
+    <p id="logout-modal-description">Are you sure you want to log out of your NDIS Care Portal account?</p>
     
     <div class="modal-actions">
-      <button class="btn-secondary" (click)="cancelLogout()">Cancel</button>
-      <button class="btn-danger" (click)="confirmLogout()">Log Out</button>
+      <button id="btn-logout-cancel" class="btn-secondary" (click)="cancelLogout()">Cancel</button>
+      <button id="btn-logout-confirm" class="btn-danger" (click)="confirmLogout()">Log Out</button>
     </div>
   </div>
 </div>

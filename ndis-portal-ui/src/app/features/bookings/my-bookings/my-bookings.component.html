@@ -1,7 +1,7 @@
 <div class="page-header">
   <div class="header-left">
     <div>
-      <h1>My Bookings</h1>
+      <h1 id="bookings-page-title">My Bookings</h1>
       <p>
         Review and manage your scheduled healthcare services. We ensure your
         care transitions remain smooth and easy to track.
@@ -9,9 +9,9 @@
     </div>
   </div>
 
-  <div class="next-session-card">
+  <div class="next-session-card" id="next-session-display">
     <div class="session-label">NEXT SESSION</div>
-    <div class="session-date">Oct 24, 2026</div>
+    <div class="session-date" id="next-session-date">Oct 24, 2026</div>
   </div>
 </div>
 
@@ -20,7 +20,7 @@
 
   <div class="filter-box">
     <span class="material-icons">filter_list</span>
-    <select (change)="setFilter(($any($event.target)).value)">
+    <select id="bookings-filter-select" (change)="setFilter(($any($event.target)).value)">
       <option value="All">All</option>
       <option value="Pending">Pending</option>
       <option value="Approved">Approved</option>
@@ -29,22 +29,22 @@
   </div>
 </div>
 
-<div *ngIf="isLoading" class="loading-state">
+<div *ngIf="isLoading" class="loading-state" id="bookings-loading-state">
   <div class="spinner"></div>
   <p>Loading bookings...</p>
 </div>
 
-<div *ngIf="error" class="error-state">
+<div *ngIf="error" class="error-state" id="bookings-error-state">
   <p>{{ error }}</p>
 </div>
 
-<div *ngIf="!isLoading && !error && filteredBookings.length === 0" class="empty-state" data-testid="empty-state">
+<div *ngIf="!isLoading && !error && filteredBookings.length === 0" class="empty-state" id="bookings-empty-state">
   <h3>No bookings found</h3>
   <p>There are no bookings matching the selected filter.</p>
 </div>
 
 <div *ngIf="!isLoading && !error && filteredBookings.length > 0" class="table-card">
-  <table class="bookings-table" data-testid="bookings-table">
+  <table class="bookings-table" id="bookings-table">
     <thead>
       <tr>
         <th>SERVICE</th>
@@ -56,22 +56,28 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let booking of filteredBookings">
+      <tr *ngFor="let booking of filteredBookings" [id]="'booking-row-' + booking.booking_id">
         <td>
-          <div class="service-name">{{ booking.service_name || 'Service' }}</div>
+          <div class="service-name" [id]="'service-name-' + booking.booking_id">
+            {{ booking.service_name || 'Service' }}
+          </div>
         </td>
 
         <td>
-          <div class="date-block">{{ formatDate(booking.preferred_date) }}</div>
+          <div class="date-block" [id]="'booking-date-' + booking.booking_id">
+            {{ formatDate(booking.preferred_date) }}
+          </div>
         </td>
 
-        <td class="notes-cell">{{ booking.notes || '-' }}</td>
+        <td class="notes-cell" [id]="'booking-notes-' + booking.booking_id">
+          {{ booking.notes || '-' }}
+        </td>
 
         <td>
           <span
             class="status-badge"
             [ngClass]="getStatusClass(booking.status)"
-            data-testid="status-badge"
+            [id]="'status-badge-' + booking.booking_id"
           >
             {{ booking.status }}
           </span>
@@ -81,13 +87,13 @@
           <button
             *ngIf="booking.status === 'Pending'"
             class="cancel-btn"
-            data-testid="cancel-btn"
+            [id]="'btn-cancel-' + booking.booking_id"
             (click)="openCancelDialog(booking.booking_id)"
           >
             Cancel
           </button>
 
-          <button *ngIf="booking.status !== 'Pending'" class="menu-btn" type="button" disabled>
+          <button *ngIf="booking.status !== 'Pending'" class="menu-btn" type="button" disabled [id]="'btn-menu-' + booking.booking_id">
             <span class="material-icons">more_vert</span>
           </button>
         </td>
@@ -96,7 +102,7 @@
   </table>
 
   <div class="table-footer">
-    <div class="footer-text">
+    <div class="footer-text" id="bookings-count-footer">
       Showing {{ filteredBookings.length }} of {{ bookings.length }} bookings
     </div>
   </div>
@@ -105,17 +111,17 @@
 <div
   *ngIf="confirmDialogOpen"
   class="dialog-backdrop"
-  data-testid="confirm-dialog"
+  id="cancel-confirmation-dialog"
 >
   <div class="dialog-card">
-    <h3>Cancel Booking?</h3>
-    <p>Are you sure you want to cancel this pending booking request?</p>
+    <h3 id="dialog-title">Cancel Booking?</h3>
+    <p id="dialog-description">Are you sure you want to cancel this pending booking request?</p>
 
     <div class="dialog-actions">
-      <button type="button" class="secondary-btn" (click)="closeCancelDialog()">
+      <button id="btn-dialog-dismiss" type="button" class="secondary-btn" (click)="closeCancelDialog()">
         Dismiss
       </button>
-      <button type="button" class="danger-btn" (click)="confirmCancel()">
+      <button id="btn-dialog-confirm" type="button" class="danger-btn" (click)="confirmCancel()">
         Confirm Cancel
       </button>
     </div>

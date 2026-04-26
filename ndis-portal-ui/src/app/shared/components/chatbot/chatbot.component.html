@@ -1,31 +1,34 @@
-<div class="chatbot-container">
+<div class="chatbot-container" id="chatbot-main-container">
   
   @if (isOpen) {
-    <div class="chat-window">
+    <div class="chat-window" id="chatbot-window">
       <div class="chat-header">
         <div class="header-left">
-          <img src="assets/icon-chat.png" alt="Bot" class="header-avatar">
-          <span class="header-name">Just Tell</span>
+          <img src="assets/icon-chat.png" alt="Bot" class="header-avatar" id="chatbot-header-icon">
+          <span class="header-name" id="chatbot-header-name">Just Tell</span>
         </div>
         <div class="header-right">
-          <button class="control-btn" (click)="toggleChat()" title="Close">×</button>
+          <button id="btn-chatbot-close" class="control-btn" (click)="toggleChat()" title="Close">×</button>
         </div>
       </div>
 
-      <div class="chat-body" #chatBody>
-        @for (msg of messages; track msg) {
-          <div class="message-wrapper" [class.user-message]="msg.sender === 'user'">
+      <div class="chat-body" #chatBody id="chatbot-body">
+        @for (msg of messages; track msg; let i = $index) {
+          <div class="message-wrapper" [class.user-message]="msg.sender === 'user'" [id]="'chat-wrapper-' + i">
             @if (msg.sender === 'bot') {
-              <img src="assets/icon-chat.png" alt="Bot" class="msg-avatar">
+              <img src="assets/icon-chat.png" alt="Bot" class="msg-avatar" [id]="'chat-bot-avatar-' + i">
             }
-            <div class="bubble" [class.bot-bubble]="msg.sender === 'bot'" [class.user-bubble]="msg.sender === 'user'">
+            <div class="bubble" 
+                 [class.bot-bubble]="msg.sender === 'bot'" 
+                 [class.user-bubble]="msg.sender === 'user'"
+                 [id]="'chat-bubble-' + i">
               <markdown [data]="msg.text"></markdown>
             </div>
           </div>
         }
 
         @if (isTyping) {
-          <div class="message-wrapper">
+          <div class="message-wrapper" id="chatbot-typing-indicator">
             <img src="assets/icon-chat.png" alt="Bot" class="msg-avatar">
             <div class="bubble bot-bubble typing-indicator">
               <span></span><span></span><span></span>
@@ -37,13 +40,14 @@
       <div class="chat-footer">
         <div class="input-box">
           <input 
+            id="chatbot-input-field"
             type="text" 
             [(ngModel)]="userInput" 
             (keyup.enter)="sendMessage()" 
             placeholder="Type a message..."
             [disabled]="isTyping"
           >
-          <button class="send-btn" (click)="sendMessage()" [disabled]="isTyping">
+          <button id="btn-chatbot-send" class="send-btn" (click)="sendMessage()" [disabled]="isTyping">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
               <path d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z"/>
             </svg>
@@ -55,11 +59,17 @@
 
   @if (!isOpen) {
     @if (showTooltip) {
-      <div class="chat-tooltip">
+      <div class="chat-tooltip" id="chatbot-tooltip">
         Need assistance? Just Tell me.
-        <button class="close-tooltip" (click)="closeTooltip($event)">×</button>
+        <button id="btn-close-tooltip" class="close-tooltip" (click)="closeTooltip($event)">×</button>
       </div>
     }
-    <img src="assets/chatbot.png" alt="Chatbot Support" class="chat-image-only" (click)="toggleChat()">
+    <img 
+      id="chatbot-launcher-icon"
+      src="assets/chatbot.png" 
+      alt="Chatbot Support" 
+      class="chat-image-only" 
+      (click)="toggleChat()"
+    >
   }
 </div>
