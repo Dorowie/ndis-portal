@@ -6,13 +6,33 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  // Check if the user has a valid token
-  if (authService.isAuthenticated()) {
+  // ❌ Not logged in
+  if (!authService.isAuthenticated()) {
+    router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    return false;
+  }
+
+  const userRole = authService.getUserRole();
+  const allowedRoles = route.data?.['roles'] as string[] | undefined;
+
+  // ✅ If route has NO role restriction → allow
+  if (!allowedRoles || allowedRoles.length === 0) {
     return true;
   }
 
-  // If not logged in, redirect to login page
-  // We pass 'state.url' so we can redirect them back after they log in
-  router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-  return false;
+  // ✅ If role is allowed → allow
+  if (userRole && allowedRoles.includes(userRole)) {
+    return true;
+  }
+
+  // ❌ BLOCKED → redirect based on role (NO LOOP)
+  if (userRole === 'Coordinator') {
+    return router.createUrlTree(['/dashboard']);
+  }
+
+  if (userRole === 'Participant') {
+    return router.createUrlTree(['/services']);
+  }
+
+  return router.createUrlTree(['/login']);
 };

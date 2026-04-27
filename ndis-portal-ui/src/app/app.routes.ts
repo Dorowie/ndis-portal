@@ -14,27 +14,54 @@ import { DashboardComponent } from './features/coordinator/dashboard/dashboard';
 import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
-  // --- PUBLIC ROUTES (No layout, full screen) ---
+  // --- PUBLIC ---
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
-  // --- PROTECTED ROUTES (Wrapped inside Main Layout) ---
-  { 
-    path: '', 
-    component: MainLayoutComponent, 
-    canActivate: [authGuard], // Protects the layout and EVERYTHING inside it
+  // --- PROTECTED ---
+  {
+    path: '',
+    component: MainLayoutComponent,
+    canActivate: [authGuard],
     children: [
-      { path: 'services', component: ServicesListComponent },
-      { path: 'services/:id', component: ServiceDetail },
-      { path: 'bookings/new', component: BookServiceComponent },
-      { path: 'bookings', component: MyBookingsComponent },
-      { path: 'dashboard', component: DashboardComponent },
-      
-      // Default redirect once inside the layout
+      // 🔵 PARTICIPANT ONLY
+      {
+        path: 'services',
+        component: ServicesListComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Participant'] }
+      },
+      {
+        path: 'services/:id',
+        component: ServiceDetail,
+        canActivate: [authGuard],
+        data: { roles: ['Participant'] }
+      },
+      {
+        path: 'bookings/new',
+        component: BookServiceComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Participant'] }
+      },
+      {
+        path: 'bookings',
+        component: MyBookingsComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Participant'] }
+      },
+
+      // 🔴 COORDINATOR ONLY
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Coordinator'] }
+      },
+
+      // ❗ DEFAULT (handled by guard)
       { path: '', redirectTo: 'services', pathMatch: 'full' }
     ]
   },
 
-  // --- FALLBACK ---
   { path: '**', redirectTo: 'login' }
 ];
