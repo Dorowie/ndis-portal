@@ -11,6 +11,15 @@ Thumbs.db
 .env.*
 *.env
 
+# =========================
+# APP SETTINGS (.NET)
+# =========================
+# Ignore actual configuration files that contain secrets
+appsettings.json
+appsettings.*.json
+
+# DO NOT ignore the example file (the ! negates the ignore)
+!appsettings.example.json
 
 # =========================
 # BUILD / BINARIES (.NET)
@@ -53,8 +62,6 @@ yarn-error.log*
 *.nupkg
 packages/
 *.snupkg
-
-
 
 # =========================
 # IDE (VS CODE)
