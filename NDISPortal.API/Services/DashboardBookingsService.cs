@@ -5,49 +5,49 @@ using NDISPortal.API.DTOs.Dashboard;
 
 namespace NDISPortal.API.Services;
 
-public class DashboardService : IDashboardService
+public class DashboardBookingsService : IDashboardBookingsService
 {
     private readonly ApplicationDbContext _context;
 
-    public DashboardService(ApplicationDbContext context)
+    public DashboardBookingsService(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    public Task<List<DashboardBookingListDto>> GetAllBookingsAsync(int? status)
+    public async Task<List<DashboardBookingListDto>> GetAllBookingsAsync(int? status)
     {
-        throw new NotImplementedException();
-    }
-
-    public async Task<DashboardResponseDto> GetDashboardAsync()
-    {
-        var bookings = _context.Bookings
+        var query = _context.Bookings
             .Include(b => b.User)
             .Include(b => b.Service)
+            .ThenInclude(s => s!.Category)
             .AsQueryable();
 
-        var recentBookings = await bookings
+        if (status.HasValue)
+        {
+            query = query.Where(b => b.status == status.Value);
+        }
+
+        return await query
             .OrderByDescending(b => b.id)
-            .Take(10)
-            .Select(b => new RecentBookingDto
+            .Select(b => new DashboardBookingListDto
             {
                 Id = b.id,
-                ParticipantName = b.User != null ? b.User.first_name +" "+  b.User.last_name : "",
-                ServiceName = b.Service != null ? b.Service.name : "",
+                ParticipantName = b.User != null
+                    ? b.User.first_name + " " + b.User.last_name
+                    : "",
+                ServiceName = b.Service != null
+                    ? b.Service.name
+                    : "",
+                CategoryName = b.Service != null && b.Service.Category != null
+                    ? b.Service.Category.name
+                    : "",
                 PreferredDate = b.booking_date,
+                Notes = b.notes,
                 Status = b.status,
-
+                CanApprove = b.status == 0,
+                CanCancel = b.status == 0
             })
             .ToListAsync();
-
-        return new DashboardResponseDto
-        {
-            TotalBookings = await bookings.CountAsync(),
-            PendingBookings = await bookings.CountAsync(b => b.status == 0),
-            ApprovedBookings = await bookings.CountAsync(b => b.status == 1),
-            CancelledBookings = await bookings.CountAsync(b => b.status == 2),
-            RecentBookings = recentBookings
-        };
     }
 
     public async Task<DashboardBookingResponseDto?> UpdateBookingStatusAsync(int bookingId, int status)
@@ -74,7 +74,9 @@ public class DashboardService : IDashboardService
         return new DashboardBookingResponseDto
         {
             Id = booking.id,
-            ParticipantName = booking.User?.first_name +" "+ booking.User?.last_name ?? "",
+            ParticipantName = booking.User != null
+                ? booking.User.first_name + " " + booking.User.last_name
+                : "",
             ServiceName = booking.Service?.name ?? "",
             PreferredDate = booking.booking_date,
             Status = booking.status

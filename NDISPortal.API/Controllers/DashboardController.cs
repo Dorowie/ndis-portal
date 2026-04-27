@@ -6,7 +6,7 @@ using NDISPortal.API.Services;
 namespace NDISPortal.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/dashboard")]
 [Authorize(Roles = "Coordinator")]
 public class DashboardController : ControllerBase
 {
@@ -25,8 +25,8 @@ public class DashboardController : ControllerBase
         return Ok(result);
     }
 
-    // PUT /api/dashboard/bookings/{id}/status
-    [HttpPut("bookings/{id}/status")]
+    // PUT /api/dashboard/bookings/{id}/update
+    [HttpPut("bookings/{id}/update")]
     public async Task<IActionResult> UpdateBookingStatus(int id, [FromBody] UpdateBookingStatusDto dto)
     {
         var result = await _dashboardService.UpdateBookingStatusAsync(id, dto.Status);
