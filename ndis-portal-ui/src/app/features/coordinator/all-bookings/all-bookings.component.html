@@ -1,0 +1,89 @@
+<div class="all-bookings-page">
+  <div class="page-header">
+    <button class="back-btn" routerLink="/dashboard">←</button>
+    <div>
+      <h1>Comprehensive Bookings</h1>
+      <p>Managing participant care schedules and service approvals.</p>
+    </div>
+  </div>
+
+  <div class="bookings-card">
+    <div class="card-header">
+      <h3>Booking Queue</h3>
+      <div class="filter-section">
+        <select [(ngModel)]="statusFilter" (change)="filterByStatus()" data-testid="status-filter" class="status-filter">
+          <option value="All">All</option>
+          <option value="Pending">Pending</option>
+          <option value="Approved">Approved</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-container" data-testid="bookings-table">
+      <table>
+        <thead>
+          <tr>
+            <th>PARTICIPANT</th>
+            <th>SERVICE</th>
+            <th>DATE & TIME</th>
+            <th>STATUS</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let booking of paginatedBookings">
+            <td>
+              <div class="participant-info">
+                <div class="avatar" [style.background-color]="booking.avatarColor">
+                  {{ getInitials(booking.participantName) }}
+                </div>
+                <div class="participant-details">
+                  <strong>{{ booking.participantName }}</strong>
+                  <small>NDIS: {{ booking.ndisNumber }}</small>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="service-info">
+                <strong>{{ booking.serviceName }}</strong>
+                <small>{{ booking.categoryName }}</small>
+              </div>
+            </td>
+            <td>
+              <div class="date-info">
+                <strong>{{ booking.bookingDate }}</strong>
+                <small>{{ booking.timeRange }}</small>
+              </div>
+            </td>
+            <td>
+              <span class="status-badge" [class]="booking.status.toLowerCase()">
+                {{ booking.status }}
+              </span>
+            </td>
+            <td>
+              <div class="actions" *ngIf="booking.status === 'Pending'; else noActions">
+                <button class="approve-btn" (click)="approveBooking(booking.id)" data-testid="approve-btn">Approve</button>
+                <button class="cancel-btn" (click)="cancelBooking(booking.id)" data-testid="cancel-btn">Cancel</button>
+              </div>
+              <ng-template #noActions>
+                <button class="menu-btn">⋮</button>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination-footer">
+      <p>Showing {{ paginatedBookings.length }} of {{ filteredBookings.length }} bookings</p>
+      <div class="pagination">
+        <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">‹</button>
+        <button *ngFor="let page of [1,2,3]"
+                [class.active]="page === currentPage"
+                (click)="goToPage(page)">{{ page }}</button>
+        <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">›</button>
+      </div>
+    </div>
+  </div>
+</div>

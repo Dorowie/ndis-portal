@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ServicesService, ServiceItem } from '../../../core/services/services';
 
 @Component({
   selector: 'app-service-detail',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './service-detail.html',
-  styleUrl: './service-detail.scss',
+  imports: [CommonModule, RouterLink],
+  templateUrl: './service-detail.component.html',
+  styleUrl: './service-detail.component.css'
 })
-export class ServiceDetail implements OnInit {
+export class ServiceDetailComponent implements OnInit {
   service: ServiceItem | null = null;
   isLoading = true;
   error: string | null = null;
@@ -22,23 +22,23 @@ export class ServiceDetail implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        this.loadService(id);
-      }
-    });
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.loadService(+id);
+    } else {
+      this.error = 'Invalid service ID';
+      this.isLoading = false;
+    }
   }
 
   loadService(id: number): void {
     this.isLoading = true;
-    this.error = null;
     this.servicesService.getService(id).subscribe({
-      next: (data) => {
+      next: (data: ServiceItem) => {
         this.service = data;
         this.isLoading = false;
       },
-      error: (err) => {
+      error: (err: Error) => {
         console.error('Error loading service:', err);
         this.error = 'Failed to load service details';
         this.isLoading = false;
@@ -46,11 +46,15 @@ export class ServiceDetail implements OnInit {
     });
   }
 
-  bookService(): void {
-    if (this.service) {
-      this.router.navigate(['/bookings/new'], { queryParams: { serviceId: this.service.id } });
-    }
+  goBack(): void {
+    this.router.navigate(['/services']);
   }
 
-
+  bookService(): void {
+    if (this.service) {
+      this.router.navigate(['/bookings/new'], {
+        queryParams: { serviceId: this.service.id }
+      });
+    }
+  }
 }

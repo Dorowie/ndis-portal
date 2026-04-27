@@ -1,12 +1,13 @@
 import { Component, Output, EventEmitter, inject } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule for *ngIf
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+
 import { AuthService } from '../../../core/services/auth.services';
 
 @Component({
   selector: 'app-top-nav',
   standalone: true,
-  imports: [CommonModule], // Ensure this is here
+  imports: [CommonModule],
   templateUrl: './top-nav.component.html',
   styleUrls: ['./top-nav.component.scss']
 })
@@ -16,27 +17,24 @@ export class TopNavComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  // Modal State
   showLogoutModal = false;
+  userRole: string | null = 'Coordinator';
 
-  onToggle() {
+  onToggle(): void {
     this.toggle.emit();
   }
 
-  // Open the confirmation dialog
-  openLogoutModal() {
+  openLogoutModal(): void {
     this.showLogoutModal = true;
   }
 
-  // Close without logging out
-  cancelLogout() {
+  cancelLogout(): void {
     this.showLogoutModal = false;
   }
 
-  // The actual logout execution
-  confirmLogout() {
+  confirmLogout(): void {
     this.authService.logout();
-    this.router.navigate(['/login'], { replaceUrl: true });
     this.showLogoutModal = false;
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
 }

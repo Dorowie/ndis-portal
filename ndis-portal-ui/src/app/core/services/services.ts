@@ -9,6 +9,7 @@ export interface ServiceItem {
   description: string;
   is_active: boolean;
   category_name: string;
+  price?: number;
 }
 
 interface ApiResponse<T> {

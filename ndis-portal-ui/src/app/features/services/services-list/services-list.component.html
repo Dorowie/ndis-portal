@@ -1,62 +1,42 @@
-<div class="top-bar">
-  <div class="heading-block">
-    <h1 class="app-section-title" id="selection-page-title">Service Selection</h1>
-    <p class="app-section-subtitle">Choose a support category that best fits your requirements today.</p>
+<div class="services-list-page">
+  <div class="page-header">
+    <h1>Available Services</h1>
+    <p>Browse and select from our range of NDIS support services</p>
   </div>
 
-  <div class="right-controls">
-    <span class="filter-label">Filter by Category</span>
-    <div class="category-dropdown">
-      <span class="material-icons dropdown-icon">tune</span>
-      
-      <select id="category-filter-select" (change)="onCategoryChange($event)" [value]="selectedCategory">
-        <option value="Category" hidden disabled selected>Category</option>
-        
-        <option *ngFor="let category of categories" [value]="category" [id]="'filter-option-' + category">
-          {{ category }}
-        </option>
-      </select>
-
-      <span class="material-icons arrow-icon">expand_more</span>
-    </div>
+  <div class="filter-section">
+    <label>Filter by Category:</label>
+    <select (change)="onCategoryChange($event)" [value]="selectedCategory">
+      <option value="Category">All Categories</option>
+      <option *ngFor="let category of categories.slice(1)" [value]="category">
+        {{ category }}
+      </option>
+    </select>
   </div>
 
-</div>
+  <div *ngIf="isLoading" class="loading-state">
+    Loading services...
+  </div>
 
-<div *ngIf="isLoading" class="loading-state app-surface" id="services-loading-spinner">
-  Loading services...
-</div>
+  <div *ngIf="!isLoading && filteredServices.length === 0" class="empty-state">
+    No services match the selected category.
+  </div>
 
-<div
-  *ngIf="!isLoading && filteredServices.length === 0"
-  class="empty-state app-surface"
-  id="services-empty-state"
->
-  No services match the selected category.
-</div>
-
-<div class="cards-grid" *ngIf="!isLoading && filteredServices.length > 0" id="services-grid-container">
-  <div
-    class="service-card app-surface"
-    *ngFor="let service of filteredServices"
-    [id]="'service-card-' + service.id"
-    [style.border-left-color]="service.accent"
-    (click)="openService(service)"
-  >
-    <div class="icon-circle">
-      <span class="material-icons" [id]="'service-icon-' + service.id">{{ service.icon }}</span>
-    </div>
-
-    <h3 [id]="'service-name-' + service.id">{{ service.name }}</h3>
-    <p [id]="'service-desc-' + service.id">{{ service.description }}</p>
-
-    <button
-      [id]="'btn-select-service-' + service.id"
-      type="button"
-      class="select-btn"
-      (click)="openService(service); $event.stopPropagation()"
+  <div class="services-grid" *ngIf="!isLoading && filteredServices.length > 0">
+    <div
+      class="service-card"
+      *ngFor="let service of filteredServices"
+      (click)="openService(service)"
+      [style.border-left-color]="service.accent"
     >
-      Select
-    </button>
+      <div class="icon-circle">
+        <span class="material-icons">{{ service.icon }}</span>
+      </div>
+      <h3>{{ service.name }}</h3>
+      <p>{{ service.description }}</p>
+      <button type="button" class="select-btn" (click)="openService(service); $event.stopPropagation()">
+        View Details
+      </button>
+    </div>
   </div>
 </div>

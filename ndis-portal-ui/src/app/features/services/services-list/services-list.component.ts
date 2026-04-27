@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ServicesService, ServiceItem } from '../../../core/services/services';
 
-// Map category names to accent colors and icons for display
 const CATEGORY_STYLES: Record<string, { accent: string; icon: string }> = {
   'Daily Personal Activities': { accent: '#d9534f', icon: 'self_improvement' },
   'Community Access': { accent: '#b59b00', icon: 'groups' },
@@ -22,7 +21,7 @@ interface DisplayService extends ServiceItem {
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './services-list.component.html',
-  styleUrl: './services-list.component.scss'
+  styleUrl: './services-list.component.css'
 })
 export class ServicesListComponent implements OnInit {
   isLoading = true;
@@ -42,7 +41,6 @@ export class ServicesListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private location: Location,
     private servicesService: ServicesService
   ) {}
 
@@ -76,7 +74,6 @@ export class ServicesListComponent implements OnInit {
     if (this.selectedCategory === 'Category') {
       return this.services;
     }
-
     return this.services.filter(
       service => (service.category_name || '') === this.selectedCategory
     );
@@ -90,5 +87,4 @@ export class ServicesListComponent implements OnInit {
   openService(service: DisplayService): void {
     this.router.navigate(['/services', service.id]);
   }
-
 }
