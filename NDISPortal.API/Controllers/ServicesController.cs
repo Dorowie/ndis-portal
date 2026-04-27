@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using NDISPortal.API.Data;
 using NDISPortal.API.DTOs;
 using NDISPortal.API.DTOs.Services;
@@ -19,14 +20,26 @@ namespace NDISPortal.API.Controllers
             _context = context;
         }
 
-        // 1. GET /api/services - Get all active services (public)
+        // 1. GET /api/services - Get services (public gets active only, Coordinators get all)
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetServices()
         {
-            var services = await _context.Services
+            // Check if user is Coordinator
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+            var isCoordinator = userRole == "Coordinator";
+
+            var query = _context.Services
                 .Include(s => s.Category)
-                .Where(s => s.is_active)
+                .AsQueryable();
+
+            // Only filter by is_active if user is not a Coordinator
+            if (!isCoordinator)
+            {
+                query = query.Where(s => s.is_active);
+            }
+
+            var services = await query
                 .OrderBy(s => s.id)
                 .Select(s => new ServiceResponseDto
                 {
@@ -168,19 +181,6 @@ namespace NDISPortal.API.Controllers
                 ));
             }
 
-            // Verify category exists
-            var categoryExists = await _context.ServiceCategories.AnyAsync(c => c.id == dto.CategoryId);
-            if (!categoryExists)
-            {
-                return BadRequest(new ApiResponse<object>(
-                    success: false,
-                    message: "Category not found. Please select a valid category."
-                ));
-            }
-
-            service.category_id = dto.CategoryId;
-            service.name = dto.Name;
-            service.description = dto.Description;
             service.is_active = dto.IsActive;
             service.modified_date = DateTime.UtcNow;
 
@@ -203,7 +203,7 @@ namespace NDISPortal.API.Controllers
             ));
         }
 
-        // 5. DELETE /api/services/{id} - Soft delete service (Coordinator only)
+        // 5. DELETE /api/services/{id} - Hard delete service (Coordinator only)
         [HttpDelete("{id}")]
         [Authorize(Roles = "Coordinator")]
         public async Task<IActionResult> DeleteService(int id)
@@ -217,9 +217,8 @@ namespace NDISPortal.API.Controllers
                 ));
             }
 
-            service.is_active = false;
-            service.modified_date = DateTime.UtcNow;
-
+            // Hard delete - permanently remove from database
+            _context.Services.Remove(service);
             await _context.SaveChangesAsync();
 
             return Ok(new ApiResponse<object>(
