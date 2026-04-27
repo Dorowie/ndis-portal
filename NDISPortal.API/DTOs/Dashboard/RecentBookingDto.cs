@@ -8,6 +8,4 @@ public class RecentBookingDto
     public DateTime PreferredDate { get; set; }
     public int Status { get; set; }
 
-    public bool CanApprove { get; set; }
-    public bool CanCancel { get; set; }
 }

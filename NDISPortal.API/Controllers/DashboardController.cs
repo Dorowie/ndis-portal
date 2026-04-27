@@ -17,7 +17,7 @@ public class DashboardController : ControllerBase
         _dashboardService = dashboardService;
     }
 
-    // ✅ GET /api/dashboard
+    // GET /api/dashboard
     [HttpGet]
     public async Task<IActionResult> GetDashboard()
     {
@@ -25,7 +25,7 @@ public class DashboardController : ControllerBase
         return Ok(result);
     }
 
-    // ✅ PUT /api/dashboard/bookings/{id}/status
+    // PUT /api/dashboard/bookings/{id}/status
     [HttpPut("bookings/{id}/status")]
     public async Task<IActionResult> UpdateBookingStatus(int id, [FromBody] UpdateBookingStatusDto dto)
     {

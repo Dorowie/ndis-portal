@@ -32,8 +32,6 @@ public class DashboardService : IDashboardService
                 PreferredDate = b.booking_date,
                 Status = b.status,
 
-                CanApprove = b.status == 0,
-                CanCancel = b.status == 0
             })
             .ToListAsync();
 
