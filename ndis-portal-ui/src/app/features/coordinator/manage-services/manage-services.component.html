@@ -1,6 +1,5 @@
 <div class="manage-services-page">
   <div class="page-header">
-    <button class="back-btn" routerLink="/dashboard">←</button>
     <div class="header-content">
       <h1>Manage Services</h1>
       <p>Efficiently organize, update, and monitor clinical and support services across your local NDIS network.</p>
@@ -26,18 +25,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let service of services">
+          <tr *ngFor="let service of filteredServices">
             <td>
               <div class="service-info">
                 <div class="avatar">{{ getInitials(service.name) }}</div>
                 <div class="service-details">
                   <strong>{{ service.name }}</strong>
-                  <small>ID: {{ service.id }}</small>
                 </div>
               </div>
             </td>
             <td>
-              <span class="category-tag">{{ service.category }}</span>
+              <div class="category-info">
+                <span class="category-tag">{{ service.category }}</span>
+              </div>
             </td>
             <td>
               <span class="status-badge" [class.active]="service.status === 'Active'" [class.inactive]="service.status === 'Inactive'">
@@ -45,10 +45,12 @@
               </span>
             </td>
             <td>
-              <label class="toggle-switch" data-testid="toggle-btn">
-                <input type="checkbox" [checked]="service.status === 'Active'" (change)="toggleStatus(service)">
-                <span class="slider"></span>
-              </label>
+              <div class="actions">
+                <label class="toggle-switch" data-testid="toggle-btn">
+                  <input type="checkbox" [checked]="service.status === 'Active'" (change)="toggleStatus(service)">
+                  <span class="slider"></span>
+                </label>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -56,7 +58,7 @@
     </div>
 
     <div class="pagination-footer">
-      <p>Showing {{ services.length }} of {{ services.length }} Services</p>
+      <p>Showing {{ filteredServices.length }} of {{ services.length }} Services</p>
       <div class="pagination">
         <button>‹</button>
         <button class="active">1</button>
