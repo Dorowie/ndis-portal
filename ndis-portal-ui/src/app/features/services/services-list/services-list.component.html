@@ -5,6 +5,10 @@
   </div>
 
   <div class="right-controls">
+    <button class="recommendation-button" (click)="openRecommendationModal()">
+      <span class="material-icons button-icon">psychology</span>
+      Find the right service for me
+    </button>
     <span class="filter-label">Filter by Category</span>
     <div class="category-dropdown">
       <span class="material-icons dropdown-icon">tune</span>
@@ -60,3 +64,6 @@
     </button>
   </div>
 </div>
+
+<!-- Service Recommendation Modal -->
+<app-service-recommendation-modal></app-service-recommendation-modal>

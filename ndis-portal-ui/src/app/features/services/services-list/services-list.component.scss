@@ -30,6 +30,35 @@ $shadow-hover: rgba(0, 0, 0, 0.1);
     align-items: flex-start;
   }
 
+  .recommendation-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #6f2da8 0%, #8b4fc9 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(111, 45, 168, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(111, 45, 168, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    .button-icon {
+      font-size: 20px;
+    }
+  }
+
   .filter-label {
     font-size: 0.7rem;
     font-weight: 800;

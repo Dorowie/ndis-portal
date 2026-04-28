@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ServicesService, ServiceItem } from '../../../core/services/services';
+import { ServiceRecommendationModalComponent } from '../../../shared/components/service-recommendation-modal/service-recommendation-modal.component';
 
 // Map category names to accent colors and icons for display
 const CATEGORY_STYLES: Record<string, { accent: string; icon: string }> = {
@@ -20,11 +21,13 @@ interface DisplayService extends ServiceItem {
 @Component({
   selector: 'app-services-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ServiceRecommendationModalComponent],
   templateUrl: './services-list.component.html',
   styleUrl: './services-list.component.scss'
 })
 export class ServicesListComponent implements OnInit {
+  @ViewChild(ServiceRecommendationModalComponent) recommendationModal!: ServiceRecommendationModalComponent;
+
   isLoading = true;
 
   categories: string[] = [
@@ -89,6 +92,10 @@ export class ServicesListComponent implements OnInit {
 
   openService(service: DisplayService): void {
     this.router.navigate(['/services', service.id]);
+  }
+
+  openRecommendationModal(): void {
+    this.recommendationModal.openModal();
   }
 
 }
