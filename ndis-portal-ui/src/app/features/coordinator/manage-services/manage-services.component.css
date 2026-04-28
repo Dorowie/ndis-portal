@@ -12,17 +12,6 @@
   position: relative;
 }
 
-.back-btn {
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: transparent;
-  font-size: 20px;
-  cursor: pointer;
-  margin-top: 4px;
-  color: #4b4450;
-}
-
 .header-content {
   flex: 1;
 }
@@ -31,12 +20,12 @@
   font-size: 28px;
   font-weight: 700;
   margin: 0 0 4px 0;
-  color: #6f2da8;
+  color: #111827;
 }
 
 .header-content p {
   margin: 0;
-  color: #6b7280;
+  color:#111827;
   font-size: 14px;
   max-width: 500px;
 }
@@ -81,7 +70,7 @@
   margin: 0;
   font-size: 16px;
   font-weight: 600;
-  color: #0057a8;
+  color:#18181b;
 }
 
 .table-container {

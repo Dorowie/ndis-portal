@@ -19,36 +19,11 @@ interface Service {
   styleUrl: './manage-services.component.css',
 })
 export class ManageServicesComponent implements OnInit {
-  services: Service[] = [
-    {
-      id: 'SRV-0342',
-      name: 'Physiotherapy - In Home',
-      category: 'Health & Wellbeing',
-      description: 'In-home physiotherapy sessions',
-      status: 'Active'
-    },
-    {
-      id: 'SRV-0098',
-      name: 'Community Access Support',
-      category: 'Social Participation',
-      description: 'Community engagement activities',
-      status: 'Active'
-    },
-    {
-      id: 'SRV-0015',
-      name: 'Occupational Therapy',
-      category: 'Clinical Support',
-      description: 'Therapeutic occupational support',
-      status: 'Inactive'
-    },
-    {
-      id: 'SRV-0221',
-      name: 'Meal Preparation & Delivery',
-      category: 'Daily Living',
-      description: 'Daily meal preparation service',
-      status: 'Active'
-    }
-  ];
+  // Services data - will be populated from API
+  services: Service[] = [];
+
+  filteredServices: Service[] = [];
+  statusFilter = 'All';
 
   showModal = false;
   newService: Service = {
@@ -68,12 +43,6 @@ export class ManageServicesComponent implements OnInit {
     'Allied Health'
   ];
 
-<<<<<<< Updated upstream
-  ngOnInit(): void {}
-
-  toggleStatus(service: Service): void {
-    service.status = service.status === 'Active' ? 'Inactive' : 'Active';
-=======
   constructor(private servicesService: ServicesService) {}
 
   ngOnInit(): void {
@@ -116,7 +85,6 @@ export class ManageServicesComponent implements OnInit {
         console.error('Error updating service status:', err);
       }
     });
->>>>>>> Stashed changes
   }
 
   openModal(): void {
@@ -136,14 +104,6 @@ export class ManageServicesComponent implements OnInit {
 
   saveService(): void {
     if (this.newService.name && this.newService.category) {
-<<<<<<< Updated upstream
-      const newId = 'SRV-' + Math.floor(1000 + Math.random() * 9000);
-      this.services.unshift({
-        ...this.newService,
-        id: newId
-      });
-      this.closeModal();
-=======
       const serviceToCreate: ServiceItem = {
         name: this.newService.name,
         category: this.newService.category,
@@ -169,7 +129,6 @@ export class ManageServicesComponent implements OnInit {
           // TODO: Show error message to user
         }
       });
->>>>>>> Stashed changes
     }
   }
 

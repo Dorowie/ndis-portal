@@ -1,124 +1,146 @@
-.service-detail-page {
-  padding: 24px;
-  color: #18181b;
-  font-family: Inter, Arial, sans-serif;
+/* Service Detail Styles */
+.service-detail-container {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-.back-btn {
+.service-detail-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border: none;
-  background: transparent;
-  color: #6f2da8;
-  font-size: 14px;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.service-detail-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #222;
+  flex: 1;
+}
+
+.category-badge {
+  background: linear-gradient(135deg, #6f2da8 0%, #8b5cf6 100%);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
   font-weight: 600;
-  cursor: pointer;
+  white-space: nowrap;
+}
+
+.service-detail-content {
+  padding: 32px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.service-detail-content h2 {
+  margin: 0 0 16px;
+  font-size: 1.4rem;
+  color: #222;
+  font-weight: 600;
+}
+
+.service-detail-content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #555;
   margin-bottom: 24px;
 }
 
-.back-btn:hover {
-  background: #f3ecf8;
-  border-radius: 8px;
+.service-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+  padding: 20px;
+  background: #f8f5fa;
+  border-radius: 12px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.meta-item .material-icons {
+  font-size: 24px;
+  color: #6f2da8;
+}
+
+.book-btn {
+  width: 100%;
+  max-width: 300px;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6f2da8 0%, #8b5cf6 100%);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(111, 45, 168, 0.3);
+}
+
+.book-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(111, 45, 168, 0.4);
+  background: linear-gradient(135deg, #5b2590 0%, #7c4fd6 100%);
+}
+
+.book-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.book-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.book-btn .material-icons {
+  font-size: 22px;
 }
 
 .loading-state,
 .error-state {
   padding: 40px;
   text-align: center;
-  background: #f9fafb;
-  border-radius: 12px;
-  color: #6b7280;
+  color: #666;
+  font-size: 1.1rem;
 }
 
 .error-state {
-  color: #dc2626;
-  background: #fef2f2;
+  color: #d32f2f;
+  background: #ffebee;
+  border-radius: 12px;
 }
 
-.service-content {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+@media (max-width: 768px) {
+  .service-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.service-header {
-  margin-bottom: 24px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid #e5e7eb;
-}
+  .service-detail-header h1 {
+    font-size: 1.6rem;
+  }
 
-.service-header h1 {
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0 0 12px 0;
-  color: #111827;
-}
+  .service-detail-content {
+    padding: 24px;
+  }
 
-.category-badge {
-  display: inline-block;
-  padding: 6px 12px;
-  background: #efe5f5;
-  color: #6f2da8;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.service-info {
-  display: grid;
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-.info-section h3 {
-  font-size: 14px;
-  font-weight: 600;
-  color: #6b7280;
-  margin: 0 0 8px 0;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.info-section p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #374151;
-}
-
-.price {
-  font-size: 20px !important;
-  font-weight: 700;
-  color: #6f2da8 !important;
-}
-
-.service-id {
-  font-family: monospace;
-  color: #9ca3af !important;
-}
-
-.actions {
-  display: flex;
-  gap: 12px;
-  padding-top: 24px;
-  border-top: 1px solid #e5e7eb;
-}
-
-.book-btn {
-  padding: 12px 24px;
-  background: #6f2da8;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.book-btn:hover {
-  background: #5a2490;
+  .service-meta {
+    grid-template-columns: 1fr;
+  }
 }

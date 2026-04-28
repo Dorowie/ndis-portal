@@ -1,126 +1,156 @@
-.services-list-page {
-  padding: 24px;
-  color: #18181b;
-  font-family: Inter, Arial, sans-serif;
-}
-
-.page-header {
-  margin-bottom: 24px;
-}
-
-.page-header h1 {
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0 0 8px 0;
-  color: #6f2da8;
-}
-
-.page-header p {
-  margin: 0;
-  color: #6b7280;
-  font-size: 14px;
-}
-
-.filter-section {
+/* Specific layout for the Services Header Area */
+.top-bar {
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.right-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.category-dropdown {
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 8px;
+  background: #ece6ef;
+  border-radius: 10px;
+  padding: 0 12px;
+  height: 42px;
+  min-width: 150px;
 }
 
-.filter-section label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
+.dropdown-icon {
+  font-size: 18px;
+  color: #666;
 }
 
-.filter-section select {
-  padding: 8px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: white;
-  font-size: 14px;
-  color: #374151;
+.category-dropdown select {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: #444;
   cursor: pointer;
-  min-width: 200px;
+  width: 100%;
 }
 
+.profile-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Service States & Grid */
 .loading-state,
 .empty-state {
-  padding: 40px;
-  text-align: center;
-  color: #6b7280;
-  background: #f9fafb;
-  border-radius: 12px;
+  padding: 22px;
+  color: #666;
 }
 
-.services-grid {
+.cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 24px;
 }
 
 .service-card {
-  background: white;
-  border-radius: 12px;
+  padding: 22px 18px;
   border-left: 4px solid #6f2da8;
-  padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .service-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1);
 }
 
 .icon-circle {
-  width: 48px;
-  height: 48px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   background: #f3ecf8;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .icon-circle .material-icons {
-  font-size: 24px;
-  color: #6f2da8;
+  font-size: 28px;
+  color: #222;
 }
 
 .service-card h3 {
-  margin: 0 0 12px 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: #111827;
+  margin: 0 0 10px;
+  font-size: 1.02rem;
+  color: #222;
+  min-height: 46px;
 }
 
 .service-card p {
-  font-size: 14px;
+  font-size: 0.9rem;
   line-height: 1.5;
-  color: #6b7280;
-  margin: 0 0 16px 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  color: #666;
+  margin-bottom: 16px;
+  min-height: 44px;
 }
 
 .select-btn {
   width: 100%;
-  padding: 10px;
+  height: 42px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #efe5f5;
   color: #6f2da8;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s ease;
 }
 
 .select-btn:hover {
   background: #e6d8ef;
+}
+
+/* Responsive Overrides Specific to Services Page */
+@media (max-width: 1100px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .right-controls {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .category-dropdown {
+    width: 100%;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
 }
