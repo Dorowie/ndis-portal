@@ -255,6 +255,7 @@ ng serve --port 4201
 --------------------------Playwright tests------------------------------------------------
 
 **Prerequisites**
+
 **Install recomended extension:**
 - Playwright Test for VS Code
 
