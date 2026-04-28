@@ -250,7 +250,62 @@ ng serve --port 4201
 - **API not connecting?** Verify the backend API is running at `http://localhost:5131`
 
 
+# How to run the Playwright tests
 
+--------------------------Playwright tests------------------------------------------------
+
+**Prerequisites**
+**Install recomended extension:**
+- Playwright Test for VS Code
+
+**Test File Structure**
+Playwright test scripts are located in the tests/ directory:
+tests/
+├── auth.spec.ts
+├── services.spec.ts
+├── bookings.spec.ts
+├── coordinator.spec.ts
+├── chatbot.spec.ts
+└── helpers/
+    └── auth.helper.ts
+
+**Playwright Installation**
+
+To initialize Playwright in the project, run the following command in the terminal:
+```bash
+   npm init playwright@latest
+   ```
+
+**During setup, configure the following:**
+
+- Select TypeScript as the language
+- Set the test directory to tests
+- Choose whether to include GitHub Actions (optional)
+- Install required browsers when prompted
+
+- **This process will generate the playwright.config.ts configuration file.**
+
+**Executing Tests**
+
+1. To execute all tests in headless mode (default):
+   ```bash
+   npx playwright test
+   ```
+
+2. To execute tests in headed mode (browser is visible during execution):
+   ```bash
+   npx playwright test --headed
+   ```
+
+3. To execute tests using the interactive user interface:
+   ```bash
+   npx playwright test --ui
+   ```
+
+4. To execute tests in debug mode:
+   ```bash
+   npx playwright test --debug
+   ```
 
 # Default Login Credentials for Testing
 
