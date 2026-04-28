@@ -5,12 +5,16 @@ interface Booking {
   id: number;
   participantName?: string;
   userName?: string;
+  ndisNumber?: string;
   serviceName?: string;
   service?: string;
   categoryName?: string;
   bookingDate?: string;
   date?: string;
+  timeRange?: string;
+  notes?: string;
   status?: string | number;
+  avatarColor?: string;
 }
 
 @Component({
@@ -27,13 +31,15 @@ export class CoordinatorDashboardComponent implements OnInit {
   filteredBookings: Booking[] = [];
   loading = false;
   errorMessage = '';
+  statusFilter: string = 'Pending';
+  showFilter: boolean = false;
   currentPage = 1;
   pageSize = 4;
 
   ngOnInit(): void {
     // TODO: Load bookings from API
     // this.loadBookingsFromAPI();
-    this.filteredBookings = [...this.bookings];
+    this.filterByStatus();
   }
 
   // TODO: Implement API integration
@@ -96,16 +102,21 @@ export class CoordinatorDashboardComponent implements OnInit {
     }
   }
 
-  filterPending(): void {
-    this.filteredBookings = this.bookings.filter(
-      booking => this.getStatusText(booking.status) === 'Pending'
-    );
-    this.currentPage = 1;
+  toggleFilter(): void {
+    this.showFilter = !this.showFilter;
   }
 
-  showAll(): void {
-    this.filteredBookings = [...this.bookings];
+  setFilter(status: string): void {
+    this.statusFilter = status;
+    this.filterByStatus();
+  }
+
+  filterByStatus(): void {
+    this.filteredBookings = this.bookings.filter(
+      booking => this.getStatusText(booking.status) === this.statusFilter
+    );
     this.currentPage = 1;
+    this.showFilter = false;
   }
 
   getParticipantName(booking: Booking): string {

@@ -23,72 +23,36 @@ interface Booking {
   styleUrl: './all-bookings.component.css',
 })
 export class AllBookingsComponent implements OnInit {
-  bookings: Booking[] = [
-    {
-      id: 1,
-      participantName: 'Sarah Mitchell',
-      ndisNumber: '#482-192-334',
-      serviceName: 'Community Participation',
-      categoryName: 'Personal Care',
-      bookingDate: 'Oct 24, 2023',
-      timeRange: '10:00 AM - 2:00 PM',
-      notes: 'Regular weekly session',
-      status: 'Pending',
-      avatarColor: '#BFDBFE'
-    },
-    {
-      id: 2,
-      participantName: 'James Robinson',
-      ndisNumber: '#112-908-445',
-      serviceName: 'Occupational Therapy',
-      categoryName: 'Therapeutic Support',
-      bookingDate: 'Oct 25, 2023',
-      timeRange: '02:30 PM - 3:30 PM',
-      status: 'Approved',
-      avatarColor: '#BBF7D0'
-    },
-    {
-      id: 3,
-      participantName: 'Emily Lawson',
-      ndisNumber: '#223-445-667',
-      serviceName: 'Meal Preparation',
-      categoryName: 'Domestic Support',
-      bookingDate: 'Oct 26, 2023',
-      timeRange: '11:00 AM - 1:00 PM',
-      status: 'Pending',
-      avatarColor: '#FED7AA'
-    },
-    {
-      id: 4,
-      participantName: 'Thomas Higgins',
-      ndisNumber: '#887-112-990',
-      serviceName: 'Speech Therapy',
-      categoryName: 'Allied Health',
-      bookingDate: 'Oct 26, 2023',
-      timeRange: '09:00 AM - 10:00 AM',
-      status: 'Cancelled',
-      avatarColor: '#BFDBFE'
-    }
-  ];
+  // Bookings data - will be populated from API
+  bookings: Booking[] = [];
 
   filteredBookings: Booking[] = [];
-  statusFilter: string = 'All';
+  statusFilter: string = 'Pending';
+  showFilter: boolean = false;
   currentPage: number = 1;
   pageSize: number = 10;
 
   ngOnInit(): void {
-    this.filteredBookings = [...this.bookings];
+    // TODO: Load bookings from API
+    // this.loadBookingsFromAPI();
+    this.filterByStatus();
+  }
+
+  toggleFilter(): void {
+    this.showFilter = !this.showFilter;
+  }
+
+  setFilter(status: string): void {
+    this.statusFilter = status;
+    this.filterByStatus();
   }
 
   filterByStatus(): void {
-    if (this.statusFilter === 'All') {
-      this.filteredBookings = [...this.bookings];
-    } else {
-      this.filteredBookings = this.bookings.filter(
-        b => b.status === this.statusFilter
-      );
-    }
+    this.filteredBookings = this.bookings.filter(
+      b => b.status === this.statusFilter
+    );
     this.currentPage = 1;
+    this.showFilter = false;
   }
 
   getInitials(name: string): string {
@@ -101,6 +65,7 @@ export class AllBookingsComponent implements OnInit {
   }
 
   approveBooking(id: number): void {
+    // TODO: Update booking status via API
     const booking = this.bookings.find(b => b.id === id);
     if (booking) {
       booking.status = 'Approved';
@@ -109,6 +74,7 @@ export class AllBookingsComponent implements OnInit {
   }
 
   cancelBooking(id: number): void {
+    // TODO: Update booking status via API
     const booking = this.bookings.find(b => b.id === id);
     if (booking) {
       booking.status = 'Cancelled';

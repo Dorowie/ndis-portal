@@ -5,21 +5,7 @@
 }
 
 .page-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
   margin-bottom: 24px;
-}
-
-.back-btn {
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: transparent;
-  font-size: 20px;
-  cursor: pointer;
-  margin-top: 4px;
-  color: #4b4450;
 }
 
 .page-header h1 {
@@ -54,29 +40,78 @@
   margin: 0;
   font-size: 16px;
   font-weight: 600;
-  color: #111827;
+  color: #18181b;
 }
 
-.filter-section {
+.filter-wrapper {
+  position: relative;
+}
+
+.filter-btn {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 10px 20px;
+  background: #e5e7eb;
+  color: #374151;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.status-filter {
-  padding: 8px 16px;
+.filter-btn:hover {
+  background: #d1d5db;
+}
+
+.filter-icon {
+  font-size: 14px;
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  z-index: 1000;
+  min-width: 180px;
+  border: 1px solid #f3f4f6;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-option {
+  padding: 12px 20px;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: #f9fafb;
-  font-size: 13px;
+  border-radius: 10px;
+  background: white;
+  font-size: 14px;
+  font-weight: 500;
   color: #374151;
   cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 32px;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.filter-option:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  transform: translateX(2px);
+}
+
+.filter-option.active {
+  background: #0057a8;
+  color: white;
+  border-color: #0057a8;
 }
 
 .table-container {
@@ -132,13 +167,6 @@ td {
   font-size: 14px;
   font-weight: 600;
   color: #111827;
-}
-
-.participant-details small {
-  display: block;
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 2px;
 }
 
 .service-info strong {

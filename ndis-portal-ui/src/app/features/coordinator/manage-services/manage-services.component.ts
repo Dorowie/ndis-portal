@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ServicesService, ServiceItem } from '../../../core/services/services.service';
 
 interface Service {
   id: string;
@@ -67,10 +68,55 @@ export class ManageServicesComponent implements OnInit {
     'Allied Health'
   ];
 
+<<<<<<< Updated upstream
   ngOnInit(): void {}
 
   toggleStatus(service: Service): void {
     service.status = service.status === 'Active' ? 'Inactive' : 'Active';
+=======
+  constructor(private servicesService: ServicesService) {}
+
+  ngOnInit(): void {
+    this.loadServices();
+  }
+
+  loadServices(): void {
+    this.servicesService.getServices().subscribe({
+      next: (data) => {
+        this.services = data.map(s => ({
+          id: s.id || '',
+          name: s.name,
+          category: s.category,
+          description: s.description || '',
+          status: s.status
+        }));
+        this.filterByStatus();
+      },
+      error: (err) => {
+        console.error('Error loading services:', err);
+      }
+    });
+  }
+
+  filterByStatus(): void {
+    if (this.statusFilter === 'All') {
+      this.filteredServices = [...this.services];
+    } else {
+      this.filteredServices = this.services.filter(s => s.status === this.statusFilter);
+    }
+  }
+
+  toggleStatus(service: Service): void {
+    const newStatus = service.status === 'Active' ? 'Inactive' : 'Active';
+    this.servicesService.updateServiceStatus(service.id, newStatus).subscribe({
+      next: () => {
+        service.status = newStatus;
+      },
+      error: (err) => {
+        console.error('Error updating service status:', err);
+      }
+    });
+>>>>>>> Stashed changes
   }
 
   openModal(): void {
@@ -90,12 +136,40 @@ export class ManageServicesComponent implements OnInit {
 
   saveService(): void {
     if (this.newService.name && this.newService.category) {
+<<<<<<< Updated upstream
       const newId = 'SRV-' + Math.floor(1000 + Math.random() * 9000);
       this.services.unshift({
         ...this.newService,
         id: newId
       });
       this.closeModal();
+=======
+      const serviceToCreate: ServiceItem = {
+        name: this.newService.name,
+        category: this.newService.category,
+        description: this.newService.description,
+        status: this.newService.status
+      };
+
+      this.servicesService.createService(serviceToCreate).subscribe({
+        next: (createdService) => {
+          // Add the new service to the list
+          this.services.unshift({
+            id: createdService.id || '',
+            name: createdService.name,
+            category: createdService.category,
+            description: createdService.description || '',
+            status: createdService.status
+          });
+          this.filterByStatus();
+          this.closeModal();
+        },
+        error: (err) => {
+          console.error('Error creating service:', err);
+          // TODO: Show error message to user
+        }
+      });
+>>>>>>> Stashed changes
     }
   }
 

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesService, ServiceItem } from '../../../core/services/services';
 
 @Component({
   selector: 'app-service-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './service-detail.component.html',
-  styleUrl: './service-detail.component.css'
+  styleUrl: './service-detail.component.scss'
 })
-export class ServiceDetailComponent implements OnInit {
+export class ServiceDetail implements OnInit {
   service: ServiceItem | null = null;
   isLoading = true;
   error: string | null = null;
@@ -22,23 +22,23 @@ export class ServiceDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.loadService(+id);
-    } else {
-      this.error = 'Invalid service ID';
-      this.isLoading = false;
-    }
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
+        this.loadService(id);
+      }
+    });
   }
 
   loadService(id: number): void {
     this.isLoading = true;
+    this.error = null;
     this.servicesService.getService(id).subscribe({
-      next: (data: ServiceItem) => {
+      next: (data) => {
         this.service = data;
         this.isLoading = false;
       },
-      error: (err: Error) => {
+      error: (err) => {
         console.error('Error loading service:', err);
         this.error = 'Failed to load service details';
         this.isLoading = false;
@@ -46,15 +46,11 @@ export class ServiceDetailComponent implements OnInit {
     });
   }
 
-  goBack(): void {
-    this.router.navigate(['/services']);
-  }
-
   bookService(): void {
     if (this.service) {
-      this.router.navigate(['/bookings/new'], {
-        queryParams: { serviceId: this.service.id }
-      });
+      this.router.navigate(['/bookings/new'], { queryParams: { serviceId: this.service.id } });
     }
   }
+
+
 }

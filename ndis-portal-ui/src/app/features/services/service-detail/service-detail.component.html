@@ -1,41 +1,42 @@
-<div class="service-detail-page">
-  <button class="back-btn" (click)="goBack()">
-    <span class="material-icons">arrow_back</span> Back to Services
-  </button>
+<div *ngIf="isLoading" class="loading-state" id="service-details-loading">
+  Loading service details...
+</div>
 
-  <div *ngIf="isLoading" class="loading-state">
-    Loading service details...
+<div *ngIf="error" class="error-state" id="service-details-error">
+  {{ error }}
+</div>
+
+<div *ngIf="!isLoading && !error && service" class="service-detail-container" id="service-detail-view">
+  
+  <div class="service-detail-header">
+    <h1 id="service-name-display">{{ service.name }}</h1>
+    <span class="category-badge" id="service-category-badge">{{ service.category_name }}</span>
   </div>
 
-  <div *ngIf="error" class="error-state">
-    {{ error }}
-  </div>
+  <div class="service-detail-content">
+    <h2>Description</h2>
+    <p id="service-description-text">{{ service.description }}</p>
 
-  <div *ngIf="!isLoading && service" class="service-content">
-    <div class="service-header">
-      <h1>{{ service.name }}</h1>
-      <span class="category-badge">{{ service.category_name }}</span>
-    </div>
-
-    <div class="service-info">
-      <div class="info-section">
-        <h3>Description</h3>
-        <p>{{ service.description }}</p>
+    <div class="service-meta">
+      <div class="meta-item">
+        <span class="material-icons">category</span>
+        <span id="service-meta-category">Category: {{ service.category_name }}</span>
       </div>
-
-      <div class="info-section" *ngIf="service.price">
-        <h3>Pricing</h3>
-        <p class="price">${{ service.price }} per hour</p>
-      </div>
-
-      <div class="info-section">
-        <h3>Service ID</h3>
-        <p class="service-id">#{{ service.id }}</p>
+      <div class="meta-item">
+        <span class="material-icons">check_circle</span>
+        <span id="service-meta-status">Status: {{ service.is_active ? 'Active' : 'Inactive' }}</span>
       </div>
     </div>
 
-    <div class="actions">
-      <button class="book-btn" (click)="bookService()">Book This Service</button>
-    </div>
+    <button
+      id="btn-book-service"
+      type="button"
+      class="book-btn"
+      (click)="bookService()"
+      [disabled]="!service.is_active"
+    >
+      <span class="material-icons">calendar_today</span>
+      Book This Service
+    </button>
   </div>
 </div>

@@ -36,9 +36,32 @@
     <div class="booking-header">
       <h3>Booking Queue</h3>
 
-      <div class="filter-buttons">
-        <button class="filter-btn" (click)="filterPending()">Filter</button>
-        <button class="filter-btn" (click)="showAll()">All</button>
+      <div class="filter-wrapper">
+        <button class="filter-btn" (click)="toggleFilter()">
+          <span class="filter-icon">☰</span> Filter
+        </button>
+        <div class="filter-dropdown" *ngIf="showFilter">
+          <div class="filter-options">
+            <button 
+              class="filter-option" 
+              [class.active]="statusFilter === 'Pending'"
+              (click)="setFilter('Pending')">
+              Pending
+            </button>
+            <button 
+              class="filter-option" 
+              [class.active]="statusFilter === 'Approved'"
+              (click)="setFilter('Approved')">
+              Approved
+            </button>
+            <button 
+              class="filter-option" 
+              [class.active]="statusFilter === 'Cancelled'"
+              (click)="setFilter('Cancelled')">
+              Cancelled
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -71,7 +94,6 @@
                 </div>
                 <div>
                   <strong>{{ getParticipantName(booking) }}</strong>
-                  <small>NDIS: #{{ booking.id }}</small>
                 </div>
               </div>
             </td>
