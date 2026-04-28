@@ -66,7 +66,7 @@ export class RegisterComponent {
             // Notify sidebar of role change
             window.dispatchEvent(new StorageEvent('storage', { key: 'userRole' }));
             // Redirect based on role
-            const role = registerData.Role;
+            const role = registerData.Role?.trim();
             console.log('Navigating based on role:', role);
             if (role === 'Coordinator') {
               console.log('Redirecting to /dashboard');
@@ -74,12 +74,15 @@ export class RegisterComponent {
                 () => console.log('Navigation to dashboard successful'),
                 (err) => console.error('Navigation to dashboard failed:', err)
               );
-            } else {
+            } else if (role === 'Participant') {
               console.log('Redirecting to /services');
               this.router.navigate(['/services']).then(
                 () => console.log('Navigation to services successful'),
                 (err) => console.error('Navigation to services failed:', err)
               );
+            } else {
+              console.error('Unknown role, defaulting to /services:', role);
+              this.router.navigate(['/services']);
             }
           } else {
             this.apiError = response.message || 'Registration failed';
