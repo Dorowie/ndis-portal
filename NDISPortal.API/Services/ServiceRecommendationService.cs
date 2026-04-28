@@ -24,6 +24,14 @@ namespace NDISPortal.API.Services
             _context = context;
         }
 
+        private class ServiceInfo
+        {
+            public int id { get; set; }
+            public string name { get; set; } = string.Empty;
+            public string description { get; set; } = string.Empty;
+            public string CategoryName { get; set; } = string.Empty;
+        }
+
         public async Task<ServiceRecommendationResponseDto> GetRecommendationsAsync(ServiceRecommendationRequestDto request)
         {
             if (string.IsNullOrWhiteSpace(request.UserSituation))
@@ -43,11 +51,11 @@ namespace NDISPortal.API.Services
             var services = await _context.Services
                 .Include(s => s.Category)
                 .Where(s => s.is_active)
-                .Select(s => new
+                .Select(s => new ServiceInfo
                 {
-                    s.id,
-                    s.name,
-                    s.description,
+                    id = s.id,
+                    name = s.name,
+                    description = s.description,
                     CategoryName = s.Category != null ? s.Category.name : "Uncategorized"
                 })
                 .ToListAsync();
@@ -129,7 +137,7 @@ namespace NDISPortal.API.Services
             return ParseRecommendations(reply, services);
         }
 
-        private string BuildKnowledgeContext(dynamic services)
+        private string BuildKnowledgeContext(List<ServiceInfo> services)
         {
             var sb = new StringBuilder();
             sb.AppendLine("Available Services in the Portal:");
@@ -185,7 +193,7 @@ Guidelines:
 """;
         }
 
-        private ServiceRecommendationResponseDto ParseRecommendations(string aiResponse, dynamic services)
+        private ServiceRecommendationResponseDto ParseRecommendations(string aiResponse, List<ServiceInfo> services)
         {
             var response = new ServiceRecommendationResponseDto();
             var recommendations = new List<RecommendedServiceDto>();

@@ -5,7 +5,7 @@ using NDISPortal.API.Services;
 
 namespace NDISPortal.API.Controllers
 {
-    [Route("api/servicerecommendation")]
+    [Route("api/ai/recommend-services")]
     [ApiController]
     [Authorize]
     public class ServiceRecommendationController : ControllerBase

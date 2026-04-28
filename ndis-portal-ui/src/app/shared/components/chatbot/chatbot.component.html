@@ -22,7 +22,7 @@
                  [class.bot-bubble]="msg.sender === 'bot'" 
                  [class.user-bubble]="msg.sender === 'user'"
                  [id]="'chat-bubble-' + i">
-              <markdown [data]="msg.text"></markdown>
+              {{ msg.text }}
             </div>
           </div>
         }

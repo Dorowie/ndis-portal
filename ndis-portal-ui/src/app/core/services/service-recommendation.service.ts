@@ -32,7 +32,7 @@ interface ApiResponse<T> {
 })
 export class ServiceRecommendationService {
   private http = inject(HttpClient);
-  private readonly apiUrl = 'https://localhost:7113/api/servicerecommendation';
+  private readonly apiUrl = 'https://localhost:7113/api/ai/recommend-services';
 
   getRecommendations(request: ServiceRecommendationRequest): Observable<ServiceRecommendationResponse> {
     return this.http.post<ApiResponse<ServiceRecommendationResponse>>(this.apiUrl, request)
