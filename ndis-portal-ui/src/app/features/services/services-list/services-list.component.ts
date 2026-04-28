@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ServicesService, ServiceItem } from '../../../core/services/services';
 
-// Map category names to accent colors and icons for display
 const CATEGORY_STYLES: Record<string, { accent: string; icon: string }> = {
   'Daily Personal Activities': { accent: '#d9534f', icon: 'self_improvement' },
   'Community Access': { accent: '#b59b00', icon: 'groups' },
@@ -22,7 +21,7 @@ interface DisplayService extends ServiceItem {
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './services-list.component.html',
-  styleUrl: './services-list.component.scss'
+  styleUrl: './services-list.component.css'
 })
 export class ServicesListComponent implements OnInit {
   isLoading = true;
@@ -42,7 +41,6 @@ export class ServicesListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private location: Location,
     private servicesService: ServicesService
   ) {}
 
@@ -54,15 +52,18 @@ export class ServicesListComponent implements OnInit {
     this.isLoading = true;
     this.servicesService.getServices().subscribe({
       next: (data) => {
+        console.log('Raw API data:', data);
         this.services = data.map(service => {
           const categoryName = service.category_name || 'Support Coordination';
           const style = CATEGORY_STYLES[categoryName] || { accent: '#7d7d7d', icon: 'assignment' };
           return {
             ...service,
+            id: (service as any).service_id || service.id,
             accent: style.accent,
             icon: style.icon
           };
         });
+        console.log('Mapped services:', this.services);
         this.isLoading = false;
       },
       error: (error) => {
@@ -76,7 +77,6 @@ export class ServicesListComponent implements OnInit {
     if (this.selectedCategory === 'Category') {
       return this.services;
     }
-
     return this.services.filter(
       service => (service.category_name || '') === this.selectedCategory
     );
@@ -88,7 +88,16 @@ export class ServicesListComponent implements OnInit {
   }
 
   openService(service: DisplayService): void {
-    this.router.navigate(['/services', service.id]);
+    console.log('Opening service:', service);
+    console.log('Service ID:', service.id);
+    if (service.id) {
+      this.router.navigate(['/services', service.id]).then(
+        () => console.log('Navigation successful'),
+        (err) => console.error('Navigation failed:', err)
+      );
+    } else {
+      console.error('Service ID is missing:', service);
+      alert('Cannot open service: ID is missing');
+    }
   }
-
 }
