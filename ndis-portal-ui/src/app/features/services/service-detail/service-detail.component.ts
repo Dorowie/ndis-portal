@@ -23,6 +23,7 @@ export class ServiceDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
+    console.log('ServiceDetail - ID from route:', id);
     if (id) {
       this.loadService(+id);
     } else {
@@ -32,15 +33,17 @@ export class ServiceDetailComponent implements OnInit {
   }
 
   loadService(id: number): void {
+    console.log('ServiceDetail - Loading service with ID:', id);
     this.isLoading = true;
     this.servicesService.getService(id).subscribe({
       next: (data: ServiceItem) => {
+        console.log('ServiceDetail - Loaded service:', data);
         this.service = data;
         this.isLoading = false;
       },
       error: (err: Error) => {
-        console.error('Error loading service:', err);
-        this.error = 'Failed to load service details';
+        console.error('ServiceDetail - Error loading service:', err);
+        this.error = 'Failed to load service details. Please try again.';
         this.isLoading = false;
       }
     });

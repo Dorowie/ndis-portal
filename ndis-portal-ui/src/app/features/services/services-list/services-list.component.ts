@@ -52,15 +52,18 @@ export class ServicesListComponent implements OnInit {
     this.isLoading = true;
     this.servicesService.getServices().subscribe({
       next: (data) => {
+        console.log('Raw API data:', data);
         this.services = data.map(service => {
           const categoryName = service.category_name || 'Support Coordination';
           const style = CATEGORY_STYLES[categoryName] || { accent: '#7d7d7d', icon: 'assignment' };
           return {
             ...service,
+            id: (service as any).service_id || service.id,
             accent: style.accent,
             icon: style.icon
           };
         });
+        console.log('Mapped services:', this.services);
         this.isLoading = false;
       },
       error: (error) => {
@@ -85,6 +88,16 @@ export class ServicesListComponent implements OnInit {
   }
 
   openService(service: DisplayService): void {
-    this.router.navigate(['/services', service.id]);
+    console.log('Opening service:', service);
+    console.log('Service ID:', service.id);
+    if (service.id) {
+      this.router.navigate(['/services', service.id]).then(
+        () => console.log('Navigation successful'),
+        (err) => console.error('Navigation failed:', err)
+      );
+    } else {
+      console.error('Service ID is missing:', service);
+      alert('Cannot open service: ID is missing');
+    }
   }
 }

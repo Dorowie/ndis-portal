@@ -54,6 +54,9 @@ export class LoginComponent {
           localStorage.setItem('token', token);
           
           const userRole = this.authService.getUserRole(token);
+          // Store role for sidebar to detect user type
+          localStorage.setItem('userRole', userRole || 'Participant');
+          
           if (userRole === 'Coordinator') {
             this.router.navigate(['/dashboard']);
           } else {

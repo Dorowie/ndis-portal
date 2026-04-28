@@ -30,25 +30,25 @@ export const routes: Routes = [
       {
         path: 'services',
         component: ServicesListComponent,
-       // canActivate: [authGuard],
+        canActivate: [authGuard],
         data: { roles: ['Participant'] }
       },
       {
         path: 'services/:id',
         component: ServiceDetailComponent,
-       // canActivate: [authGuard],
+        canActivate: [authGuard],
         data: { roles: ['Participant'] }
       },
       {
         path: 'bookings/new',
         component: BookServiceComponent,
-       // canActivate: [authGuard],
+        canActivate: [authGuard],
         data: { roles: ['Participant'] }
       },
       {
         path: 'bookings',
         component: MyBookingsComponent,
-       // canActivate: [authGuard],
+        canActivate: [authGuard],
         data: { roles: ['Participant'] }
       },
 
@@ -56,19 +56,19 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: CoordinatorDashboardComponent,
-       // canActivate: [authGuard],
+        canActivate: [authGuard],
         data: { roles: ['Coordinator'] }
       },
       {
         path: 'coordinator/bookings',
         component: AllBookingsComponent,
-       // canActivate: [authGuard],
+        canActivate: [authGuard],
         data: { roles: ['Coordinator'] }
       },
       {
         path: 'coordinator/services',
         component: ManageServicesComponent,
-       // canActivate: [authGuard],
+        canActivate: [authGuard],
         data: { roles: ['Coordinator'] }
       },
 
