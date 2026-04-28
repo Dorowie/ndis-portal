@@ -260,6 +260,7 @@ ng serve --port 4201
 
 **Test File Structure**
 Playwright test scripts are located in the tests/ directory:
+
 tests/
 ├── auth.spec.ts
 ├── services.spec.ts
