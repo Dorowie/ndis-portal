@@ -233,12 +233,8 @@ export class CoordinatorDashboardComponent implements OnInit {
       },
       error: (err) => {
         console.error(`Failed to update booking ${bookingId} status:`, err);
-        
-        // If API fails, update locally for demo purposes
-        console.log('API failed, updating locally for demo');
-        booking.status = status;
-        this.filteredBookings = [...this.bookings];
-        alert(`Booking ${status.toLowerCase()} successfully! (Demo mode - local update)`);
+        console.error('Error details:', err);
+        alert(`Failed to ${status.toLowerCase()} booking. Please check the API server and try again.`);
       }
     });
   }

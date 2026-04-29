@@ -35,7 +35,7 @@ interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class BookingsService {
-  private readonly apiUrl = 'https://localhost:7113/api/bookings';
+  private readonly apiUrl = 'http://localhost:7113/api/bookings';
 
   constructor(private http: HttpClient) {
     console.log('BookingsService initialized with API URL:', this.apiUrl);
@@ -66,7 +66,12 @@ export class BookingsService {
     console.log(`Making API call to: ${endpoint}`);
     console.log(`Request payload:`, { status });
     
-    return this.http.put<ApiResponse<Booking>>(endpoint, { status })
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    };
+    
+    return this.http.put<ApiResponse<Booking>>(endpoint, { status }, { headers })
       .pipe(
         map(response => {
           console.log('API Response:', response);
