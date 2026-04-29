@@ -91,7 +91,11 @@ export class ServicesListComponent implements OnInit {
   }
 
   openService(service: DisplayService): void {
-    this.router.navigate(['/services', service.id]);
+    if (service.id) {
+      this.router.navigate(['/services', service.id]);
+    } else {
+      console.error('Service ID is undefined:', service);
+    }
   }
 
   openRecommendationModal(): void {
