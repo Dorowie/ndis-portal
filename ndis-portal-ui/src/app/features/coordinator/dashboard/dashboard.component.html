@@ -1,0 +1,136 @@
+<div class="coordinator-dashboard">
+  <div class="dashboard-header">
+    <div>
+      <h1>Welcome back</h1>
+      <p>Managing participant care schedules and service approvals.</p>
+    </div>
+  </div>
+
+  <section class="stats-grid">
+    <div class="stat-card white-card">
+      <div class="stat-icon blue">▣</div>
+      <p>TOTAL BOOKINGS</p>
+      <h2>{{ totalBookings }}</h2>
+    </div>
+
+    <div class="stat-card orange-card">
+      <div class="stat-icon orange-light">▣</div>
+      <p>PENDING APPROVAL</p>
+      <h2>{{ pendingCount }}</h2>
+    </div>
+
+    <div class="stat-card green-card">
+      <div class="stat-icon green-light">♡</div>
+      <p>APPROVED</p>
+      <h2>{{ approvedCount }}</h2>
+    </div>
+
+    <div class="stat-card red-card">
+      <div class="stat-icon red-light">▣</div>
+      <p>CANCELLATIONS</p>
+      <h2>{{ cancelledCount }}</h2>
+    </div>
+  </section>
+
+  <section class="booking-card">
+    <div class="booking-header">
+      <h3>Booking Queue</h3>
+
+      <div class="filter-buttons">
+        <button class="filter-btn" (click)="filterPending()">Filter</button>
+        <button class="filter-btn" (click)="showAll()">All</button>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="state-message">
+      Loading bookings...
+    </div>
+
+    <div *ngIf="errorMessage && !loading" class="state-message error">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="!loading && !errorMessage" class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>PARTICIPANT</th>
+            <th>SERVICE</th>
+            <th>DATE & TIME</th>
+            <th>STATUS</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let booking of paginatedBookings">
+            <td>
+              <div class="participant-cell">
+                <div class="avatar">
+                  {{ getInitials(getParticipantName(booking)) }}
+                </div>
+                <div>
+                  <strong>{{ getParticipantName(booking) }}</strong>
+                  <small>NDIS: #{{ booking.id }}</small>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <strong>{{ getServiceName(booking) }}</strong>
+              <small>{{ getCategoryName(booking) }}</small>
+            </td>
+
+            <td>
+              <strong>{{ formatDate(booking.bookingDate || booking.date) }}</strong>
+              <small>{{ formatTime(booking.bookingDate || booking.date) }}</small>
+            </td>
+
+            <td>
+              <span class="status" [ngClass]="getStatusText(booking.status).toLowerCase()">
+                {{ getStatusText(booking.status) }}
+              </span>
+            </td>
+
+            <td>
+              <div class="actions" *ngIf="getStatusText(booking.status) === 'Pending'; else menuOnly">
+                <button class="approve-btn" (click)="approveBooking(booking.id)">Approve</button>
+                <button class="cancel-btn" (click)="cancelBooking(booking.id)">Cancel</button>
+              </div>
+
+              <ng-template #menuOnly>
+                <button class="menu-btn">⋮</button>
+              </ng-template>
+            </td>
+          </tr>
+
+          <tr *ngIf="paginatedBookings.length === 0">
+            <td colspan="5" class="empty-row">
+              No bookings found.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-footer" *ngIf="!loading && !errorMessage">
+      <p>
+        Showing <strong>{{ paginatedBookings.length }}</strong>
+        of <strong>{{ filteredBookings.length }}</strong> bookings
+      </p>
+
+      <div class="pagination">
+        <button (click)="goToPage(currentPage - 1)">‹</button>
+
+        <button
+          *ngFor="let page of pages"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)">
+          {{ page }}
+        </button>
+
+        <button (click)="goToPage(currentPage + 1)">›</button>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,138 @@
+.service-detail-page {
+  padding: 24px;
+  color: #18181b;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: #6f2da8;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+
+.back-btn:hover {
+  background: #f3ecf8;
+  border-radius: 8px;
+}
+
+.loading-state,
+.error-state {
+  padding: 40px;
+  text-align: center;
+  background: #f9fafb;
+  border-radius: 12px;
+  color: #6b7280;
+}
+
+.error-state {
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #6f2da8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.service-content {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.service-header {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.service-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  color: #111827;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #efe5f5;
+  color: #6f2da8;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.service-info {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.info-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-section p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #374151;
+}
+
+.price {
+  font-size: 20px !important;
+  font-weight: 700;
+  color: #6f2da8 !important;
+}
+
+.service-id {
+  font-family: monospace;
+  color: #9ca3af !important;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.book-btn {
+  padding: 12px 24px;
+  background: #6f2da8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.book-btn:hover {
+  background: #5a2490;
+}
