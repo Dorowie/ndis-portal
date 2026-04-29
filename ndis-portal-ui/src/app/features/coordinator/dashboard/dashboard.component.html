@@ -113,8 +113,8 @@
 
             <td>
               <div class="actions" *ngIf="getStatusText(booking.status) === 'Pending'; else menuOnly">
-                <button class="approve-btn" (click)="approveBooking(booking.id || booking.booking_id)">Approve</button>
-                <button class="cancel-btn" (click)="cancelBooking(booking.id || booking.booking_id)">Cancel</button>
+                <button class="approve-btn" (click)="approveBooking(booking.id)">Approve</button>
+                <button class="cancel-btn" (click)="cancelBooking(booking.id)">Cancel</button>
               </div>
 
               <ng-template #menuOnly>
