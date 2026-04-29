@@ -20,6 +20,8 @@ export class BookServiceComponent implements OnInit {
   selectedService: ServiceItem | null = null;
   preselectedServiceId: number | null = null;
   isPreselected = false;
+  preselectedServiceNameValue = '';
+  preselectedServiceCategoryValue = '';
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +45,8 @@ export class BookServiceComponent implements OnInit {
         this.preselectedServiceId = Number(serviceId);
         this.isPreselected = true;
         this.bookForm.patchValue({ serviceId: Number(serviceId) });
+        // Load the specific service for display
+        this.loadPreselectedService(Number(serviceId));
       }
     });
   }
@@ -51,11 +55,35 @@ export class BookServiceComponent implements OnInit {
     this.servicesService.getServices().subscribe({
       next: (data) => {
         this.services = data;
+        // If we have a preselected service, update display from loaded services
+        if (this.isPreselected && this.preselectedServiceId) {
+          this.updatePreselectedServiceDisplay();
+        }
       },
       error: (error) => {
         console.error('Error loading services:', error);
       }
     });
+  }
+
+  loadPreselectedService(id: number): void {
+    this.servicesService.getService(id).subscribe({
+      next: (service) => {
+        this.preselectedServiceNameValue = service.name;
+        this.preselectedServiceCategoryValue = service.category_name || 'Support Service';
+      },
+      error: (error) => {
+        console.error('Error loading preselected service:', error);
+      }
+    });
+  }
+
+  updatePreselectedServiceDisplay(): void {
+    const service = this.services.find(s => s.id === this.preselectedServiceId || (s as any).service_id === this.preselectedServiceId);
+    if (service) {
+      this.preselectedServiceNameValue = service.name;
+      this.preselectedServiceCategoryValue = service.category_name || 'Support Service';
+    }
   }
 
   get minDate(): string {
@@ -74,15 +102,11 @@ export class BookServiceComponent implements OnInit {
   }
 
   get preselectedServiceName(): string {
-    if (!this.preselectedServiceId) return '';
-    const service = this.services.find(s => s.id === this.preselectedServiceId || (s as any).service_id === this.preselectedServiceId);
-    return service ? service.name : '';
+    return this.preselectedServiceNameValue;
   }
 
   get preselectedServiceCategory(): string {
-    if (!this.preselectedServiceId) return '';
-    const service = this.services.find(s => s.id === this.preselectedServiceId || (s as any).service_id === this.preselectedServiceId);
-    return service ? (service.category_name || 'Support Service') : '';
+    return this.preselectedServiceCategoryValue;
   }
 
   isPastDate(value: string): boolean {
