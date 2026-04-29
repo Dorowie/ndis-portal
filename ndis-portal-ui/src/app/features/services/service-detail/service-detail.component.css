@@ -4,7 +4,11 @@
   font-family: Inter, Arial, sans-serif;
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
   word-wrap: break-word;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-bottom: 60px;
 }
 
 .back-btn {
