@@ -52,6 +52,7 @@ export class LoginComponent {
         if (response.success && response.data) {
           const token = response.data.token;
           localStorage.setItem('token', token);
+          localStorage.removeItem('user'); // Clear stale user data
           
           const userRole = this.authService.getUserRole(token);
           if (userRole === 'Coordinator') {

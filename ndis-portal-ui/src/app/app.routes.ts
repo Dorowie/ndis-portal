@@ -15,11 +15,12 @@ import { AllBookingsComponent } from './features/coordinator/all-bookings/all-bo
 import { SupportWorkersComponent } from './features/coordinator/support-workers/support-workers.component';
 
 import { authGuard } from './core/guards/auth-guard';
+import { guestGuard } from './core/guards/guest-guard';
 
 export const routes: Routes = [
-  // --- PUBLIC ---
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  // --- PUBLIC (redirect if already logged in) ---
+  { path: 'login', component: LoginComponent, canActivate: [guestGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [guestGuard] },
 
   // --- PROTECTED ---
   {
@@ -61,19 +62,19 @@ export const routes: Routes = [
         data: { roles: ['Coordinator'] }
       },
       {
-        path: 'coordinator/bookings',
-        component: AllBookingsComponent,
-        canActivate: [authGuard],
-        data: { roles: ['Coordinator'] }
-      },
-      {
-        path: 'coordinator/services',
+        path: 'dashboard/services',
         component: ManageServicesComponent,
         canActivate: [authGuard],
         data: { roles: ['Coordinator'] }
       },
       {
-        path: 'coordinator/workers',
+        path: 'dashboard/bookings',
+        component: AllBookingsComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Coordinator'] }
+      },
+      {
+        path: 'dashboard/workers',
         component: SupportWorkersComponent,
         canActivate: [authGuard],
         data: { roles: ['Coordinator'] }

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -11,33 +11,23 @@ import { AuthService } from '../../../core/services/auth.services';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
 
   userRole: string | null = null;
+  private storageListener = () => this.updateUserRole();
 
   ngOnInit(): void {
     this.updateUserRole();
-    // Listen for storage changes to update role dynamically
-    window.addEventListener('storage', () => this.updateUserRole());
+    window.addEventListener('storage', this.storageListener);
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('storage', this.storageListener);
   }
 
   updateUserRole(): void {
-    // Check localStorage first for explicit role setting
-    const storedRole = localStorage.getItem('userRole');
-    if (storedRole) {
-      this.userRole = storedRole;
-      return;
-    }
-
-    // Otherwise get from auth service
     const role = this.authService.getUserRole();
-    this.userRole = role || 'Coordinator'; // Default to Coordinator if no role found
-  }
-
-  // Method to manually set role for testing
-  setRole(role: string): void {
-    localStorage.setItem('userRole', role);
     this.userRole = role;
   }
 }

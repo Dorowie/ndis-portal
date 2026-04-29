@@ -53,9 +53,26 @@ export class RegisterComponent {
 
       this.authService.register(registerData).subscribe({
         next: (response) => {
-          if (response.success) {
-            alert('Registration successful! Please login to continue.');
-            this.router.navigate(['/login']);
+          if (response.success && response.data?.token) {
+            // Registration returned token - auto-login
+            this.handleLoginSuccess(response.data.token);
+          } else if (response.success) {
+            // Registration succeeded but no token - auto-login with credentials
+            this.authService.login(registerData.Email, registerData.Password).subscribe({
+              next: (loginResponse) => {
+                if (loginResponse.success && loginResponse.data?.token) {
+                  this.handleLoginSuccess(loginResponse.data.token);
+                } else {
+                  this.apiError = loginResponse.message || 'Auto-login failed. Please login manually.';
+                  this.isLoading = false;
+                }
+              },
+              error: (loginError) => {
+                console.error('Auto-login error:', loginError);
+                this.apiError = 'Registration successful. Please login to continue.';
+                this.isLoading = false;
+              }
+            });
           } else {
             this.apiError = response.message || 'Registration failed';
             this.isLoading = false;
@@ -70,6 +87,23 @@ export class RegisterComponent {
 
     } else {
       this.registerForm.markAllAsTouched();
+    }
+  }
+
+  handleLoginSuccess(token: string) {
+    // Auto-login: store token and user data
+    localStorage.setItem('token', token);
+    localStorage.removeItem('user'); // Clear stale user data
+
+    // Get user role from token
+    const role = this.authService.getUserRole(token);
+
+    // Redirect based on role
+    if (role === 'Coordinator') {
+      this.router.navigate(['/dashboard']);
+    } else {
+      // Default to /services for Participant or any other role
+      this.router.navigate(['/services']);
     }
   }
 }
