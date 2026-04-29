@@ -206,18 +206,24 @@ export class CoordinatorDashboardComponent implements OnInit {
   }
 
   updateBookingStatus(id: number, status: string): void {
+    console.log(`Attempting to update booking ${id} to status: ${status}`);
+    
     this.bookingsService.updateBookingStatus(id, status).subscribe({
-      next: () => {
-        const booking = this.bookings.find(b => b.id === id);
+      next: (response) => {
+        console.log('Update successful:', response);
+        const booking = this.bookings.find(b => b.id === id || (b as any).booking_id === id);
         if (booking) {
           booking.status = status;
         }
         this.filteredBookings = [...this.bookings];
         console.log(`Booking ${id} status updated to ${status}`);
+        // Show success message
+        alert(`Booking ${status.toLowerCase()} successfully!`);
       },
       error: (err) => {
         console.error(`Failed to update booking ${id} status:`, err);
-        alert(`Failed to ${status.toLowerCase()} booking. Please try again.`);
+        console.error('Error details:', err.error);
+        alert(`Failed to ${status.toLowerCase()} booking. Please try again.\nError: ${err.message || 'Unknown error'}`);
       }
     });
   }
