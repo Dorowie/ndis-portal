@@ -82,9 +82,8 @@ export class ServicesListComponent implements OnInit {
     );
   }
 
-  onCategoryChange(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.selectedCategory = target.value;
+  selectCategory(category: string): void {
+    this.selectedCategory = category;
   }
 
   openService(service: DisplayService): void {

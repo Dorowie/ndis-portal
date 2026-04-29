@@ -23,26 +23,33 @@
 
 .filter-section {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 24px;
 }
 
-.filter-section label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
-}
-
-.filter-section select {
+.category-filter-btn {
   padding: 8px 16px;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 20px;
   background: white;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
   color: #374151;
   cursor: pointer;
-  min-width: 200px;
+  transition: all 0.2s ease;
+}
+
+.category-filter-btn:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.category-filter-btn.active {
+  background: #6f2da8;
+  color: white;
+  border-color: #6f2da8;
 }
 
 .loading-state,
@@ -52,6 +59,31 @@
   color: #6b7280;
   background: #f9fafb;
   border-radius: 12px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #6f2da8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.empty-state button {
+  margin-top: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #6f2da8;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .services-grid {
@@ -92,20 +124,37 @@
 }
 
 .service-card h3 {
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
   font-size: 16px;
   font-weight: 600;
   color: #111827;
 }
 
-.service-card p {
+.category-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: #f3ecf8;
+  color: #6f2da8;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.description-truncated {
   font-size: 14px;
   line-height: 1.5;
   color: #6b7280;
   margin: 0 0 16px 0;
   display: -webkit-box;
+  display: -moz-box;
+  display: box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
+  box-orient: vertical;
   overflow: hidden;
 }
 

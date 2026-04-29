@@ -5,21 +5,33 @@
   </div>
 
   <div class="filter-section">
-    <label>Filter by Category:</label>
-    <select (change)="onCategoryChange($event)" [value]="selectedCategory">
-      <option value="Category">All Categories</option>
-      <option *ngFor="let category of categories.slice(1)" [value]="category">
-        {{ category }}
-      </option>
-    </select>
+    <button
+      class="category-filter-btn"
+      [class.active]="selectedCategory === 'Category'"
+      (click)="selectCategory('Category')"
+      data-testid="category-filter-btn"
+    >
+      All
+    </button>
+    <button
+      *ngFor="let category of categories.slice(1)"
+      class="category-filter-btn"
+      [class.active]="selectedCategory === category"
+      (click)="selectCategory(category)"
+      data-testid="category-filter-btn"
+    >
+      {{ category }}
+    </button>
   </div>
 
-  <div *ngIf="isLoading" class="loading-state">
-    Loading services...
+  <div *ngIf="isLoading" class="loading-state" data-testid="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading services...</p>
   </div>
 
-  <div *ngIf="!isLoading && filteredServices.length === 0" class="empty-state">
-    No services match the selected category.
+  <div *ngIf="!isLoading && filteredServices.length === 0" class="empty-state" data-testid="empty-state">
+    <p>No services match the selected filter.</p>
+    <button (click)="selectCategory('Category')">Show All Services</button>
   </div>
 
   <div class="services-grid" *ngIf="!isLoading && filteredServices.length > 0">
@@ -28,12 +40,14 @@
       *ngFor="let service of filteredServices"
       (click)="openService(service)"
       [style.border-left-color]="service.accent"
+      data-testid="service-card"
     >
       <div class="icon-circle">
         <span class="material-icons">{{ service.icon }}</span>
       </div>
+      <div class="category-badge">{{ service.category_name }}</div>
       <h3>{{ service.name }}</h3>
-      <p>{{ service.description }}</p>
+      <p class="description-truncated">{{ service.description }}</p>
       <button type="button" class="select-btn" (click)="openService(service); $event.stopPropagation()">
         View Details
       </button>
