@@ -38,22 +38,30 @@ export class BookServiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('BookServiceComponent - ngOnInit');
     this.loadServices();
     this.route.queryParams.subscribe(params => {
+      console.log('BookServiceComponent - Query params:', params);
       const serviceId = params['serviceId'];
+      console.log('BookServiceComponent - serviceId from query:', serviceId);
       if (serviceId) {
         this.preselectedServiceId = Number(serviceId);
         this.isPreselected = true;
         this.bookForm.patchValue({ serviceId: Number(serviceId) });
+        console.log('BookServiceComponent - Loading preselected service:', this.preselectedServiceId);
         // Load the specific service for display
         this.loadPreselectedService(Number(serviceId));
+      } else {
+        console.log('BookServiceComponent - No serviceId in query params');
       }
     });
   }
 
   loadServices(): void {
+    console.log('BookServiceComponent - loadServices called');
     this.servicesService.getServices().subscribe({
       next: (data) => {
+        console.log('BookServiceComponent - Loaded services:', data);
         this.services = data;
         // If we have a preselected service, update display from loaded services
         if (this.isPreselected && this.preselectedServiceId) {
@@ -67,20 +75,25 @@ export class BookServiceComponent implements OnInit {
   }
 
   loadPreselectedService(id: number): void {
+    console.log('BookServiceComponent - loadPreselectedService called with id:', id);
     this.servicesService.getService(id).subscribe({
       next: (service) => {
+        console.log('BookServiceComponent - Loaded service:', service);
         this.preselectedServiceNameValue = service.name;
         this.preselectedServiceCategoryValue = service.category_name || 'Support Service';
+        console.log('BookServiceComponent - Set name:', this.preselectedServiceNameValue, 'category:', this.preselectedServiceCategoryValue);
       },
       error: (error) => {
-        console.error('Error loading preselected service:', error);
+        console.error('BookServiceComponent - Error loading preselected service:', error);
       }
     });
   }
 
   updatePreselectedServiceDisplay(): void {
+    console.log('BookServiceComponent - updatePreselectedServiceDisplay called');
     const service = this.services.find(s => s.id === this.preselectedServiceId || (s as any).service_id === this.preselectedServiceId);
     if (service) {
+      console.log('BookServiceComponent - Found service:', service);
       this.preselectedServiceNameValue = service.name;
       this.preselectedServiceCategoryValue = service.category_name || 'Support Service';
     }

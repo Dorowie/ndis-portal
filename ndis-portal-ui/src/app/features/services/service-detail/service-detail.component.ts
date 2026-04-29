@@ -55,8 +55,11 @@ export class ServiceDetailComponent implements OnInit {
 
   bookService(): void {
     if (this.service) {
+      const serviceId = this.service.id || (this.service as any).service_id;
+      console.log('BookService clicked - Navigating with serviceId:', serviceId);
+      console.log('Service object:', this.service);
       this.router.navigate(['/bookings/new'], {
-        queryParams: { serviceId: this.service.id }
+        queryParams: { serviceId: serviceId }
       });
     }
   }
