@@ -13,9 +13,22 @@
   <div class="services-card">
     <div class="card-header">
       <h3>Registered Services Registry</h3>
+      <button class="refresh-btn" (click)="loadServices()" [disabled]="loading">
+        ↻ Refresh
+      </button>
     </div>
 
-    <div class="table-container" data-testid="services-table">
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading services...</p>
+    </div>
+
+    <div *ngIf="errorMessage && !loading" class="error-state">
+      {{ errorMessage }}
+      <button class="retry-btn" (click)="loadServices()">Retry</button>
+    </div>
+
+    <div *ngIf="!loading && !errorMessage" class="table-container" data-testid="services-table">
       <table>
         <thead>
           <tr>
@@ -55,7 +68,7 @@
       </table>
     </div>
 
-    <div class="pagination-footer">
+    <div class="pagination-footer" *ngIf="!loading && !errorMessage">
       <p>Showing {{ services.length }} of {{ services.length }} Services</p>
       <div class="pagination">
         <button>‹</button>

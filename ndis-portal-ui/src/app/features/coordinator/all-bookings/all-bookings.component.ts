@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BookingsService, Booking as ApiBooking } from '../../../core/services/bookings';
 
-interface Booking {
+interface AllBooking {
   id: number;
   participantName: string;
   ndisNumber: string;
@@ -23,61 +24,94 @@ interface Booking {
   styleUrl: './all-bookings.component.css',
 })
 export class AllBookingsComponent implements OnInit {
-  bookings: Booking[] = [
-    {
-      id: 1,
-      participantName: 'Sarah Mitchell',
-      ndisNumber: '#482-192-334',
-      serviceName: 'Community Participation',
-      categoryName: 'Personal Care',
-      bookingDate: 'Oct 24, 2023',
-      timeRange: '10:00 AM - 2:00 PM',
-      notes: 'Regular weekly session',
-      status: 'Pending',
-      avatarColor: '#BFDBFE'
-    },
-    {
-      id: 2,
-      participantName: 'James Robinson',
-      ndisNumber: '#112-908-445',
-      serviceName: 'Occupational Therapy',
-      categoryName: 'Therapeutic Support',
-      bookingDate: 'Oct 25, 2023',
-      timeRange: '02:30 PM - 3:30 PM',
-      status: 'Approved',
-      avatarColor: '#BBF7D0'
-    },
-    {
-      id: 3,
-      participantName: 'Emily Lawson',
-      ndisNumber: '#223-445-667',
-      serviceName: 'Meal Preparation',
-      categoryName: 'Domestic Support',
-      bookingDate: 'Oct 26, 2023',
-      timeRange: '11:00 AM - 1:00 PM',
-      status: 'Pending',
-      avatarColor: '#FED7AA'
-    },
-    {
-      id: 4,
-      participantName: 'Thomas Higgins',
-      ndisNumber: '#887-112-990',
-      serviceName: 'Speech Therapy',
-      categoryName: 'Allied Health',
-      bookingDate: 'Oct 26, 2023',
-      timeRange: '09:00 AM - 10:00 AM',
-      status: 'Cancelled',
-      avatarColor: '#BFDBFE'
-    }
-  ];
+  private bookingsService = inject(BookingsService);
 
-  filteredBookings: Booking[] = [];
+  bookings: AllBooking[] = [];
+  filteredBookings: AllBooking[] = [];
   statusFilter: string = 'All';
   currentPage: number = 1;
   pageSize: number = 10;
+  loading = false;
+  errorMessage = '';
+
+  // Avatar colors for visual variety
+  private avatarColors = ['#BFDBFE', '#BBF7D0', '#FED7AA', '#FECACA', '#E9D5FF'];
 
   ngOnInit(): void {
-    this.filteredBookings = [...this.bookings];
+    this.loadBookingsFromAPI();
+  }
+
+  loadBookingsFromAPI(): void {
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.bookingsService.getAllBookings().subscribe({
+      next: (data) => {
+        this.bookings = data.map(apiBooking => this.mapApiBookingToAllBooking(apiBooking));
+        this.filterByStatus();
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load bookings:', err);
+        this.errorMessage = 'Failed to load bookings. Please try again.';
+        this.loading = false;
+      }
+    });
+  }
+
+  private mapApiBookingToAllBooking(apiBooking: ApiBooking): AllBooking {
+    const status = this.getStatusText(apiBooking.status);
+    return {
+      id: apiBooking.booking_id,
+      participantName: 'Participant', // TODO: Get from user service
+      ndisNumber: `#${apiBooking.booking_id.toString().padStart(9, '0')}`,
+      serviceName: apiBooking.service_name,
+      categoryName: 'Support Service',
+      bookingDate: this.formatDate(apiBooking.preferred_date),
+      timeRange: this.formatTimeRange(apiBooking.preferred_date),
+      notes: apiBooking.notes,
+      status: status,
+      avatarColor: this.avatarColors[apiBooking.booking_id % this.avatarColors.length]
+    };
+  }
+
+  private getStatusText(status: string | number): string {
+    if (status === 0 || status === '0' || String(status).toLowerCase().includes('pending')) {
+      return 'Pending';
+    }
+    if (status === 1 || status === '1' || String(status).toLowerCase().includes('approved')) {
+      return 'Approved';
+    }
+    if (status === 2 || status === '2' || String(status).toLowerCase().includes('cancelled')) {
+      return 'Cancelled';
+    }
+    return 'Pending';
+  }
+
+  private formatDate(dateValue: string): string {
+    if (!dateValue) return 'No date';
+    const date = new Date(dateValue);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: '2-digit',
+      year: 'numeric'
+    });
+  }
+
+  private formatTimeRange(dateValue: string): string {
+    if (!dateValue) return '';
+    const date = new Date(dateValue);
+    const startTime = date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    // Add 1 hour as default duration
+    const endDate = new Date(date.getTime() + 60 * 60 * 1000);
+    const endTime = endDate.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    return `${startTime} - ${endTime}`;
   }
 
   filterByStatus(): void {
@@ -101,22 +135,31 @@ export class AllBookingsComponent implements OnInit {
   }
 
   approveBooking(id: number): void {
-    const booking = this.bookings.find(b => b.id === id);
-    if (booking) {
-      booking.status = 'Approved';
-    }
-    this.filterByStatus();
+    this.updateBookingStatus(id, 'Approved');
   }
 
   cancelBooking(id: number): void {
-    const booking = this.bookings.find(b => b.id === id);
-    if (booking) {
-      booking.status = 'Cancelled';
-    }
-    this.filterByStatus();
+    this.updateBookingStatus(id, 'Cancelled');
   }
 
-  get paginatedBookings(): Booking[] {
+  private updateBookingStatus(id: number, status: string): void {
+    this.bookingsService.updateBookingStatus(id, status).subscribe({
+      next: () => {
+        const booking = this.bookings.find(b => b.id === id);
+        if (booking) {
+          booking.status = status;
+        }
+        this.filterByStatus();
+        console.log(`Booking ${id} status updated to ${status}`);
+      },
+      error: (err) => {
+        console.error(`Failed to update booking ${id} status:`, err);
+        alert(`Failed to ${status.toLowerCase()} booking. Please try again.`);
+      }
+    });
+  }
+
+  get paginatedBookings(): AllBooking[] {
     const start = (this.currentPage - 1) * this.pageSize;
     return this.filteredBookings.slice(start, start + this.pageSize);
   }

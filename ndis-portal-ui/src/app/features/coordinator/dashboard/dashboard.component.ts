@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { BookingsService, Booking as ApiBooking } from '../../../core/services/bookings';
 
-interface Booking {
+interface DashboardBooking {
   id: number;
   participantName?: string;
   userName?: string;
@@ -21,36 +22,54 @@ interface Booking {
   styleUrl: './dashboard.component.css',
 })
 export class CoordinatorDashboardComponent implements OnInit {
-  // Bookings data - will be populated from API
-  bookings: Booking[] = [];
+  private bookingsService = inject(BookingsService);
 
-  filteredBookings: Booking[] = [];
+  // Bookings data - populated from API
+  bookings: DashboardBooking[] = [];
+
+  filteredBookings: DashboardBooking[] = [];
   loading = false;
   errorMessage = '';
   currentPage = 1;
   pageSize = 4;
 
   ngOnInit(): void {
-    // TODO: Load bookings from API
-    // this.loadBookingsFromAPI();
-    this.filteredBookings = [...this.bookings];
+    this.loadBookingsFromAPI();
   }
 
-  // TODO: Implement API integration
-  // loadBookingsFromAPI(): void {
-  //   this.loading = true;
-  //   this.bookingService.getAllBookings().subscribe({
-  //     next: (data) => {
-  //       this.bookings = data;
-  //       this.filteredBookings = [...this.bookings];
-  //       this.loading = false;
-  //     },
-  //     error: (err) => {
-  //       this.errorMessage = 'Failed to load bookings';
-  //       this.loading = false;
-  //     }
-  //   });
-  // }
+  loadBookingsFromAPI(): void {
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.bookingsService.getAllBookings().subscribe({
+      next: (data) => {
+        // Map API booking data to dashboard format
+        this.bookings = data.map(apiBooking => this.mapApiBookingToDashboard(apiBooking));
+        this.filteredBookings = [...this.bookings];
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load bookings:', err);
+        this.errorMessage = 'Failed to load bookings. Please try again.';
+        this.loading = false;
+      }
+    });
+  }
+
+  private mapApiBookingToDashboard(apiBooking: ApiBooking): DashboardBooking {
+    return {
+      id: apiBooking.booking_id,
+      serviceName: apiBooking.service_name,
+      service: apiBooking.service_name,
+      bookingDate: apiBooking.preferred_date,
+      date: apiBooking.preferred_date,
+      status: apiBooking.status,
+      // These fields may need additional API calls or data enrichment
+      participantName: 'Participant', // TODO: Get from user service
+      userName: 'Participant',
+      categoryName: 'Support Service'
+    };
+  }
 
   get totalBookings(): number {
     return this.bookings.length;
@@ -74,7 +93,7 @@ export class CoordinatorDashboardComponent implements OnInit {
     ).length;
   }
 
-  get paginatedBookings(): Booking[] {
+  get paginatedBookings(): DashboardBooking[] {
     const start = (this.currentPage - 1) * this.pageSize;
     return this.filteredBookings.slice(start, start + this.pageSize);
   }
@@ -108,7 +127,7 @@ export class CoordinatorDashboardComponent implements OnInit {
     this.currentPage = 1;
   }
 
-  getParticipantName(booking: Booking): string {
+  getParticipantName(booking: DashboardBooking): string {
     return booking.participantName ||
            booking.userName ||
            'Participant';
@@ -123,13 +142,13 @@ export class CoordinatorDashboardComponent implements OnInit {
       .toUpperCase();
   }
 
-  getServiceName(booking: Booking): string {
+  getServiceName(booking: DashboardBooking): string {
     return booking.serviceName ||
            booking.service ||
            'Service';
   }
 
-  getCategoryName(booking: Booking): string {
+  getCategoryName(booking: DashboardBooking): string {
     return booking.categoryName ||
            'Support Service';
   }
@@ -180,14 +199,20 @@ export class CoordinatorDashboardComponent implements OnInit {
   }
 
   updateBookingStatus(id: number, status: string): void {
-    const booking = this.bookings.find(
-      b => b.id === id
-    );
-
-    if (booking) {
-      booking.status = status;
-    }
-
-    this.filteredBookings = [...this.bookings];
+    this.bookingsService.updateBookingStatus(id, status).subscribe({
+      next: (updatedBooking) => {
+        // Update local state after successful API call
+        const booking = this.bookings.find(b => b.id === id);
+        if (booking) {
+          booking.status = status;
+        }
+        this.filteredBookings = [...this.bookings];
+        console.log(`Booking ${id} status updated to ${status}`);
+      },
+      error: (err) => {
+        console.error(`Failed to update booking ${id} status:`, err);
+        alert(`Failed to ${status.toLowerCase()} booking. Please try again.`);
+      }
+    });
   }
 }
