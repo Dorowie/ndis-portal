@@ -39,10 +39,16 @@ export class MyBookingsComponent implements OnInit {
     this.isLoading = true;
     this.bookingsService.getMyBookings().subscribe({
       next: (data) => {
-        this.bookings = data.map(booking => ({
-          ...booking,
-          status: this.capitalizeStatus(booking.status)
-        }));
+        console.log('Raw API data:', data);
+        this.bookings = data.map(booking => {
+          const capitalizedStatus = this.capitalizeStatus(booking.status);
+          console.log(`Booking ${booking.booking_id}: original status="${booking.status}", capitalized="${capitalizedStatus}"`);
+          return {
+            ...booking,
+            status: capitalizedStatus
+          };
+        });
+        console.log('Final bookings array:', this.bookings);
         this.isLoading = false;
       },
       error: (error) => {
