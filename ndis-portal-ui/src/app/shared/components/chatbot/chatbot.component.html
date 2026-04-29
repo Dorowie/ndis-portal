@@ -38,20 +38,32 @@
       </div>
 
       <div class="chat-footer">
-        <div class="input-box">
-          <input 
+        <div class="input-box" [class.input-error]="isOverWordLimit">
+          <textarea 
             id="chatbot-input-field"
-            type="text" 
             [(ngModel)]="userInput" 
-            (keyup.enter)="sendMessage()" 
+            (keydown)="onKeydown($event)" 
             placeholder="Type a message..."
             [disabled]="isTyping"
-          >
-          <button id="btn-chatbot-send" class="send-btn" (click)="sendMessage()" [disabled]="isTyping">
+            rows="1"
+          ></textarea>
+
+          <button id="btn-chatbot-send" class="send-btn" (click)="sendMessage()" 
+                  [disabled]="isTyping || currentWordCount === 0 || isOverWordLimit">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
               <path d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z"/>
             </svg>
           </button>
+        </div>
+        
+        <div class="footer-meta">
+          @if (isOverWordLimit) {
+            <span class="error-text">Message exceeds 500 words.</span>
+          } @else {
+            <span></span> }
+          <span class="word-counter" [class.limit-reached]="isOverWordLimit">
+            {{ currentWordCount }} / 500
+          </span>
         </div>
       </div>
     </div>

@@ -177,19 +177,32 @@
 
       .input-box {
         display: flex;
-        align-items: center;
+        align-items: flex-end; 
         border: 1px solid #ddd;
         border-radius: 24px;
-        padding: 4px 6px 4px 16px;
+        padding: 6px 8px 6px 16px;
         background-color: white;
+        transition: border-color 0.2s, background-color 0.2s;
+        
+        /* Visual cue that the input is invalid */
+        &.input-error {
+          border-color: #d32f2f;
+          background-color: #fffafa;
+        }
 
-        input {
+        textarea {
           flex: 1;
           border: none;
           outline: none;
           font-size: 14px;
-          padding: 8px 0;
+          padding: 6px 0;
           background: transparent;
+          resize: none; /* Stops the user from manually dragging the corner */
+          min-height: 24px;
+          max-height: 100px; /* Forces a scrollbar if they type a massive paragraph */
+          font-family: inherit;
+          line-height: 1.4;
+          overflow-y: auto;
         }
 
         .send-btn {
@@ -203,6 +216,8 @@
           justify-content: center;
           cursor: pointer;
           transition: transform 0.1s;
+          flex-shrink: 0; /* Prevents the text area from squishing the button */
+          margin-left: 8px; /* Adds breathing room between text and button */
 
           &:active {
             transform: scale(0.95);
@@ -211,6 +226,34 @@
           &:disabled {
             background-color: #ccc;
             cursor: not-allowed;
+          }
+        }
+      }
+
+      /* Container for the error message and word counter */
+      .footer-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+        padding: 0 8px;
+
+        .error-text {
+          color: #d32f2f;
+          font-size: 11px;
+          font-weight: 700;
+          animation: shake 0.3s ease-in-out;
+        }
+
+        .word-counter {
+          font-size: 11px;
+          color: #999;
+          font-weight: 600;
+          transition: color 0.2s ease;
+
+          /* Turns red to warn the user they cannot type anymore */
+          &.limit-reached {
+            color: #d32f2f;
           }
         }
       }
@@ -279,6 +322,13 @@
   } 40% { 
     transform: scale(1);
   }
+}
+
+/* Keyframes for the error text shake */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
 }
 
 ::ng-deep .bubble markdown p {

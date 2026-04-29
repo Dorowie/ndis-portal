@@ -39,8 +39,12 @@ export class ChatbotComponent implements AfterViewChecked {
     event.stopPropagation();
     this.showTooltip = false;
   }
+  
+  
 
   sendMessage() {
+    if (this.isOverWordLimit || this.currentWordCount === 0) return;
+
     const textToSend = this.userInput.trim();
     if (!textToSend) return;
 
@@ -91,5 +95,38 @@ export class ChatbotComponent implements AfterViewChecked {
     try {
       this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
     } catch(err) { }
+  }
+
+  
+
+  get currentWordCount(): number {
+    const trimmed = this.userInput.trim();
+    return trimmed ? trimmed.split(/\s+/).length : 0;
+  }
+
+  get isOverWordLimit(): boolean {
+    return this.currentWordCount > 500;
+  }
+  
+
+  onKeydown(event: KeyboardEvent) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault(); 
+        // Only send if they are under the limit!
+        if (!this.isOverWordLimit) {
+          this.sendMessage();
+        }
+      }
+    }
+
+  // Truncates the input if it exceeds 500 words
+  enforceWordLimit() {
+    const words = this.userInput.split(/\s+/);
+    
+    // Check if the array length exceeds 500 (ignoring trailing spaces)
+    if (words.filter(w => w.length > 0).length > 500) {
+      // Re-join only the first 500 words and append a space so they can keep typing if they backspace
+      this.userInput = words.slice(0, 500).join(' ') + ' ';
+    }
   }
 }
