@@ -186,10 +186,15 @@ RECOMMENDATION 2:
 Guidelines:
 - Only recommend services that exist in the provided portal knowledge
 - Use the exact service names and IDs from the portal
-- Match services based on category and description relevance to the participant's needs
+- READ and ANALYZE each service's DESCRIPTION carefully to understand what the service offers
+- Match services based on detailed DESCRIPTION content, not just service name or category
+- Consider keywords in the user's situation/needs and match them to keywords in service descriptions
+- Recommend services whose descriptions directly address the user's specific challenges
+- If a service description mentions specific conditions or needs that match the user, prioritize that service
 - If no services match, explain that clearly
 - Be empathetic and supportive in your tone
 - Keep explanations concise and practical
+- In your reason, reference specific details from the service description that match the user's needs
 """;
         }
 

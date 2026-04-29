@@ -22,7 +22,7 @@ interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class ServicesService {
-  private readonly apiUrl = 'https://localhost:7113/api/services';
+  private readonly apiUrl = 'http://localhost:5130/api/services';
 
   constructor(private http: HttpClient) {}
 

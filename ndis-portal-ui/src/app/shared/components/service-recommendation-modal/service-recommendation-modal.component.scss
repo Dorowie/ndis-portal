@@ -24,16 +24,17 @@
 }
 
 .modal-container {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
   width: 90%;
   max-width: 700px;
   max-height: 90vh;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(111, 45, 168, 0.25);
   display: flex;
   flex-direction: column;
   animation: slideUp 0.3s ease-in-out;
   overflow: hidden;
+  border: 1px solid rgba(111, 45, 168, 0.1);
 }
 
 @keyframes slideUp {
@@ -52,8 +53,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 24px;
-  border-bottom: 1px solid #e0e0e0;
-  background: #f8f9fa;
+  border-bottom: 1px solid rgba(111, 45, 168, 0.15);
+  background: linear-gradient(135deg, #f7f2f8 0%, #efe5f5 100%);
 }
 
 .header-left {
@@ -85,9 +86,10 @@
 
 .modal-title {
   font-size: 20px;
-  font-weight: 600;
-  color: #333;
+  font-weight: 700;
+  color: #6f2da8;
   margin: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
 .close-button {
@@ -133,15 +135,16 @@
   transition: all 0.3s;
 
   &.active {
-    background: #2f5bd3;
+    background: linear-gradient(135deg, #8e5cc7, #6f2da8);
     color: white;
+    box-shadow: 0 4px 12px rgba(111, 45, 168, 0.3);
   }
 }
 
 .step-connector {
   width: 32px;
   height: 2px;
-  background: #e0e0e0;
+  background: #e5d9eb;
 }
 
 .modal-content {
@@ -164,7 +167,7 @@
 
 .step-icon {
   font-size: 32px;
-  color: #2f5bd3;
+  color: #6f2da8;
 }
 
 .step-header h3 {
@@ -172,6 +175,7 @@
   font-weight: 600;
   color: #333;
   margin: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
 .step-description {
@@ -183,18 +187,20 @@
 
 .text-input {
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  padding: 14px 18px;
+  border: 2px solid #e5d9eb;
+  border-radius: 12px;
   font-size: 14px;
   font-family: inherit;
   resize: vertical;
   transition: border-color 0.2s, box-shadow 0.2s;
+  background: #faf7fc;
 
   &:focus {
     outline: none;
-    border-color: #2f5bd3;
-    box-shadow: 0 0 0 3px rgba(47, 91, 211, 0.1);
+    border-color: #6f2da8;
+    box-shadow: 0 0 0 4px rgba(111, 45, 168, 0.1);
+    background: #ffffff;
   }
 
   &::placeholder {
@@ -203,18 +209,20 @@
 }
 
 .primary-button {
-  background: #2f5bd3;
+  background: linear-gradient(135deg, #8e5cc7, #6f2da8);
   color: white;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
+  padding: 14px 28px;
+  border-radius: 12px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 18px rgba(111, 45, 168, 0.25);
 
   &:hover:not(:disabled) {
-    background: #2650c0;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(111, 45, 168, 0.32);
   }
 
   &:active:not(:disabled) {
@@ -228,18 +236,19 @@
 }
 
 .secondary-button {
-  background: #f0f0f0;
-  color: #333;
+  background: #efe5f5;
+  color: #6f2da8;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
+  padding: 14px 28px;
+  border-radius: 12px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition: all 0.2s ease;
 
   &:hover {
-    background: #e0e0e0;
+    background: #e5d9eb;
+    transform: translateY(-2px);
   }
 
   &:active {
@@ -261,7 +270,7 @@
   width: 48px;
   height: 48px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #2f5bd3;
+  border-top: 4px solid #6f2da8;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -288,17 +297,17 @@
 }
 
 .summary-box {
-  background: #e8f4fd;
-  border-left: 4px solid #2f5bd3;
+  background: linear-gradient(135deg, #f7f2f8, #efe5f5);
+  border-left: 4px solid #6f2da8;
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   display: flex;
   gap: 12px;
   align-items: flex-start;
 
   .summary-icon {
     font-size: 24px;
-    color: #2f5bd3;
+    color: #6f2da8;
     flex-shrink: 0;
   }
 
@@ -317,13 +326,19 @@
 }
 
 .recommendation-card {
-  background: #f8f9fa;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #e5d9eb;
+  border-radius: 14px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  box-shadow: 0 4px 12px rgba(111, 45, 168, 0.08);
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 8px 20px rgba(111, 45, 168, 0.12);
+  }
 }
 
 .card-header {
@@ -345,12 +360,13 @@
 
 .category-badge {
   display: inline-block;
-  background: #e0e0e0;
-  color: #666;
-  padding: 4px 12px;
-  border-radius: 12px;
+  background: linear-gradient(135deg, #8e5cc7, #6f2da8);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(111, 45, 168, 0.2);
 }
 
 .service-description {
@@ -361,8 +377,8 @@
 }
 
 .reason-box {
-  background: #f0f7ff;
-  border-radius: 6px;
+  background: linear-gradient(135deg, #f7f2f8, #faf7fc);
+  border-radius: 10px;
   padding: 12px;
   display: flex;
   gap: 10px;
@@ -370,7 +386,7 @@
 
   .reason-icon {
     font-size: 20px;
-    color: #2f5bd3;
+    color: #6f2da8;
     flex-shrink: 0;
   }
 
@@ -383,19 +399,21 @@
 }
 
 .book-button {
-  background: #2f5bd3;
+  background: linear-gradient(135deg, #8e5cc7, #6f2da8);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
+  padding: 12px 24px;
+  border-radius: 10px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition: all 0.2s ease;
   align-self: flex-start;
+  box-shadow: 0 6px 16px rgba(111, 45, 168, 0.25);
 
   &:hover {
-    background: #2650c0;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(111, 45, 168, 0.32);
   }
 
   &:active {
@@ -408,7 +426,7 @@
   gap: 12px;
   justify-content: flex-end;
   padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid rgba(111, 45, 168, 0.15);
 }
 
 // Scrollbar styling
@@ -417,15 +435,15 @@
 }
 
 .modal-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f7f2f8;
   border-radius: 4px;
 }
 
 .modal-content::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: #c4a5d8;
   border-radius: 4px;
 }
 
 .modal-content::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+  background: #8e5cc7;
 }

@@ -14,7 +14,9 @@
                             "http://localhost:4200",  // Default Angular port
                             "http://localhost:5200",  // Alternative Angular port
                             "https://localhost:4200",
-                            "https://localhost:5200"
+                            "https://localhost:5200",
+                            "https://localhost:7113",   // API HTTPS port
+                            "http://localhost:5130"   // API HTTP port
                         )
                         .AllowAnyMethod()
                         .AllowAnyHeader()

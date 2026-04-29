@@ -7,7 +7,7 @@ namespace NDISPortal.API.Controllers
 {
     [Route("api/ai/recommend-services")]
     [ApiController]
-    [Authorize]
+    [AllowAnonymous]
     public class ServiceRecommendationController : ControllerBase
     {
         private readonly IServiceRecommendationService _serviceRecommendationService;
