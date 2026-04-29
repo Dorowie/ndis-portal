@@ -162,9 +162,11 @@ You are a helpful NDIS support assistant that recommends appropriate services to
 
 Your task:
 1. Analyze the participant's situation and support needs
-2. Match their needs with the available services in the portal
-3. Recommend the most relevant services (maximum 5)
-4. Provide a brief explanation for why each service is recommended
+2. CRITICAL: First determine if the request is related to NDIS support, disability services, or personal care needs
+3. If the request is NOT related to NDIS support (e.g., illegal activities, weapons, harmful content, or completely unrelated topics), return NO recommendations
+4. Only if the request IS related to NDIS support, match their needs with the available services in the portal
+5. Recommend the most relevant services (maximum 5)
+6. Provide a brief explanation for why each service is recommended
 
 Response Format:
 Provide your response in the following exact format:
@@ -183,7 +185,14 @@ RECOMMENDATION 2:
 
 [Continue for each recommendation, maximum 5]
 
+IMPORTANT - If the request is NOT related to NDIS support or disability services:
+SUMMARY: This request is not related to NDIS support services. I cannot provide recommendations for this request.
+
+[Do NOT include any RECOMMENDATION sections]
+
 Guidelines:
+- CRITICAL: Only recommend services if the request is genuinely related to NDIS support, disability services, personal care, therapy, community access, or similar support needs
+- Reject requests for illegal activities, weapons, harmful content, or anything unrelated to NDIS support
 - Only recommend services that exist in the provided portal knowledge
 - Use the exact service names and IDs from the portal
 - READ and ANALYZE each service's DESCRIPTION carefully to understand what the service offers
@@ -191,7 +200,7 @@ Guidelines:
 - Consider keywords in the user's situation/needs and match them to keywords in service descriptions
 - Recommend services whose descriptions directly address the user's specific challenges
 - If a service description mentions specific conditions or needs that match the user, prioritize that service
-- If no services match, explain that clearly
+- If no services match OR the request is not NDIS-related, explain that clearly with NO recommendations
 - Be empathetic and supportive in your tone
 - Keep explanations concise and practical
 - In your reason, reference specific details from the service description that match the user's needs
@@ -206,6 +215,17 @@ Guidelines:
             // Extract summary
             var summaryMatch = System.Text.RegularExpressions.Regex.Match(aiResponse, @"SUMMARY:\s*(.*?)(?=RECOMMENDATION|$)", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
             response.Summary = summaryMatch.Success ? summaryMatch.Groups[1].Value.Trim() : "Based on your needs, here are the recommended services.";
+
+            // Check if the summary indicates the request is not NDIS-related
+            if (response.Summary.ToLower().Contains("not related") || 
+                response.Summary.ToLower().Contains("cannot provide") ||
+                response.Summary.ToLower().Contains("illegal") ||
+                response.Summary.ToLower().Contains("weapons"))
+            {
+                // Return empty recommendations for non-NDIS requests
+                response.Recommendations = new List<RecommendedServiceDto>();
+                return response;
+            }
 
             // Extract recommendations
             var recommendationMatches = System.Text.RegularExpressions.Regex.Matches(aiResponse, @"RECOMMENDATION\s*\d*:\s*-?\s*Service Name:\s*(.*?)\s*-?\s*Service ID:\s*(\d+)\s*-?\s*Reason:\s*(.*?)(?=RECOMMENDATION|$)", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Singleline);
@@ -231,23 +251,8 @@ Guidelines:
                 }
             }
 
-            // If parsing failed, provide a fallback response
-            if (!recommendations.Any() && services.Any())
-            {
-                response.Summary = "I analyzed your needs and found some services that might help. Here are the top recommendations:";
-                foreach (var service in services.Take(3))
-                {
-                    recommendations.Add(new RecommendedServiceDto
-                    {
-                        Id = service.id,
-                        Name = service.name,
-                        Description = service.description,
-                        CategoryName = service.CategoryName,
-                        Reason = "This service may address your support needs based on the available options."
-                    });
-                }
-            }
-
+            // Only return recommendations if the AI actually provided them
+            // No fallback - if AI didn't recommend anything, return empty list
             response.Recommendations = recommendations.Take(5).ToList();
             return response;
         }
