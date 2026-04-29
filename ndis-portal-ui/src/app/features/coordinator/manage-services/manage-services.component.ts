@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ServicesService, ServiceItem as ApiService } from '../../../core/services/services';
 
-interface Service {
-  id: string;
+interface ManageService {
+  id: number;
   name: string;
   category: string;
   description: string;
@@ -18,40 +19,14 @@ interface Service {
   styleUrl: './manage-services.component.css',
 })
 export class ManageServicesComponent implements OnInit {
-  services: Service[] = [
-    {
-      id: 'SRV-0342',
-      name: 'Physiotherapy - In Home',
-      category: 'Health & Wellbeing',
-      description: 'In-home physiotherapy sessions',
-      status: 'Active'
-    },
-    {
-      id: 'SRV-0098',
-      name: 'Community Access Support',
-      category: 'Social Participation',
-      description: 'Community engagement activities',
-      status: 'Active'
-    },
-    {
-      id: 'SRV-0015',
-      name: 'Occupational Therapy',
-      category: 'Clinical Support',
-      description: 'Therapeutic occupational support',
-      status: 'Inactive'
-    },
-    {
-      id: 'SRV-0221',
-      name: 'Meal Preparation & Delivery',
-      category: 'Daily Living',
-      description: 'Daily meal preparation service',
-      status: 'Active'
-    }
-  ];
+  private servicesService = inject(ServicesService);
+
+  services: ManageService[] = [];
+  loading = false;
+  errorMessage = '';
 
   showModal = false;
-  newService: Service = {
-    id: '',
+  newService: Partial<ManageService> = {
     name: '',
     category: '',
     description: '',
@@ -67,16 +42,66 @@ export class ManageServicesComponent implements OnInit {
     'Allied Health'
   ];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadServices();
+  }
 
-  toggleStatus(service: Service): void {
-    service.status = service.status === 'Active' ? 'Inactive' : 'Active';
+  loadServices(): void {
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.servicesService.getServices().subscribe({
+      next: (data) => {
+        this.services = data
+          .filter(s => s.is_active !== false)
+          .map(apiService => this.mapApiServiceToManage(apiService));
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load services:', err);
+        this.errorMessage = 'Failed to load services. Please try again.';
+        this.loading = false;
+      }
+    });
+  }
+
+  private mapApiServiceToManage(apiService: ApiService): ManageService {
+    return {
+      id: apiService.id || (apiService as any).service_id || 0,
+      name: apiService.name,
+      category: apiService.category_name || 'Support Service',
+      description: apiService.description,
+      status: apiService.is_active ? 'Active' : 'Inactive'
+    };
+  }
+
+  toggleStatus(service: ManageService): void {
+    const newStatus = service.status === 'Active' ? 'Inactive' : 'Active';
+    const updatedService: ApiService = {
+      id: service.id,
+      name: service.name,
+      category_name: service.category,
+      description: service.description,
+      is_active: newStatus === 'Active',
+      category_id: 1,
+      price: 0
+    };
+
+    this.servicesService.updateService(service.id, updatedService).subscribe({
+      next: () => {
+        service.status = newStatus;
+        console.log(`Service ${service.id} status updated to ${newStatus}`);
+      },
+      error: (err) => {
+        console.error(`Failed to update service ${service.id} status:`, err);
+        alert('Failed to update service status. Please try again.');
+      }
+    });
   }
 
   openModal(): void {
     this.showModal = true;
     this.newService = {
-      id: '',
       name: '',
       category: '',
       description: '',
@@ -90,12 +115,27 @@ export class ManageServicesComponent implements OnInit {
 
   saveService(): void {
     if (this.newService.name && this.newService.category) {
-      const newId = 'SRV-' + Math.floor(1000 + Math.random() * 9000);
-      this.services.unshift({
-        ...this.newService,
-        id: newId
+      const serviceToCreate: ApiService = {
+        id: 0,
+        name: this.newService.name!,
+        category_name: this.newService.category!,
+        description: this.newService.description || '',
+        is_active: this.newService.status === 'Active',
+        category_id: 1,
+        price: 0
+      };
+
+      this.servicesService.createService(serviceToCreate).subscribe({
+        next: (createdService) => {
+          this.services.unshift(this.mapApiServiceToManage(createdService));
+          this.closeModal();
+          console.log('Service created successfully');
+        },
+        error: (err) => {
+          console.error('Failed to create service:', err);
+          alert('Failed to create service. Please try again.');
+        }
       });
-      this.closeModal();
     }
   }
 

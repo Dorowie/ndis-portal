@@ -17,10 +17,23 @@
           <option value="Approved">Approved</option>
           <option value="Cancelled">Cancelled</option>
         </select>
+        <button class="refresh-btn" (click)="loadBookingsFromAPI()" [disabled]="loading">
+          ↻ Refresh
+        </button>
       </div>
     </div>
 
-    <div class="table-container" data-testid="bookings-table">
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading bookings...</p>
+    </div>
+
+    <div *ngIf="errorMessage && !loading" class="error-state">
+      {{ errorMessage }}
+      <button class="retry-btn" (click)="loadBookingsFromAPI()">Retry</button>
+    </div>
+
+    <div *ngIf="!loading && !errorMessage" class="table-container" data-testid="bookings-table">
       <table>
         <thead>
           <tr>
@@ -74,7 +87,7 @@
       </table>
     </div>
 
-    <div class="pagination-footer">
+    <div class="pagination-footer" *ngIf="!loading && !errorMessage">
       <p>Showing {{ paginatedBookings.length }} of {{ filteredBookings.length }} bookings</p>
       <div class="pagination">
         <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">‹</button>

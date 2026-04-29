@@ -39,15 +39,20 @@
       <div class="filter-buttons">
         <button class="filter-btn" (click)="filterPending()">Filter</button>
         <button class="filter-btn" (click)="showAll()">All</button>
+        <button class="refresh-btn" (click)="loadBookingsFromAPI()" [disabled]="loading">
+          ↻ Refresh
+        </button>
       </div>
     </div>
 
-    <div *ngIf="loading" class="state-message">
-      Loading bookings...
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading bookings...</p>
     </div>
 
     <div *ngIf="errorMessage && !loading" class="state-message error">
       {{ errorMessage }}
+      <button class="retry-btn" (click)="loadBookingsFromAPI()">Retry</button>
     </div>
 
     <div *ngIf="!loading && !errorMessage" class="table-wrapper">

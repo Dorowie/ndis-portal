@@ -304,6 +304,53 @@ td small {
   color: #dc2626;
 }
 
+.refresh-btn {
+  border: none;
+  background: #6f2da8;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.refresh-btn:disabled {
+  background: #a78bfa;
+  cursor: not-allowed;
+}
+
+.loading-state {
+  padding: 40px;
+  text-align: center;
+  color: #52525b;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #6f2da8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.retry-btn {
+  display: block;
+  margin: 16px auto 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #6f2da8;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .empty-row {
   text-align: center;
   color: #71717a;
