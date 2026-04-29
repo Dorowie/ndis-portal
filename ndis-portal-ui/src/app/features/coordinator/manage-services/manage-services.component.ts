@@ -113,16 +113,6 @@ export class ManageServicesComponent implements OnInit {
     this.showModal = false;
   }
 
-  prevPage(): void {
-    // Simple pagination - can be enhanced later
-    console.log('Previous page clicked');
-  }
-
-  nextPage(): void {
-    // Simple pagination - can be enhanced later
-    console.log('Next page clicked');
-  }
-
   saveService(): void {
     if (this.newService.name && this.newService.category) {
       const serviceToCreate: ApiService = {

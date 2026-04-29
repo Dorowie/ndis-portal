@@ -35,11 +35,9 @@ interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class BookingsService {
-  private readonly apiUrl = 'http://localhost:7113/api/bookings';
+  private readonly apiUrl = 'https://localhost:7113/api/bookings';
 
-  constructor(private http: HttpClient) {
-    console.log('BookingsService initialized with API URL:', this.apiUrl);
-  }
+  constructor(private http: HttpClient) {}
 
   getMyBookings(): Observable<Booking[]> {
     return this.http.get<ApiResponse<Booking[]>>(this.apiUrl)
@@ -62,25 +60,10 @@ export class BookingsService {
   }
 
   updateBookingStatus(id: number, status: string): Observable<Booking> {
-    const endpoint = `${this.apiUrl}/${id}/status`;
-    console.log(`Making API call to: ${endpoint}`);
-    console.log(`Request payload:`, { status });
-    
-    const headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    };
-    
-    return this.http.put<ApiResponse<Booking>>(endpoint, { status }, { headers })
-      .pipe(
-        map(response => {
-          console.log('API Response:', response);
-          return response.data;
-        })
-      );
+    return this.http.put<ApiResponse<Booking>>(`${this.apiUrl}/${id}/status`, { status })
+      .pipe(map(response => response.data));
   }
 
-  
   deleteBooking(id: number): Observable<void> {
     return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/${id}`)
       .pipe(map(response => response.data));
