@@ -25,7 +25,7 @@ export class ServiceDetail implements OnInit {
     this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
-        this.loadService(id);
+        this.loadService(Number(id));
       }
     });
   }
