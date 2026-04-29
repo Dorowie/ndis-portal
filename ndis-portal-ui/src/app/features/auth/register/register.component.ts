@@ -63,6 +63,13 @@ export class RegisterComponent {
             }
             // Store role for sidebar to detect user type
             localStorage.setItem('userRole', registerData.Role);
+            // Store user info
+            localStorage.setItem('user', JSON.stringify({
+              firstName: registerData.FirstName,
+              lastName: registerData.LastName,
+              email: registerData.Email,
+              role: registerData.Role
+            }));
             // Notify sidebar of role change
             window.dispatchEvent(new StorageEvent('storage', { key: 'userRole' }));
             // Redirect based on role
@@ -71,18 +78,39 @@ export class RegisterComponent {
             if (role === 'Coordinator') {
               console.log('Redirecting to /dashboard');
               this.router.navigate(['/dashboard']).then(
-                () => console.log('Navigation to dashboard successful'),
-                (err) => console.error('Navigation to dashboard failed:', err)
+                () => {
+                  console.log('Navigation to dashboard successful');
+                  this.isLoading = false;
+                },
+                (err) => {
+                  console.error('Navigation to dashboard failed:', err);
+                  this.isLoading = false;
+                }
               );
             } else if (role === 'Participant') {
               console.log('Redirecting to /services');
               this.router.navigate(['/services']).then(
-                () => console.log('Navigation to services successful'),
-                (err) => console.error('Navigation to services failed:', err)
+                () => {
+                  console.log('Navigation to services successful');
+                  this.isLoading = false;
+                },
+                (err) => {
+                  console.error('Navigation to services failed:', err);
+                  this.isLoading = false;
+                }
               );
             } else {
               console.error('Unknown role, defaulting to /services:', role);
-              this.router.navigate(['/services']);
+              this.router.navigate(['/services']).then(
+                () => {
+                  console.log('Navigation to services successful');
+                  this.isLoading = false;
+                },
+                (err) => {
+                  console.error('Navigation to services failed:', err);
+                  this.isLoading = false;
+                }
+              );
             }
           } else {
             this.apiError = response.message || 'Registration failed';
