@@ -250,7 +250,156 @@ ng serve --port 4201
 - **API not connecting?** Verify the backend API is running at `http://localhost:5131`
 
 
+# How to run the Playwright tests
 
+--------------------------Playwright tests------------------------------------------------
+
+**Prerequisites**
+
+**Install recomended extension:**
+- Playwright Test for VS Code
+
+**Test File Structure**
+Playwright test scripts are located in the tests/ directory:
+
+tests/
+├── auth.spec.ts
+├── services.spec.ts
+├── bookings.spec.ts
+├── coordinator.spec.ts
+├── chatbot.spec.ts
+└── helpers/
+    └── auth.helper.ts
+
+**Playwright Installation**
+
+To initialize Playwright in the project, run the following command in the terminal:
+```bash
+   npm init playwright@latest
+   ```
+
+**During setup, configure the following:**
+
+- Select TypeScript as the language
+- Set the test directory to tests
+- Choose whether to include GitHub Actions (optional)
+- Install required browsers when prompted
+
+- **This process will generate the playwright.config.ts configuration file.**
+
+**Executing Tests**
+
+1. To execute all tests in headless mode (default):
+   ```bash
+   npx playwright test
+   ```
+
+2. To execute tests in headed mode (browser is visible during execution):
+   ```bash
+   npx playwright test --headed
+   ```
+
+3. To execute tests using the interactive user interface:
+   ```bash
+   npx playwright test --ui
+   ```
+
+4. To execute tests in debug mode:
+   ```bash
+   npx playwright test --debug
+   ```
+
+# Running the SSIS Packages
+
+--------------------------SSIS Packages------------------------------------------------
+
+**Input Files**
+
+Place the following CSV files in your local machine (You may create them using Notepad or Excel):
+
+**services_import.csv**
+```
+name, category_id, description
+Daily Assistance, 1, Help participants with daily activities
+```
+
+**bookings_import.csv**
+```
+participant_email,service_name, preferred date, notes, status
+participant1@ndisportal.com, Daily Assistance, 2026-05-05, Needs support, 0
+```
+
+**Database Connection Setup**
+
+Before running the SSIS packages, you must configure the database connection.
+
+**Steps to Configure Database Connection**
+
+1. Open any SSIS package (e.g., ImportServices.dtsx)
+2. Locate Connection Managers at the bottom panel
+3. Right-click OLE DB Connection Manager
+4. Click Edit Configure Connection
+5. Set the following:
+   - Server name: localhost (or your SQL Server instance name)
+   - Authentication: Windows Authentication (recommended) OR SQL Server Authentication (enter username/password)
+   - Select Database: Choose ndis_portal_db
+6. Click Test Connection → should succeed
+7. Click OK
+
+**Important Notes**
+- Make sure SQL Server is running
+- Ensure the database ndis_portal_db already exists
+- Tables required: services, users, bookings, service_categories
+
+**File Path Configuration**
+
+Each user must update file paths based on their local machine.
+
+**Import File Paths**
+
+1. Open ImportServices.dtsx or ImportBookings.dtsx
+2. Locate Connection Managers
+3. Right-click the Flat File Connection (e.g., services_import_csv) and update the path to your local file.
+
+**How to Run the Packages**
+
+**1. Run ImportServices.dtsx**
+- Purpose: Imports service data into the services table.
+- Steps:
+  1. Open ImportServices.dtsx
+  2. Click Start
+- Output: Valid records → inserted into database. Invalid records → saved in services_import_errors.csv
+
+**2. Run ImportBookings.dtsx**
+- Purpose: Imports bookings and resolves foreign keys.
+- Steps:
+  1. Open ImportBookings.dtsx
+  2. Click Start
+- Output: Valid records → inserted into bookings. Invalid records → saved in bookings_import_errors.csv
+
+**3. Run ExportBookingReport.dtsx**
+- Purpose: Exports booking data into a CSV report.
+- Steps:
+  1. Open ExportBookingReport.dtsx
+  2. Click Start
+- Output: A new file will be created: C:\Users\<YourUsername>\Downloads\booking_report_YYYYMMDD.csv
+
+**Important Notes**
+- Ensure the target folder exists: C:\Users\<YourUsername>\Downloads
+- Close CSV files before running (Excel locks files)
+- Verify correct username in paths
+- Ensure SQL Server is running
+- Do not modify database table structure
+
+**Troubleshooting**
+
+| Issue | Cause | Solution |
+|-------|--------|----------|
+| File not created / Cannot open file | Wrong path or file in use | Verify folder path and close Excel |
+| Insert error | NULL or wrong datatype | Check Data Conversion |
+| Lookup failed | No matching data | Check CSV values |
+| Path not found | Incorrect username | Fix path |
+| Cannot connect | SQL Server not running | Start SQL Server Service |
 
 # Default Login Credentials for Testing
 
