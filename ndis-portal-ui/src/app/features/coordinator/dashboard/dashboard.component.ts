@@ -30,6 +30,8 @@ export class CoordinatorDashboardComponent implements OnInit {
   errorMessage = '';
   currentPage = 1;
   pageSize = 4;
+  showFilterDropdown = false;
+  currentFilter = 'All';
 
   ngOnInit(): void {
     this.loadBookingsFromAPI();
@@ -111,16 +113,25 @@ export class CoordinatorDashboardComponent implements OnInit {
     }
   }
 
-  filterPending(): void {
-    this.filteredBookings = this.bookings.filter(
-      booking => this.getStatusText(booking.status) === 'Pending'
-    );
-    this.currentPage = 1;
+  toggleFilterDropdown(): void {
+    this.showFilterDropdown = !this.showFilterDropdown;
   }
 
-  showAll(): void {
-    this.filteredBookings = [...this.bookings];
+  closeFilterDropdown(): void {
+    this.showFilterDropdown = false;
+  }
+
+  filterByStatus(status: string): void {
+    this.currentFilter = status;
+    if (status === 'All') {
+      this.filteredBookings = [...this.bookings];
+    } else {
+      this.filteredBookings = this.bookings.filter(
+        booking => this.getStatusText(booking.status) === status
+      );
+    }
     this.currentPage = 1;
+    this.showFilterDropdown = false;
   }
 
   getParticipantName(booking: DashboardBooking): string {
