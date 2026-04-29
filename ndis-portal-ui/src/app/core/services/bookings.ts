@@ -75,17 +75,7 @@ export class BookingsService {
       );
   }
 
-  // Test API connectivity
-  testConnection(): Observable<boolean> {
-    console.log('Testing API connection to:', this.apiUrl);
-    return this.http.get<ApiResponse<any>>(`${this.apiUrl}/test`)
-      .pipe(
-        map(() => true),
-        // If test endpoint fails, try main endpoint
-        // This helps identify if the API is running
-      );
-  }
-
+  
   deleteBooking(id: number): Observable<void> {
     return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/${id}`)
       .pipe(map(response => response.data));
