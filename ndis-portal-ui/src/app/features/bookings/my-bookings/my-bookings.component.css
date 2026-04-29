@@ -496,11 +496,14 @@
 .footer-text {
   font-size: 0.85rem;
   color: #7a7482;
+  flex: 1;
 }
 
 .pagination {
   display: flex;
   gap: 8px;
+  justify-content: center;
+  flex: 1;
 }
 
 .pagination button {
