@@ -222,6 +222,20 @@ export class CoordinatorDashboardComponent implements OnInit {
     const bookingId = booking.booking_id;
     console.log(`Using booking_id: ${bookingId} for API call`);
     
+    // Test API connection first
+    this.bookingsService.testConnection().subscribe({
+      next: () => {
+        console.log('API connection test passed, proceeding with update');
+        this.performStatusUpdate(bookingId, status, booking);
+      },
+      error: (testErr) => {
+        console.error('API connection test failed:', testErr);
+        alert('API connection failed. Please check if the server is running.');
+      }
+    });
+  }
+
+  private performStatusUpdate(bookingId: number, status: string, booking: DashboardBooking): void {
     this.bookingsService.updateBookingStatus(bookingId, status).subscribe({
       next: (response) => {
         console.log('Update successful:', response);
@@ -232,7 +246,9 @@ export class CoordinatorDashboardComponent implements OnInit {
       },
       error: (err) => {
         console.error(`Failed to update booking ${bookingId} status:`, err);
-        alert(`Failed to ${status.toLowerCase()} booking. Please try again.`);
+        console.error('Error status:', err.status);
+        console.error('Error message:', err.message);
+        alert(`Failed to ${status.toLowerCase()} booking. API Error: ${err.status || 'Unknown'}`);
       }
     });
   }
