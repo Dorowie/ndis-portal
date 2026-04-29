@@ -55,7 +55,13 @@ export class BookingsService {
   }
 
   createBooking(booking: BookingCreateDto): Observable<Booking> {
-    return this.http.post<ApiResponse<Booking>>(this.apiUrl, booking)
+    // Ensure the date is in ISO format for .NET DateTime parsing
+    const payload = {
+      serviceId: booking.serviceId,
+      preferredDate: new Date(booking.preferredDate).toISOString(),
+      notes: booking.notes
+    };
+    return this.http.post<ApiResponse<Booking>>(this.apiUrl, payload)
       .pipe(map(response => response.data));
   }
 

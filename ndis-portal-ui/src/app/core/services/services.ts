@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 
 export interface ServiceItem {
   id: number;
+  service_id?: number; // API might return service_id instead of id
   category_id: number;
   name: string;
   description: string;
@@ -28,12 +29,18 @@ export class ServicesService {
 
   getServices(): Observable<ServiceItem[]> {
     return this.http.get<ApiResponse<ServiceItem[]>>(this.apiUrl)
-      .pipe(map(response => response.data));
+      .pipe(map(response => response.data.map(service => ({
+        ...service,
+        id: service.id || service.service_id || 0
+      }))));
   }
 
   getService(id: number): Observable<ServiceItem> {
     return this.http.get<ApiResponse<ServiceItem>>(`${this.apiUrl}/${id}`)
-      .pipe(map(response => response.data));
+      .pipe(map(response => ({
+        ...response.data,
+        id: response.data.id || response.data.service_id || 0
+      })));
   }
 
   createService(service: ServiceItem): Observable<ServiceItem> {
