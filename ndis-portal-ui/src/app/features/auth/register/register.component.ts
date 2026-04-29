@@ -61,79 +61,79 @@ export class RegisterComponent {
           console.log('Role from form:', registerData.Role);
           
           if (response.success) {
-            alert('Registration successful!');
+            alert('Registration successful! Logging you in...');
             
-            // Store token if returned by API
-            if (response.data && response.data.token) {
-              console.log('Token found in response, storing...');
-              localStorage.setItem('token', response.data.token);
-            } else {
-              console.warn('No token in response - user will need to login');
-            }
-            
-            // Store role for sidebar to detect user type
-            localStorage.setItem('userRole', registerData.Role);
-            console.log('Stored userRole:', registerData.Role);
-            
-            // Store user info
-            const userInfo = {
-              firstName: registerData.FirstName,
-              lastName: registerData.LastName,
-              email: registerData.Email,
-              role: registerData.Role
-            };
-            localStorage.setItem('user', JSON.stringify(userInfo));
-            console.log('Stored user info:', userInfo);
-            
-            // Check what's in localStorage now
-            console.log('localStorage token:', localStorage.getItem('token'));
-            console.log('localStorage userRole:', localStorage.getItem('userRole'));
-            console.log('localStorage user:', localStorage.getItem('user'));
-            
-            // Notify sidebar of role change
-            window.dispatchEvent(new StorageEvent('storage', { key: 'userRole' }));
-            
-            // Redirect based on role
-            const role = registerData.Role?.trim();
-            console.log('Navigating based on role:', role);
-            
-            if (role === 'Coordinator') {
-              console.log('Redirecting to /dashboard');
-              this.router.navigate(['/dashboard']).then(
-                () => {
-                  console.log('Navigation to dashboard successful');
-                  this.isLoading = false;
-                },
-                (err) => {
-                  console.error('Navigation to dashboard failed:', err);
-                  this.isLoading = false;
-                }
-              );
-            } else if (role === 'Participant') {
-              console.log('Redirecting to /services');
-              this.router.navigate(['/services']).then(
-                () => {
-                  console.log('Navigation to services successful');
-                  this.isLoading = false;
-                },
-                (err) => {
-                  console.error('Navigation to services failed:', err);
-                  this.isLoading = false;
-                }
-              );
-            } else {
-              console.error('Unknown role, defaulting to /services:', role);
-              this.router.navigate(['/services']).then(
-                () => {
-                  console.log('Navigation to services successful');
-                  this.isLoading = false;
-                },
-                (err) => {
-                  console.error('Navigation to services failed:', err);
+            // Auto-login after registration to get a token
+            this.authService.login(registerData.Email, registerData.Password).subscribe({
+              next: (loginResponse) => {
+                console.log('=== AUTO-LOGIN DEBUG ===');
+                console.log('Login response:', loginResponse);
+                
+                if (loginResponse.success && loginResponse.data) {
+                  const token = loginResponse.data.token;
+                  localStorage.setItem('token', token);
+                  console.log('Token stored from auto-login');
+                  
+                  const userRole = this.authService.getUserRole(token);
+                  localStorage.setItem('userRole', userRole || registerData.Role);
+                  console.log('User role from token:', userRole);
+                  
+                  // Store user info
+                  const userInfo = {
+                    firstName: registerData.FirstName,
+                    lastName: registerData.LastName,
+                    email: registerData.Email,
+                    role: registerData.Role
+                  };
+                  localStorage.setItem('user', JSON.stringify(userInfo));
+                  console.log('Stored user info:', userInfo);
+                  
+                  // Notify sidebar of role change
+                  window.dispatchEvent(new StorageEvent('storage', { key: 'userRole' }));
+                  
+                  // Redirect based on role
+                  const role = (userRole || registerData.Role)?.trim();
+                  console.log('Navigating based on role:', role);
+                  
+                  if (role === 'Coordinator') {
+                    console.log('Redirecting to /dashboard');
+                    this.router.navigate(['/dashboard']).then(
+                      () => {
+                        console.log('Navigation to dashboard successful');
+                        this.isLoading = false;
+                      },
+                      (err) => {
+                        console.error('Navigation to dashboard failed:', err);
+                        this.isLoading = false;
+                      }
+                    );
+                  } else {
+                    console.log('Redirecting to /services');
+                    this.router.navigate(['/services']).then(
+                      () => {
+                        console.log('Navigation to services successful');
+                        this.isLoading = false;
+                      },
+                      (err) => {
+                        console.error('Navigation to services failed:', err);
+                        this.isLoading = false;
+                      }
+                    );
+                  }
+                } else {
+                  console.error('Auto-login failed:', loginResponse.message);
+                  // Fallback to login page
+                  this.router.navigate(['/login']);
                   this.isLoading = false;
                 }
-              );
-            }
+              },
+              error: (loginError) => {
+                console.error('Auto-login error:', loginError);
+                // Fallback to login page
+                this.router.navigate(['/login']);
+                this.isLoading = false;
+              }
+            });
           } else {
             console.error('Registration not successful:', response.message);
             this.apiError = response.message || 'Registration failed';
