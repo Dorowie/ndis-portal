@@ -198,32 +198,52 @@ export class CoordinatorDashboardComponent implements OnInit {
   }
 
   approveBooking(id: number): void {
-    this.updateBookingStatus(id, 'Approved');
+    this.updateBookingStatus(id, 1, 'Approved');
   }
 
   cancelBooking(id: number): void {
-    this.updateBookingStatus(id, 'Cancelled');
+    this.updateBookingStatus(id, 2, 'Cancelled');
   }
 
-  updateBookingStatus(id: number, status: string): void {
-    console.log(`Attempting to update booking ${id} to status: ${status}`);
+  updateBookingStatus(id: number, statusValue: number, statusText: string): void {
+    console.log(`Attempting to update booking ${id} to status: ${statusText} (${statusValue})`);
     
-    this.bookingsService.updateBookingStatus(id, status).subscribe({
+    this.bookingsService.updateBookingStatus(id, statusValue.toString()).subscribe({
       next: (response) => {
         console.log('Update successful:', response);
         const booking = this.bookings.find(b => b.id === id || (b as any).booking_id === id);
         if (booking) {
-          booking.status = status;
+          booking.status = statusValue;
         }
         this.filteredBookings = [...this.bookings];
-        console.log(`Booking ${id} status updated to ${status}`);
+        console.log(`Booking ${id} status updated to ${statusText}`);
         // Show success message
-        alert(`Booking ${status.toLowerCase()} successfully!`);
+        alert(`Booking ${statusText.toLowerCase()} successfully!`);
       },
       error: (err) => {
         console.error(`Failed to update booking ${id} status:`, err);
         console.error('Error details:', err.error);
-        alert(`Failed to ${status.toLowerCase()} booking. Please try again.\nError: ${err.message || 'Unknown error'}`);
+        // Try with string status if numeric fails
+        if (statusValue !== statusText) {
+          console.log('Retrying with string status...');
+          this.bookingsService.updateBookingStatus(id, statusText).subscribe({
+            next: (response) => {
+              console.log('String status update successful:', response);
+              const booking = this.bookings.find(b => b.id === id || (b as any).booking_id === id);
+              if (booking) {
+                booking.status = statusText;
+              }
+              this.filteredBookings = [...this.bookings];
+              alert(`Booking ${statusText.toLowerCase()} successfully!`);
+            },
+            error: (stringErr) => {
+              console.error('String status also failed:', stringErr);
+              alert(`Failed to ${statusText.toLowerCase()} booking. Please try again.\nError: ${stringErr.message || 'API error'}`);
+            }
+          });
+        } else {
+          alert(`Failed to ${statusText.toLowerCase()} booking. Please try again.\nError: ${err.message || 'API error'}`);
+        }
       }
     });
   }
