@@ -18,6 +18,8 @@ export class BookServiceComponent implements OnInit {
   apiError: string | null = null;
   services: ServiceItem[] = [];
   selectedService: ServiceItem | null = null;
+  preselectedServiceId: number | null = null;
+  isPreselected = false;
 
   constructor(
     private fb: FormBuilder,
@@ -38,6 +40,8 @@ export class BookServiceComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const serviceId = params['serviceId'];
       if (serviceId) {
+        this.preselectedServiceId = Number(serviceId);
+        this.isPreselected = true;
         this.bookForm.patchValue({ serviceId: Number(serviceId) });
       }
     });
@@ -64,9 +68,21 @@ export class BookServiceComponent implements OnInit {
 
   get selectedServiceName(): string {
     const selectedId = Number(this.bookForm.get('serviceId')?.value);
-    const service = this.services.find(s => s.id === selectedId);
+    const service = this.services.find(s => s.id === selectedId || (s as any).service_id === selectedId);
     this.selectedService = service || null;
     return service ? service.name : '';
+  }
+
+  get preselectedServiceName(): string {
+    if (!this.preselectedServiceId) return '';
+    const service = this.services.find(s => s.id === this.preselectedServiceId || (s as any).service_id === this.preselectedServiceId);
+    return service ? service.name : '';
+  }
+
+  get preselectedServiceCategory(): string {
+    if (!this.preselectedServiceId) return '';
+    const service = this.services.find(s => s.id === this.preselectedServiceId || (s as any).service_id === this.preselectedServiceId);
+    return service ? (service.category_name || 'Support Service') : '';
   }
 
   isPastDate(value: string): boolean {
