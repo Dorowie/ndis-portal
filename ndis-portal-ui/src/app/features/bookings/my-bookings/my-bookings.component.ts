@@ -115,14 +115,13 @@ export class MyBookingsComponent implements OnInit {
   confirmCancel(): void {
     if (this.selectedBookingId === null) return;
 
-    this.bookingsService.updateBookingStatus(this.selectedBookingId, 'Cancelled').subscribe({
+    this.bookingsService.deleteBooking(this.selectedBookingId).subscribe({
       next: () => {
-        this.bookings = this.bookings.map(booking =>
-          booking.booking_id === this.selectedBookingId
-            ? { ...booking, status: 'Cancelled' }
-            : booking
+        this.bookings = this.bookings.filter(
+          booking => booking.booking_id !== this.selectedBookingId
         );
         this.closeCancelDialog();
+        alert('Booking cancelled successfully');
       },
       error: (error) => {
         console.error('Error cancelling booking:', error);
