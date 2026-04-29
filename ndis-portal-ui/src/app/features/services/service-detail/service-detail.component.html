@@ -3,8 +3,9 @@
     <span class="material-icons">arrow_back</span> Back to Services
   </button>
 
-  <div *ngIf="isLoading" class="loading-state">
-    Loading service details...
+  <div *ngIf="isLoading" class="loading-state" data-testid="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading service details...</p>
   </div>
 
   <div *ngIf="error" class="error-state">
