@@ -488,22 +488,23 @@
 .table-footer {
   padding: 16px;
   border-top: 1px solid #efebf1;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr; /* Match table columns: SERVICE, BOOKING DATE, NOTES, STATUS, ACTIONS */
   align-items: center;
+  gap: 16px;
 }
 
 .footer-text {
   font-size: 0.85rem;
   color: #7a7482;
-  flex: 1;
+  grid-column: 1; /* Align with SERVICE column */
 }
 
 .pagination {
   display: flex;
   gap: 8px;
   justify-content: center;
-  flex: 1;
+  grid-column: 2 / span 3; /* Span across BOOKING DATE, NOTES, STATUS columns */
 }
 
 .pagination button {
