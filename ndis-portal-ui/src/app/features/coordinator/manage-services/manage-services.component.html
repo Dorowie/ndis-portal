@@ -1,0 +1,129 @@
+<div class="manage-services-page">
+  <div class="page-header">
+    <button class="back-btn" routerLink="/dashboard">←</button>
+    <div class="header-content">
+      <h1>Manage Services</h1>
+      <p>Efficiently organize, update, and monitor clinical and support services across your local NDIS network.</p>
+    </div>
+    <button class="add-service-btn" (click)="openModal()" data-testid="add-service-btn">
+      <span>+</span> Add New Service
+    </button>
+  </div>
+
+  <div class="services-card">
+    <div class="card-header">
+      <h3>Registered Services Registry</h3>
+      <button class="refresh-btn" (click)="loadServices()" [disabled]="loading">
+        ↻ Refresh
+      </button>
+    </div>
+
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading services...</p>
+    </div>
+
+    <div *ngIf="errorMessage && !loading" class="error-state">
+      {{ errorMessage }}
+      <button class="retry-btn" (click)="loadServices()">Retry</button>
+    </div>
+
+    <div *ngIf="!loading && !errorMessage" class="table-container" data-testid="services-table">
+      <table>
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>CATEGORY</th>
+            <th>STATUS</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let service of services">
+            <td>
+              <div class="service-info">
+                <div class="avatar">{{ getInitials(service.name) }}</div>
+                <div class="service-details">
+                  <strong>{{ service.name }}</strong>
+                  <small>ID: {{ service.id }}</small>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="category-tag">{{ service.category }}</span>
+            </td>
+            <td>
+              <span class="status-badge" [class.active]="service.status === 'Active'" [class.inactive]="service.status === 'Inactive'">
+                {{ service.status }}
+              </span>
+            </td>
+            <td>
+              <label class="toggle-switch" data-testid="toggle-btn">
+                <input type="checkbox" [checked]="service.status === 'Active'" (change)="toggleStatus(service)">
+                <span class="slider"></span>
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination-footer" *ngIf="!loading && !errorMessage">
+      <p>Showing {{ services.length }} of {{ services.length }} Services</p>
+      <div class="pagination">
+        <button>‹</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>›</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add New Service Modal -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-card" (click)=$event.stopPropagation() data-testid="service-modal">
+    <div class="modal-header">
+      <h2>Add New Service</h2>
+      <p>Configure a new NDIS-compliant service offering for your coordinator dashboard.</p>
+      <button class="close-btn" (click)="closeModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Service Name <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="newService.name" placeholder="e.g. Community Access Assistance" />
+      </div>
+
+      <div class="form-group">
+        <label>Category <span class="required">*</span></label>
+        <select [(ngModel)]="newService.category">
+          <option value="">Select a service category</option>
+          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea [(ngModel)]="newService.description" rows="4" placeholder="Provide a detailed overview of the service scope, pricing limits, and reporting requirements."></textarea>
+      </div>
+
+      <div class="form-group toggle-group">
+        <div>
+          <label>Active on creation</label>
+          <small>Publish this service immediately</small>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" [(ngModel)]="newService.status" [checked]="newService.status === 'Active'">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="save-btn" (click)="saveService()" data-testid="save-btn">Save Service</button>
+      <button class="cancel-btn" (click)="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -53,9 +53,37 @@ export class RegisterComponent {
 
       this.authService.register(registerData).subscribe({
         next: (response) => {
+          console.log('Registration response:', response);
+          console.log('Role from form:', registerData.Role);
           if (response.success) {
-            alert('Registration successful! Please login to continue.');
-            this.router.navigate(['/login']);
+            alert('Registration successful!');
+            // Store token if returned by API
+            if (response.data && response.data.token) {
+              localStorage.setItem('token', response.data.token);
+            }
+            // Store role for sidebar to detect user type
+            localStorage.setItem('userRole', registerData.Role);
+            // Notify sidebar of role change
+            window.dispatchEvent(new StorageEvent('storage', { key: 'userRole' }));
+            // Redirect based on role
+            const role = registerData.Role?.trim();
+            console.log('Navigating based on role:', role);
+            if (role === 'Coordinator') {
+              console.log('Redirecting to /dashboard');
+              this.router.navigate(['/dashboard']).then(
+                () => console.log('Navigation to dashboard successful'),
+                (err) => console.error('Navigation to dashboard failed:', err)
+              );
+            } else if (role === 'Participant') {
+              console.log('Redirecting to /services');
+              this.router.navigate(['/services']).then(
+                () => console.log('Navigation to services successful'),
+                (err) => console.error('Navigation to services failed:', err)
+              );
+            } else {
+              console.error('Unknown role, defaulting to /services:', role);
+              this.router.navigate(['/services']);
+            }
           } else {
             this.apiError = response.message || 'Registration failed';
             this.isLoading = false;

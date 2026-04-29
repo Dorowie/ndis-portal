@@ -64,6 +64,19 @@ export class MyBookingsComponent implements OnInit {
     return this.bookings.filter(b => b.status === this.selectedFilter);
   }
 
+  get nextSessionDate(): string | null {
+    // Get approved bookings with future dates, sorted by date
+    const approvedBookings = this.bookings
+      .filter(b => b.status === 'Approved' && new Date(b.preferred_date) >= new Date())
+      .sort((a, b) => new Date(a.preferred_date).getTime() - new Date(b.preferred_date).getTime());
+    
+    if (approvedBookings.length === 0) {
+      return null;
+    }
+    
+    return this.formatDate(approvedBookings[0].preferred_date);
+  }
+
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString('en-US', {
       month: 'short',

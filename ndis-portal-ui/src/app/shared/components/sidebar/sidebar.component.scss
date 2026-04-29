@@ -1,74 +1,73 @@
 .sidebar-wrapper {
   width: 100%;
-  height: 100%;
-  background-color: var(--color-sidebar-bg);
+  height: 100vh;
+  background-color: var(--color-sidebar-bg, #fff4fd);
   padding: 32px 0;
   display: flex;
   flex-direction: column;
+}
 
-  /* 1. Set identical padding for the header container */
-  .brand-header {
-    padding: 0 20px; /* Locked to 20px */
-    margin-bottom: 32px;
+.brand-header {
+  padding: 0 20px;
+  margin-bottom: 32px;
+}
 
-    .brand-title {
-      color: var(--color-primary);
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 24px;
-      padding-left: 8px; /* Slightly indents title to align with the icons below */
-    }
+.brand-title {
+  color: var(--color-primary, #5b21b6);
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin: 0 0 24px;
+  padding-left: 8px;
+}
 
-    .btn-book-support {
-      width: 100%;
-      background-color: var(--color-primary);
-      color: white;
-      border: none;
-      padding: 12px; /* Adjust if you need it taller/shorter */
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      
-      /* Perfect Centering */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px; /* Tidy gap between icon and text */
-    }
-  }
+.btn-book-support {
+  width: 100%;
+  background-color: var(--color-primary, #451274);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
 
-  /* 2. Set identical padding for the nav links container */
-  .nav-links {
-    display: flex;
-    flex-direction: column;
-    padding: 0 20px; /* Locked to 20px to perfectly match the button above */
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
 
-    .nav-item {
-      display: flex;
-      align-items: center;
-      padding: 14px 16px;
-      margin: 0 0 8px 0; /* Cleaned up: only bottom margin to separate links */
-      color: #666;
-      text-decoration: none;
-      font-weight: 500;
-      border-radius: 8px;
-      border-right: 4px solid transparent; /* Invisible border prevents UI jumping */
-      transition: all 0.2s ease;
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  color: #4b4450;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 8px;
+  border-right: 4px solid transparent;
+  transition: all 0.2s ease;
+}
 
-      .icon { margin-right: 12px; font-size: 18px; }
+.nav-item .icon {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+}
 
-      /* ACTIVE PILL */
-      &.active {
-        background-color: var(--color-active-purple);
-        color: var(--color-primary);
-        font-weight: 700;
-        border-right: 4px solid var(--color-primary);
-      }
+.nav-item.active {
+  background-color: var(--color-active-purple, #eee3f2);
+  color: var(--color-primary, #451274);
+  font-weight: 800;
+  border-right: 4px solid var(--color-primary, #451274);
+}
 
-      &:hover:not(.active) {
-        background-color: rgba(111, 44, 145, 0.05);
-      }
-    }
-  }
+.nav-item:hover:not(.active) {
+  background-color: rgba(111, 44, 145, 0.05);
 }

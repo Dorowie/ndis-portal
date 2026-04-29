@@ -22,6 +22,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('userRole');
   }
 
   isAuthenticated(): boolean {
@@ -58,6 +59,12 @@ export class AuthService {
   }
 
   getUserRole(token?: string): string | null {
+    // First check localStorage for explicit role setting (set during registration)
+    const storedRole = localStorage.getItem('userRole');
+    if (storedRole) {
+      return storedRole;
+    }
+    // Fall back to token or user object
     const user = token ? this.getUserFromToken(token) : this.getUser();
     return user ? user.role : null;
   }
