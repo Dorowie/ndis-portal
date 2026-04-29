@@ -53,28 +53,50 @@ export class RegisterComponent {
 
       this.authService.register(registerData).subscribe({
         next: (response) => {
-          console.log('Registration response:', response);
+          console.log('=== REGISTRATION DEBUG ===');
+          console.log('Full response:', response);
+          console.log('Response success:', response.success);
+          console.log('Response data:', response.data);
+          console.log('Response message:', response.message);
           console.log('Role from form:', registerData.Role);
+          
           if (response.success) {
             alert('Registration successful!');
+            
             // Store token if returned by API
             if (response.data && response.data.token) {
+              console.log('Token found in response, storing...');
               localStorage.setItem('token', response.data.token);
+            } else {
+              console.warn('No token in response - user will need to login');
             }
+            
             // Store role for sidebar to detect user type
             localStorage.setItem('userRole', registerData.Role);
+            console.log('Stored userRole:', registerData.Role);
+            
             // Store user info
-            localStorage.setItem('user', JSON.stringify({
+            const userInfo = {
               firstName: registerData.FirstName,
               lastName: registerData.LastName,
               email: registerData.Email,
               role: registerData.Role
-            }));
+            };
+            localStorage.setItem('user', JSON.stringify(userInfo));
+            console.log('Stored user info:', userInfo);
+            
+            // Check what's in localStorage now
+            console.log('localStorage token:', localStorage.getItem('token'));
+            console.log('localStorage userRole:', localStorage.getItem('userRole'));
+            console.log('localStorage user:', localStorage.getItem('user'));
+            
             // Notify sidebar of role change
             window.dispatchEvent(new StorageEvent('storage', { key: 'userRole' }));
+            
             // Redirect based on role
             const role = registerData.Role?.trim();
             console.log('Navigating based on role:', role);
+            
             if (role === 'Coordinator') {
               console.log('Redirecting to /dashboard');
               this.router.navigate(['/dashboard']).then(
@@ -113,12 +135,16 @@ export class RegisterComponent {
               );
             }
           } else {
+            console.error('Registration not successful:', response.message);
             this.apiError = response.message || 'Registration failed';
             this.isLoading = false;
           }
         },
         error: (error) => {
-          console.error('Registration error:', error);
+          console.error('=== REGISTRATION ERROR ===');
+          console.error('Full error:', error);
+          console.error('Error status:', error.status);
+          console.error('Error message:', error.error?.message);
           this.apiError = error.error?.message || 'Registration failed. Please try again.';
           this.isLoading = false;
         }
