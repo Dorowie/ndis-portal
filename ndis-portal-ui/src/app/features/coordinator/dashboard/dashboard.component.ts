@@ -4,6 +4,7 @@ import { BookingsService, Booking as ApiBooking } from '../../../core/services/b
 
 interface DashboardBooking {
   id: number;
+  booking_id: number; // Add booking_id field
   participantName?: string;
   userName?: string;
   serviceName?: string;
@@ -58,6 +59,7 @@ export class CoordinatorDashboardComponent implements OnInit {
   private mapApiBookingToDashboard(apiBooking: ApiBooking): DashboardBooking {
     return {
       id: apiBooking.booking_id,
+      booking_id: apiBooking.booking_id, // Preserve original booking_id
       serviceName: apiBooking.service_name,
       service: apiBooking.service_name,
       bookingDate: apiBooking.preferred_date,
@@ -207,10 +209,8 @@ export class CoordinatorDashboardComponent implements OnInit {
 
   updateBookingStatus(id: number, status: string): void {
     console.log(`Attempting to update booking ${id} to status: ${status}`);
-    console.log('All bookings data:', this.bookings);
-    console.log('Booking with ID:', this.bookings.find(b => b.id === id));
     
-    // Check if booking exists
+    // Find booking and use its booking_id
     const booking = this.bookings.find(b => b.id === id);
     if (!booking) {
       console.error('Booking not found with ID:', id);
@@ -218,25 +218,21 @@ export class CoordinatorDashboardComponent implements OnInit {
       return;
     }
     
-    this.bookingsService.updateBookingStatus(id, status).subscribe({
+    // Use booking_id for API call
+    const bookingId = booking.booking_id;
+    console.log(`Using booking_id: ${bookingId} for API call`);
+    
+    this.bookingsService.updateBookingStatus(bookingId, status).subscribe({
       next: (response) => {
         console.log('Update successful:', response);
-        const updatedBooking = this.bookings.find(b => b.id === id);
-        if (updatedBooking) {
-          updatedBooking.status = status;
-        }
+        booking.status = status;
         this.filteredBookings = [...this.bookings];
-        console.log(`Booking ${id} status updated to ${status}`);
-        // Show success message
+        console.log(`Booking ${bookingId} status updated to ${status}`);
         alert(`Booking ${status.toLowerCase()} successfully!`);
       },
       error: (err) => {
-        console.error(`Failed to update booking ${id} status:`, err);
-        console.error('Error details:', err.error);
-        console.error('Status code:', err.status);
-        console.error('Response body:', err.error);
-        console.error('Full error:', err);
-        alert(`Failed to ${status.toLowerCase()} booking. Status: ${err.status}. Please try again.`);
+        console.error(`Failed to update booking ${bookingId} status:`, err);
+        alert(`Failed to ${status.toLowerCase()} booking. Please try again.`);
       }
     });
   }
