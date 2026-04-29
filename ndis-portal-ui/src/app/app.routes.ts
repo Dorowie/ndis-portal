@@ -12,6 +12,7 @@ import { ServiceDetailComponent } from './features/services/service-detail/servi
 import { ManageServicesComponent } from './features/coordinator/manage-services/manage-services.component';
 import { CoordinatorDashboardComponent } from './features/coordinator/dashboard/dashboard.component';
 import { AllBookingsComponent } from './features/coordinator/all-bookings/all-bookings.component';
+import { SupportWorkersComponent } from './features/coordinator/support-workers/support-workers.component';
 
 import { authGuard } from './core/guards/auth-guard';
 
@@ -68,6 +69,12 @@ export const routes: Routes = [
       {
         path: 'coordinator/services',
         component: ManageServicesComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Coordinator'] }
+      },
+      {
+        path: 'coordinator/support-workers',
+        component: SupportWorkersComponent,
         canActivate: [authGuard],
         data: { roles: ['Coordinator'] }
       },

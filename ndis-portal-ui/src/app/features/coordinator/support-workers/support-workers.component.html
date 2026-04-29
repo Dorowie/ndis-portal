@@ -1,0 +1,220 @@
+<div class="support-workers-page">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Support Workers</h1>
+      <p>Manage staff assigned to participant support services.</p>
+    </div>
+    <button class="add-worker-btn" (click)="openModal()" data-testid="add-worker-btn">
+      <span>+</span> Add Support Worker
+    </button>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="error-message" data-testid="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Workers Card -->
+  <div class="workers-card" *ngIf="!isLoading && !error">
+    <div class="card-header">
+      <h3>Support Worker Registry</h3>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="workers.length === 0" class="empty-state" data-testid="empty-state">
+      <div class="empty-icon">
+        <span class="material-icons">people</span>
+      </div>
+      <h3>No Support Workers Found</h3>
+      <p>Click "Add Support Worker" to register your first staff member.</p>
+    </div>
+
+    <!-- Workers Table -->
+    <div class="table-container" *ngIf="workers.length > 0" data-testid="support-workers-table">
+      <table>
+        <thead>
+          <tr>
+            <th>FULL NAME</th>
+            <th>EMAIL</th>
+            <th>PHONE</th>
+            <th>ASSIGNED SERVICE</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let worker of workers">
+            <td>
+              <div class="worker-info">
+                <div class="avatar">{{ getInitials(worker.fullName) }}</div>
+                <div class="worker-details">
+                  <strong>{{ worker.fullName }}</strong>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="email-text">{{ worker.email }}</span>
+            </td>
+            <td>
+              <span class="phone-text">{{ worker.phone || 'N/A' }}</span>
+            </td>
+            <td>
+              <span class="service-tag">{{ getServiceName(worker.assignedService) }}</span>
+            </td>
+            <td>
+              <button class="action-btn view-btn" title="View Details" (click)="viewWorker(worker)">
+                <span class="material-icons">visibility</span>
+              </button>
+              <button class="action-btn edit-btn" title="Edit" (click)="editWorker(worker)">
+                <span class="material-icons">edit</span>
+              </button>
+              <button class="action-btn delete-btn" title="Delete" (click)="confirmDelete(worker)">
+                <span class="material-icons">delete</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-footer" *ngIf="workers.length > 0">
+      <p>Showing {{ workers.length }} of {{ workers.length }} Support Workers</p>
+      <div class="pagination">
+        <button>‹</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>›</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Add Support Worker Modal -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()" data-testid="worker-modal">
+    <div class="modal-header">
+      <h2>{{ isEditMode ? 'Edit Support Worker' : 'Add Support Worker' }}</h2>
+      <p>{{ isEditMode ? 'Update support worker details and assigned service.' : 'Register a new support worker and assign them to a service.' }}</p>
+      <button class="close-btn" (click)="closeModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Full Name <span class="required">*</span></label>
+        <input
+          type="text"
+          [(ngModel)]="newWorker.fullName"
+          placeholder="e.g. John Smith"
+          [class.error]="formErrors['fullName']"
+        />
+        <small class="error-text" *ngIf="formErrors['fullName']">{{ formErrors['fullName'] }}</small>
+      </div>
+
+      <div class="form-group">
+        <label>Email <span class="required">*</span></label>
+        <input
+          type="email"
+          [(ngModel)]="newWorker.email"
+          placeholder="e.g. john.smith@example.com"
+          [class.error]="formErrors['email']"
+        />
+        <small class="error-text" *ngIf="formErrors['email']">{{ formErrors['email'] }}</small>
+      </div>
+
+      <div class="form-group">
+        <label>Phone</label>
+        <input
+          type="tel"
+          [(ngModel)]="newWorker.phone"
+          placeholder="e.g. +61 412 345 678"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Assigned Service <span class="required">*</span></label>
+        <select
+          [(ngModel)]="newWorker.assignedService"
+          [class.error]="formErrors['assignedService']"
+        >
+          <option value="">Select a service</option>
+          <option *ngFor="let service of services" [value]="service.id">
+            {{ service.name }}
+          </option>
+        </select>
+        <small class="error-text" *ngIf="formErrors['assignedService']">
+          {{ formErrors['assignedService'] }}
+        </small>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="save-btn" (click)="saveWorker()" data-testid="save-worker-btn">
+        {{ isEditMode ? 'Update Support Worker' : 'Add Support Worker' }}
+      </button>
+      <button class="cancel-btn" (click)="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- View Worker Details Modal -->
+<div class="modal-overlay" *ngIf="showViewModal" (click)="closeViewModal()">
+  <div class="modal-card view-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Support Worker Details</h2>
+      <button class="close-btn" (click)="closeViewModal()">×</button>
+    </div>
+
+    <div class="modal-body" *ngIf="selectedWorker">
+      <div class="view-section">
+        <div class="worker-avatar-large">{{ getInitials(selectedWorker.fullName) }}</div>
+        <h3 class="worker-name">{{ selectedWorker.fullName }}</h3>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Email</label>
+          <p>{{ selectedWorker.email }}</p>
+        </div>
+        <div class="info-item">
+          <label>Phone</label>
+          <p>{{ selectedWorker.phone || 'Not provided' }}</p>
+        </div>
+        <div class="info-item">
+          <label>Assigned Service</label>
+          <p>{{ getServiceName(selectedWorker.assignedService) }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="cancel-btn" (click)="closeViewModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" *ngIf="showDeleteConfirm" (click)="cancelDelete()">
+  <div class="modal-card confirm-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Delete Support Worker</h2>
+      <button class="close-btn" (click)="cancelDelete()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="confirm-icon">
+        <span class="material-icons">warning</span>
+      </div>
+      <p class="confirm-text">
+        Are you sure you want to delete <strong>{{ workerToDelete?.fullName }}</strong>?
+      </p>
+      <p class="confirm-subtext">This action cannot be undone.</p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="delete-confirm-btn" (click)="deleteWorker()">Delete</button>
+      <button class="cancel-btn" (click)="cancelDelete()">Cancel</button>
+    </div>
+  </div>
+</div>
