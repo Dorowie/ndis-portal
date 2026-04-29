@@ -71,11 +71,11 @@
     <div class="pagination-footer" *ngIf="!loading && !errorMessage">
       <p>Showing {{ services.length }} of {{ services.length }} Services</p>
       <div class="pagination">
-        <button>‹</button>
+        <button (click)="prevPage()">‹</button>
         <button class="active">1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>›</button>
+        <button (click)="nextPage()">2</button>
+        <button (click)="nextPage()">3</button>
+        <button (click)="nextPage()">›</button>
       </div>
     </div>
   </div>
