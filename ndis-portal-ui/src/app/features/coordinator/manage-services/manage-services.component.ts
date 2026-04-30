@@ -34,12 +34,11 @@ export class ManageServicesComponent implements OnInit {
   };
 
   categories = [
-    'Health & Wellbeing',
-    'Social Participation',
-    'Clinical Support',
-    'Daily Living',
-    'Therapeutic Support',
-    'Allied Health'
+    'Daily Personal Activities',
+    'Community Access',
+    'Therapy Supports',
+    'Respite Care',
+    'Support Coordination'
   ];
 
   ngOnInit(): void {
