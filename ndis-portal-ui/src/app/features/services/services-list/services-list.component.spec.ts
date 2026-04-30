@@ -13,16 +13,20 @@ describe('ServicesListComponent', () => {
     {
       id: 1,
       service_id: 1,
+      category_id: 1,
       name: 'Personal Care',
       description: 'Daily personal care and hygiene assistance',
+      is_active: true,
       category_name: 'Daily Personal Activities',
       price: 50
     },
     {
       id: 2,
       service_id: 2,
+      category_id: 2,
       name: 'Community Access',
       description: 'Social and community participation support',
+      is_active: true,
       category_name: 'Community Access',
       price: 60
     }
@@ -83,7 +87,7 @@ describe('ServicesListComponent', () => {
       const spinner = fixture.debugElement.query(By.css('[data-testid="loading-spinner"]'));
       expect(spinner).toBeTruthy();
       expect(spinner.attributes['data-testid']).toBe('loading-spinner');
-    }));
+    });
 
     it('should hide loading spinner after API response is received', fakeAsync(() => {
       servicesServiceSpy.getServices.and.returnValue(
@@ -150,7 +154,7 @@ describe('ServicesListComponent', () => {
       // Check "All" button exists
       const allButton = filterButtons.find(btn => btn.nativeElement.textContent.trim() === 'All');
       expect(allButton).toBeTruthy();
-    }));
+    });
 
     it('should filter services when category button is clicked', () => {
       servicesServiceSpy.getServices.and.returnValue(of(mockServices));
@@ -163,7 +167,7 @@ describe('ServicesListComponent', () => {
       expect(component.selectedCategory).toBe('Daily Personal Activities');
       expect(component.filteredServices.length).toBe(1);
       expect(component.filteredServices[0].category_name).toBe('Daily Personal Activities');
-    }));
+    });
 
     it('should reset filter when "All" button is clicked', () => {
       servicesServiceSpy.getServices.and.returnValue(of(mockServices));
@@ -193,6 +197,6 @@ describe('ServicesListComponent', () => {
 
       const emptyState = fixture.debugElement.query(By.css('[data-testid="empty-state"]'));
       expect(emptyState).toBeTruthy();
-    }));
+    });
   });
 });
