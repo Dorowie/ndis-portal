@@ -170,6 +170,12 @@ export class SupportWorkersComponent implements OnInit {
     if (!this.newWorker.fullName?.trim()) {
       this.formErrors['fullName'] = 'Full Name is required';
       isValid = false;
+    } else if (!/^[a-zA-Z\s]+$/.test(this.newWorker.fullName.trim())) {
+      this.formErrors['fullName'] = 'Full Name must contain letters only';
+      isValid = false;
+    } else if (this.newWorker.fullName.trim().split(/\s+/).length < 2) {
+      this.formErrors['fullName'] = 'Please provide both first and last name';
+      isValid = false;
     }
 
     if (!this.newWorker.email?.trim()) {
@@ -177,6 +183,9 @@ export class SupportWorkersComponent implements OnInit {
       isValid = false;
     } else if (!this.isValidEmail(this.newWorker.email)) {
       this.formErrors['email'] = 'Please enter a valid email address';
+      isValid = false;
+    } else if (this.hasEmailTypo(this.newWorker.email)) {
+      this.formErrors['email'] = 'Did you mean ' + this.suggestEmailFix(this.newWorker.email) + '?';
       isValid = false;
     }
 
@@ -204,6 +213,122 @@ export class SupportWorkersComponent implements OnInit {
     // Allow numbers, spaces, plus sign, hyphens, and parentheses
     const phoneRegex = /^[\d\s\+\-\(\)]+$/;
     return phoneRegex.test(phone);
+  }
+
+  hasEmailTypo(email: string): boolean {
+    const domain = email.split('@')[1]?.toLowerCase();
+    if (!domain) return false;
+
+    const commonDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com'];
+    const commonTypos: { [key: string]: string[] } = {
+      'gmail.com': ['gmal.com', 'gmaill.com', 'gmial.com', 'gamil.com', 'gmai.com', 'gmail.co', 'gnail.com', 'gmail.cm', 'gmail.con'],
+      'yahoo.com': ['yahoo.co', 'yaho.com', 'yahooo.com', 'yahoo.cm', 'yahoo.con'],
+      'hotmail.com': ['hotmal.com', 'hotmaill.com', 'hotmial.com', 'hotmail.co', 'hotmail.cm', 'hotmail.con'],
+      'outlook.com': ['outlok.com', 'outlook.co', 'outlook.cm', 'outlook.con', 'outook.com'],
+      'icloud.com': ['iclod.com', 'icloud.co', 'icloud.cm', 'icloud.con']
+    };
+
+    // Check if domain is a known typo of a common domain
+    for (const [correctDomain, typos] of Object.entries(commonTypos)) {
+      if (typos.includes(domain)) {
+        return true;
+      }
+    }
+
+    // Check if domain is very similar to a common domain (1-2 character difference)
+    for (const correctDomain of commonDomains) {
+      if (domain !== correctDomain && this.levenshteinDistance(domain, correctDomain) <= 2) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  suggestEmailFix(email: string): string {
+    const [localPart, domain] = email.split('@');
+    if (!domain) return email;
+
+    const domainLower = domain.toLowerCase();
+
+    const commonTypos: { [key: string]: string } = {
+      'gmal.com': 'gmail.com',
+      'gmaill.com': 'gmail.com',
+      'gmial.com': 'gmail.com',
+      'gamil.com': 'gmail.com',
+      'gmai.com': 'gmail.com',
+      'gmail.co': 'gmail.com',
+      'gnail.com': 'gmail.com',
+      'gmail.cm': 'gmail.com',
+      'gmail.con': 'gmail.com',
+      'yahoo.co': 'yahoo.com',
+      'yaho.com': 'yahoo.com',
+      'yahooo.com': 'yahoo.com',
+      'yahoo.cm': 'yahoo.com',
+      'yahoo.con': 'yahoo.com',
+      'hotmal.com': 'hotmail.com',
+      'hotmaill.com': 'hotmail.com',
+      'hotmial.com': 'hotmail.com',
+      'hotmail.co': 'hotmail.com',
+      'hotmail.cm': 'hotmail.com',
+      'hotmail.con': 'hotmail.com',
+      'outlok.com': 'outlook.com',
+      'outlook.co': 'outlook.com',
+      'outlook.cm': 'outlook.com',
+      'outlook.con': 'outlook.com',
+      'outook.com': 'outlook.com',
+      'iclod.com': 'icloud.com',
+      'icloud.co': 'icloud.com',
+      'icloud.cm': 'icloud.com',
+      'icloud.con': 'icloud.com'
+    };
+
+    if (commonTypos[domainLower]) {
+      return localPart + '@' + commonTypos[domainLower];
+    }
+
+    // Find closest match
+    const commonDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com'];
+    let closestDomain = commonDomains[0];
+    let minDistance = this.levenshteinDistance(domainLower, commonDomains[0]);
+
+    for (const d of commonDomains) {
+      const distance = this.levenshteinDistance(domainLower, d);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestDomain = d;
+      }
+    }
+
+    if (minDistance <= 2) {
+      return localPart + '@' + closestDomain;
+    }
+
+    return email;
+  }
+
+  levenshteinDistance(a: string, b: string): number {
+    const matrix: number[][] = [];
+    for (let i = 0; i <= b.length; i++) {
+      matrix[i] = [i];
+    }
+    for (let j = 0; j <= a.length; j++) {
+      matrix[0][j] = j;
+    }
+    for (let i = 1; i <= b.length; i++) {
+      for (let j = 1; j <= a.length; j++) {
+        if (b.charAt(i - 1) === a.charAt(j - 1)) {
+          matrix[i][j] = matrix[i - 1][j - 1];
+        } else {
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j - 1] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j] + 1
+          );
+        }
+      }
+    }
+    return matrix[b.length][a.length];
   }
 
   saveWorker(): void {
