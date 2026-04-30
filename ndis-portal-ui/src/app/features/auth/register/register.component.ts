@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, ValidatorFn, AbstractControl } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService} from '../../../core/services/auth.services';
 import { RegisterRequest } from '../../../core/models/auth.model';
@@ -26,13 +26,20 @@ export class RegisterComponent {
   ) {
     
     this.registerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', [Validators.required, this.noNumbersValidator()]],
+      lastName: ['', [Validators.required, this.noNumbersValidator()]],
       email: ['', [Validators.required, Validators.email]],
       role: ['Participant', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
       agreeToTerms: [false, Validators.requiredTrue]
     });
+  }
+
+  noNumbersValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const hasNumbers = /\d/.test(control.value);
+      return hasNumbers ? { hasNumber: true } : null;
+    };
   }
 
   togglePassword() {
@@ -50,6 +57,9 @@ export class RegisterComponent {
       }
       if (control.errors?.['minlength']) {
         return `Password must be at least ${control.errors?.['minlength'].requiredLength} characters`;
+      }
+      if (control.errors?.['hasNumber']) {
+        return `${this.formatFieldName(fieldName)} should not contain numbers`;
       }
     }
     return this.fieldErrors[fieldName] || '';

@@ -22,11 +22,6 @@
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" id="register-form">
         <div *ngIf="apiError" class="error-message" id="register-api-error">{{ apiError }}</div>
 
-        <div *ngIf="getFieldError('firstName') || getFieldError('lastName')" class="field-error-summary">
-          <span *ngIf="getFieldError('firstName')">{{ getFieldError('firstName') }}</span>
-          <span *ngIf="getFieldError('lastName')">{{ getFieldError('lastName') }}</span>
-        </div>
-
         <div class="name-group">
           <div class="input-group" [class.has-error]="getFieldError('firstName')">
             <label for="first-name">First Name</label>

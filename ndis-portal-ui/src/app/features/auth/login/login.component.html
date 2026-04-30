@@ -25,7 +25,7 @@
           {{ apiError }}
         </div>
 
-        <div class="input-group">
+        <div class="input-group" [class.has-error]="getFieldError('email')">
           <label>Email Address</label>
           <div class="custom-input">
             <span class="icon">
@@ -38,23 +38,10 @@
               placeholder="name@example.com"
             />
           </div>
-          <small
-            id="error-email-required"
-            class="field-error"
-            *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched"
-          >
-            Email is required
-          </small>
-          <small
-            id="error-email-invalid"
-            class="field-error"
-            *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched"
-          >
-            Please enter a valid email
-          </small>
+          <small class="field-error" *ngIf="getFieldError('email')">{{ getFieldError('email') }}</small>
         </div>
 
-        <div class="input-group">
+        <div class="input-group" [class.has-error]="getFieldError('password')">
           <label>Password</label>
           <div class="custom-input">
             <span class="icon">
@@ -71,13 +58,7 @@
               <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
             </button>
           </div>
-          <small
-            id="error-password-required"
-            class="field-error"
-            *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
-          >
-            Password is required
-          </small>
+          <small class="field-error" *ngIf="getFieldError('password')">{{ getFieldError('password') }}</small>
         </div>
 
         <div class="extra-links">
