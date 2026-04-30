@@ -51,9 +51,7 @@ export class ManageServicesComponent implements OnInit {
 
     this.servicesService.getServices().subscribe({
       next: (data) => {
-        this.services = data
-          .filter(s => s.is_active !== false)
-          .map(apiService => this.mapApiServiceToManage(apiService));
+        this.services = data.map(apiService => this.mapApiServiceToManage(apiService));
         this.loading = false;
       },
       error: (err) => {
