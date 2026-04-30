@@ -201,9 +201,9 @@ namespace NDISPortal.API.Controllers
             ));
         }
 
-        // PUT /api/bookings/{id}/status - Update booking status (Coordinator only)
+        // PUT /api/bookings/{id}/status - Update booking status (Participants can cancel own bookings, Coordinators can update any)
         [HttpPut("{id}/status")]
-        [Authorize(Roles = "Coordinator")]
+        [Authorize(Roles = "Participant,Coordinator")]
         public async Task<IActionResult> UpdateBookingStatus(int id, [FromBody] BookingStatusUpdateDto dto)
         {
             if (!ModelState.IsValid)
@@ -220,6 +220,21 @@ namespace NDISPortal.API.Controllers
                 ));
             }
 
+            // Get user info from JWT claims
+            var userIdClaim = User.FindFirst("userId")?.Value ?? 
+                             User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? 
+                             User.FindFirst("sub")?.Value;
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+            {
+                return Unauthorized(new ApiResponse<object>(
+                    success: false,
+                    message: "Invalid user token. Please login again."
+                ));
+            }
+
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty;
+
             var booking = await _context.Bookings.FindAsync(id);
             if (booking == null)
             {
@@ -227,6 +242,23 @@ namespace NDISPortal.API.Controllers
                     success: false,
                     message: "Booking not found. Please check the booking ID and try again."
                 ));
+            }
+
+            // Participants can only cancel their own bookings
+            if (userRole == "Participant")
+            {
+                if (booking.user_id != userId)
+                {
+                    return Forbid();
+                }
+                // Participants can only cancel (status = 2), not approve
+                if (dto.Status != 2)
+                {
+                    return BadRequest(new ApiResponse<object>(
+                        success: false,
+                        message: "Participants can only cancel bookings."
+                    ));
+                }
             }
 
             // Update status and timestamp
