@@ -22,6 +22,8 @@ namespace NDISPortal.API.DTOs.Auth
 
         [Required(ErrorMessage = "Email is required.")]
         [MaxLength(150, ErrorMessage = "Email must not exceed 150 characters.")]
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Email must be in this format (email@example.com).")]
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Password is required.")]
