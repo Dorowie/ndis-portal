@@ -489,18 +489,23 @@
   padding: 16px;
   border-top: 1px solid #efebf1;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .footer-text {
   font-size: 0.85rem;
   color: #7a7482;
+  position: absolute;
+  left: 16px;
 }
 
 .pagination {
   display: flex;
   gap: 8px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .pagination button {

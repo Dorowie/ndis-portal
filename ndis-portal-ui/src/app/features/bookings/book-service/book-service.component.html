@@ -11,7 +11,8 @@
       {{ apiError }}
     </div>
 
-    <div class="input-group">
+    <!-- Service Selection - Show dropdown if not pre-selected, read-only if pre-selected -->
+    <div class="input-group" *ngIf="!isPreselected">
       <label for="serviceId">Service</label>
       <div class="custom-select-wrapper">
         <select
@@ -34,9 +35,15 @@
       </small>
     </div>
 
-    <div class="input-group" *ngIf="selectedService">
+    <!-- Pre-selected Service - Read only display -->
+    <div class="input-group" *ngIf="isPreselected">
+      <label>Service</label>
+      <div class="readonly-box" id="preselected-service-display">{{ preselectedServiceName }}</div>
+    </div>
+
+    <div class="input-group" *ngIf="selectedService || isPreselected">
       <label>Category</label>
-      <div class="readonly-box" id="booking-category-display">{{ selectedService.category_name }}</div>
+      <div class="readonly-box" id="booking-category-display">{{ isPreselected ? preselectedServiceCategory : selectedService?.category_name }}</div>
     </div>
 
     <div class="two-column">

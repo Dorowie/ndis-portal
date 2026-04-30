@@ -36,9 +36,23 @@
     <div class="booking-header">
       <h3>Booking Queue</h3>
 
-      <div class="filter-buttons">
-        <button class="filter-btn" (click)="filterPending()">Filter</button>
-        <button class="filter-btn" (click)="showAll()">All</button>
+      <div class="filter-section">
+        <div class="filter-dropdown-wrapper">
+          <button class="filter-dropdown-btn" (click)="toggleFilterDropdown()">
+            <span class="hamburger-icon">☰</span> Filter
+          </button>
+          <div class="filter-dropdown-menu" *ngIf="showFilterDropdown" (clickOutside)="closeFilterDropdown()">
+            <button class="dropdown-item" [class.active]="currentFilter === 'Pending'" (click)="filterByStatus('Pending')">
+              Pending
+            </button>
+            <button class="dropdown-item" [class.active]="currentFilter === 'Approved'" (click)="filterByStatus('Approved')">
+              Approved
+            </button>
+            <button class="dropdown-item" [class.active]="currentFilter === 'Cancelled'" (click)="filterByStatus('Cancelled')">
+              Cancelled
+            </button>
+          </div>
+        </div>
         <button class="refresh-btn" (click)="loadBookingsFromAPI()" [disabled]="loading">
           ↻ Refresh
         </button>

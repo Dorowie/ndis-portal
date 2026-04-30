@@ -35,7 +35,7 @@ interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class BookingsService {
-  private readonly apiUrl = 'https://localhost:7113/api/bookings';
+  private readonly apiUrl = 'http://localhost:5130/api/bookings';
 
   constructor(private http: HttpClient) {}
 
@@ -55,7 +55,13 @@ export class BookingsService {
   }
 
   createBooking(booking: BookingCreateDto): Observable<Booking> {
-    return this.http.post<ApiResponse<Booking>>(this.apiUrl, booking)
+    // Ensure the date is in ISO format for .NET DateTime parsing
+    const payload = {
+      serviceId: booking.serviceId,
+      preferredDate: new Date(booking.preferredDate).toISOString(),
+      notes: booking.notes
+    };
+    return this.http.post<ApiResponse<Booking>>(this.apiUrl, payload)
       .pipe(map(response => response.data));
   }
 
@@ -65,7 +71,6 @@ export class BookingsService {
   }
 
   deleteBooking(id: number): Observable<void> {
-    return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/${id}`)
-      .pipe(map(response => response.data));
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

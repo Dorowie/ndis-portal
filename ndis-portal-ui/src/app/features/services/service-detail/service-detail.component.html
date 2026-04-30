@@ -21,7 +21,7 @@
     <div class="service-info">
       <div class="info-section">
         <h3>Description</h3>
-        <p>{{ service.description }}</p>
+        <p>{{ getDetailedDescription() }}</p>
       </div>
 
       <div class="info-section" *ngIf="service.price">

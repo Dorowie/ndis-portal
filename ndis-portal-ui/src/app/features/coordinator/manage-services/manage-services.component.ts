@@ -53,7 +53,7 @@ export class ManageServicesComponent implements OnInit {
     this.servicesService.getServices().subscribe({
       next: (data) => {
         this.services = data
-          .filter(s => s.is_active !== false) // Show active services, adjust as needed
+          .filter(s => s.is_active !== false)
           .map(apiService => this.mapApiServiceToManage(apiService));
         this.loading = false;
       },
@@ -83,7 +83,7 @@ export class ManageServicesComponent implements OnInit {
       category_name: service.category,
       description: service.description,
       is_active: newStatus === 'Active',
-      category_id: 1, // Default category ID
+      category_id: 1,
       price: 0
     };
 
@@ -121,7 +121,7 @@ export class ManageServicesComponent implements OnInit {
         category_name: this.newService.category!,
         description: this.newService.description || '',
         is_active: this.newService.status === 'Active',
-        category_id: 1, // TODO: Map category name to ID
+        category_id: 1,
         price: 0
       };
 

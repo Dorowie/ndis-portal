@@ -34,7 +34,6 @@ export class AllBookingsComponent implements OnInit {
   loading = false;
   errorMessage = '';
 
-  // Avatar colors for visual variety
   private avatarColors = ['#BFDBFE', '#BBF7D0', '#FED7AA', '#FECACA', '#E9D5FF'];
 
   ngOnInit(): void {
@@ -63,7 +62,7 @@ export class AllBookingsComponent implements OnInit {
     const status = this.getStatusText(apiBooking.status);
     return {
       id: apiBooking.booking_id,
-      participantName: 'Participant', // TODO: Get from user service
+      participantName: 'Participant',
       ndisNumber: `#${apiBooking.booking_id.toString().padStart(9, '0')}`,
       serviceName: apiBooking.service_name,
       categoryName: 'Support Service',
@@ -105,7 +104,6 @@ export class AllBookingsComponent implements OnInit {
       hour: '2-digit',
       minute: '2-digit'
     });
-    // Add 1 hour as default duration
     const endDate = new Date(date.getTime() + 60 * 60 * 1000);
     const endTime = endDate.toLocaleTimeString('en-US', {
       hour: '2-digit',

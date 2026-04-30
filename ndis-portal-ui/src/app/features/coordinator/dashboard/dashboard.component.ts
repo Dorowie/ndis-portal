@@ -24,14 +24,14 @@ interface DashboardBooking {
 export class CoordinatorDashboardComponent implements OnInit {
   private bookingsService = inject(BookingsService);
 
-  // Bookings data - populated from API
   bookings: DashboardBooking[] = [];
-
   filteredBookings: DashboardBooking[] = [];
   loading = false;
   errorMessage = '';
   currentPage = 1;
   pageSize = 4;
+  showFilterDropdown = false;
+  currentFilter = 'All';
 
   ngOnInit(): void {
     this.loadBookingsFromAPI();
@@ -43,7 +43,6 @@ export class CoordinatorDashboardComponent implements OnInit {
 
     this.bookingsService.getAllBookings().subscribe({
       next: (data) => {
-        // Map API booking data to dashboard format
         this.bookings = data.map(apiBooking => this.mapApiBookingToDashboard(apiBooking));
         this.filteredBookings = [...this.bookings];
         this.loading = false;
@@ -64,8 +63,7 @@ export class CoordinatorDashboardComponent implements OnInit {
       bookingDate: apiBooking.preferred_date,
       date: apiBooking.preferred_date,
       status: apiBooking.status,
-      // These fields may need additional API calls or data enrichment
-      participantName: 'Participant', // TODO: Get from user service
+      participantName: 'Participant',
       userName: 'Participant',
       categoryName: 'Support Service'
     };
@@ -115,16 +113,25 @@ export class CoordinatorDashboardComponent implements OnInit {
     }
   }
 
-  filterPending(): void {
-    this.filteredBookings = this.bookings.filter(
-      booking => this.getStatusText(booking.status) === 'Pending'
-    );
-    this.currentPage = 1;
+  toggleFilterDropdown(): void {
+    this.showFilterDropdown = !this.showFilterDropdown;
   }
 
-  showAll(): void {
-    this.filteredBookings = [...this.bookings];
+  closeFilterDropdown(): void {
+    this.showFilterDropdown = false;
+  }
+
+  filterByStatus(status: string): void {
+    this.currentFilter = status;
+    if (status === 'All') {
+      this.filteredBookings = [...this.bookings];
+    } else {
+      this.filteredBookings = this.bookings.filter(
+        booking => this.getStatusText(booking.status) === status
+      );
+    }
     this.currentPage = 1;
+    this.showFilterDropdown = false;
   }
 
   getParticipantName(booking: DashboardBooking): string {
@@ -200,8 +207,7 @@ export class CoordinatorDashboardComponent implements OnInit {
 
   updateBookingStatus(id: number, status: string): void {
     this.bookingsService.updateBookingStatus(id, status).subscribe({
-      next: (updatedBooking) => {
-        // Update local state after successful API call
+      next: () => {
         const booking = this.bookings.find(b => b.id === id);
         if (booking) {
           booking.status = status;

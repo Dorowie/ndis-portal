@@ -64,6 +64,19 @@ export class MyBookingsComponent implements OnInit {
     return this.bookings.filter(b => b.status === this.selectedFilter);
   }
 
+  get nextSessionDate(): string | null {
+    // Get approved bookings with future dates, sorted by date
+    const approvedBookings = this.bookings
+      .filter(b => b.status === 'Approved' && new Date(b.preferred_date) >= new Date())
+      .sort((a, b) => new Date(a.preferred_date).getTime() - new Date(b.preferred_date).getTime());
+    
+    if (approvedBookings.length === 0) {
+      return null;
+    }
+    
+    return this.formatDate(approvedBookings[0].preferred_date);
+  }
+
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString('en-US', {
       month: 'short',
@@ -115,14 +128,13 @@ export class MyBookingsComponent implements OnInit {
   confirmCancel(): void {
     if (this.selectedBookingId === null) return;
 
-    this.bookingsService.updateBookingStatus(this.selectedBookingId, 'Cancelled').subscribe({
+    this.bookingsService.deleteBooking(this.selectedBookingId).subscribe({
       next: () => {
-        this.bookings = this.bookings.map(booking =>
-          booking.booking_id === this.selectedBookingId
-            ? { ...booking, status: 'Cancelled' }
-            : booking
+        this.bookings = this.bookings.filter(
+          booking => booking.booking_id !== this.selectedBookingId
         );
         this.closeCancelDialog();
+        alert('Booking cancelled successfully');
       },
       error: (error) => {
         console.error('Error cancelling booking:', error);

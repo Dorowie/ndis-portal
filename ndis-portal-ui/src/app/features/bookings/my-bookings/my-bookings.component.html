@@ -11,7 +11,9 @@
 
   <div class="next-session-card" id="next-session-display">
     <div class="session-label">NEXT SESSION</div>
-    <div class="session-date" id="next-session-date">Oct 24, 2026</div>
+    <div class="session-date" id="next-session-date">
+      {{ nextSessionDate || 'No incoming session' }}
+    </div>
   </div>
 </div>
 

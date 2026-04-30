@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ServicesService, ServiceItem } from '../../../core/services/services';
+import { ServiceRecommendationModalComponent } from '../../../shared/components/service-recommendation-modal/service-recommendation-modal.component';
 
+// Map category names to accent colors and icons for display
 const CATEGORY_STYLES: Record<string, { accent: string; icon: string }> = {
   'Daily Personal Activities': { accent: '#d9534f', icon: 'self_improvement' },
   'Community Access': { accent: '#b59b00', icon: 'groups' },
@@ -19,11 +21,13 @@ interface DisplayService extends ServiceItem {
 @Component({
   selector: 'app-services-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ServiceRecommendationModalComponent],
   templateUrl: './services-list.component.html',
-  styleUrl: './services-list.component.css'
+  styleUrl: './services-list.component.scss'
 })
 export class ServicesListComponent implements OnInit {
+  @ViewChild(ServiceRecommendationModalComponent) recommendationModal!: ServiceRecommendationModalComponent;
+
   isLoading = true;
 
   categories: string[] = [
@@ -41,6 +45,7 @@ export class ServicesListComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private location: Location,
     private servicesService: ServicesService
   ) {}
 
@@ -52,18 +57,15 @@ export class ServicesListComponent implements OnInit {
     this.isLoading = true;
     this.servicesService.getServices().subscribe({
       next: (data) => {
-        console.log('Raw API data:', data);
         this.services = data.map(service => {
           const categoryName = service.category_name || 'Support Coordination';
           const style = CATEGORY_STYLES[categoryName] || { accent: '#7d7d7d', icon: 'assignment' };
           return {
             ...service,
-            id: (service as any).service_id || service.id,
             accent: style.accent,
             icon: style.icon
           };
         });
-        console.log('Mapped services:', this.services);
         this.isLoading = false;
       },
       error: (error) => {
@@ -77,26 +79,27 @@ export class ServicesListComponent implements OnInit {
     if (this.selectedCategory === 'Category') {
       return this.services;
     }
+
     return this.services.filter(
       service => (service.category_name || '') === this.selectedCategory
     );
   }
 
-  selectCategory(category: string): void {
-    this.selectedCategory = category;
+  onCategoryChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.selectedCategory = target.value;
   }
 
   openService(service: DisplayService): void {
-    console.log('Opening service:', service);
-    console.log('Service ID:', service.id);
     if (service.id) {
-      this.router.navigate(['/services', service.id]).then(
-        () => console.log('Navigation successful'),
-        (err) => console.error('Navigation failed:', err)
-      );
+      this.router.navigate(['/services', service.id]);
     } else {
-      console.error('Service ID is missing:', service);
-      alert('Cannot open service: ID is missing');
+      console.error('Service ID is undefined:', service);
     }
   }
+
+  openRecommendationModal(): void {
+    this.recommendationModal.openModal();
+  }
+
 }

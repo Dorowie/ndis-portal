@@ -79,6 +79,61 @@
   padding-right: 32px;
 }
 
+.refresh-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #6f2da8;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.refresh-btn:disabled {
+  background: #a78bfa;
+  cursor: not-allowed;
+}
+
+.loading-state {
+  padding: 40px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #6f2da8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-state {
+  padding: 40px;
+  text-align: center;
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+.retry-btn {
+  display: block;
+  margin: 16px auto 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #6f2da8;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .table-container {
   overflow-x: auto;
 }
