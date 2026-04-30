@@ -60,7 +60,8 @@ export class BookingsService {
   }
 
   updateBookingStatus(id: number, status: string): Observable<Booking> {
-    return this.http.put<ApiResponse<Booking>>(`${this.apiUrl}/${id}/status`, { status })
+    const statusValue = status === 'Approved' ? 1 : status === 'Cancelled' ? 2 : 0;
+    return this.http.put<ApiResponse<Booking>>(`${this.apiUrl}/${id}/status`, { status: statusValue })
       .pipe(map(response => response.data));
   }
 
