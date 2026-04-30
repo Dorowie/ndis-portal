@@ -42,6 +42,9 @@
             <span class="hamburger-icon">☰</span> Filter
           </button>
           <div class="filter-dropdown-menu" *ngIf="showFilterDropdown" (clickOutside)="closeFilterDropdown()">
+            <button class="dropdown-item" [class.active]="currentFilter === 'All'" (click)="filterByStatus('All')">
+              All
+            </button>
             <button class="dropdown-item" [class.active]="currentFilter === 'Pending'" (click)="filterByStatus('Pending')">
               Pending
             </button>

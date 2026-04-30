@@ -39,10 +39,16 @@ export class MyBookingsComponent implements OnInit {
     this.isLoading = true;
     this.bookingsService.getMyBookings().subscribe({
       next: (data) => {
-        this.bookings = data.map(booking => ({
-          ...booking,
-          status: this.capitalizeStatus(booking.status)
-        }));
+        console.log('Raw API data:', data);
+        this.bookings = data.map(booking => {
+          const capitalizedStatus = this.capitalizeStatus(booking.status);
+          console.log(`Booking ${booking.booking_id}: original status="${booking.status}", capitalized="${capitalizedStatus}"`);
+          return {
+            ...booking,
+            status: capitalizedStatus
+          };
+        });
+        console.log('Final bookings array:', this.bookings);
         this.isLoading = false;
       },
       error: (error) => {
@@ -53,8 +59,22 @@ export class MyBookingsComponent implements OnInit {
     });
   }
 
-  capitalizeStatus(status: string): BookingStatus {
-    return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() as BookingStatus;
+  capitalizeStatus(status: string | number): BookingStatus {
+    const statusStr = String(status);
+    
+    // Handle numeric status values from API
+    if (statusStr === '0') return 'Pending';
+    if (statusStr === '1') return 'Approved';
+    if (statusStr === '2') return 'Cancelled';
+    
+    // Handle string status values
+    const lowerStatus = statusStr.toLowerCase();
+    if (lowerStatus.includes('pending')) return 'Pending';
+    if (lowerStatus.includes('approved')) return 'Approved';
+    if (lowerStatus.includes('cancelled')) return 'Cancelled';
+    
+    // Default fallback
+    return 'Pending';
   }
 
   get filteredBookings(): BookingItem[] {
@@ -128,13 +148,15 @@ export class MyBookingsComponent implements OnInit {
   confirmCancel(): void {
     if (this.selectedBookingId === null) return;
 
-    this.bookingsService.deleteBooking(this.selectedBookingId).subscribe({
+    // API expects numeric status: 0=Pending, 1=Approved, 2=Cancelled
+    this.bookingsService.updateBookingStatus(this.selectedBookingId, '2').subscribe({
       next: () => {
-        this.bookings = this.bookings.filter(
-          booking => booking.booking_id !== this.selectedBookingId
+        this.bookings = this.bookings.map(booking =>
+          booking.booking_id === this.selectedBookingId
+            ? { ...booking, status: 'Cancelled' }
+            : booking
         );
         this.closeCancelDialog();
-        alert('Booking cancelled successfully');
       },
       error: (error) => {
         console.error('Error cancelling booking:', error);

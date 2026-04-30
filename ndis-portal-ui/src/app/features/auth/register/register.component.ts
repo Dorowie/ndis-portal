@@ -53,44 +53,98 @@ export class RegisterComponent {
 
       this.authService.register(registerData).subscribe({
         next: (response) => {
-          console.log('Registration response:', response);
+          console.log('=== REGISTRATION DEBUG ===');
+          console.log('Full response:', response);
+          console.log('Response success:', response.success);
+          console.log('Response data:', response.data);
+          console.log('Response message:', response.message);
           console.log('Role from form:', registerData.Role);
+          
           if (response.success) {
-            alert('Registration successful!');
-            // Store token if returned by API
-            if (response.data && response.data.token) {
-              localStorage.setItem('token', response.data.token);
-            }
-            // Store role for sidebar to detect user type
-            localStorage.setItem('userRole', registerData.Role);
-            // Notify sidebar of role change
-            window.dispatchEvent(new StorageEvent('storage', { key: 'userRole' }));
-            // Redirect based on role
-            const role = registerData.Role?.trim();
-            console.log('Navigating based on role:', role);
-            if (role === 'Coordinator') {
-              console.log('Redirecting to /dashboard');
-              this.router.navigate(['/dashboard']).then(
-                () => console.log('Navigation to dashboard successful'),
-                (err) => console.error('Navigation to dashboard failed:', err)
-              );
-            } else if (role === 'Participant') {
-              console.log('Redirecting to /services');
-              this.router.navigate(['/services']).then(
-                () => console.log('Navigation to services successful'),
-                (err) => console.error('Navigation to services failed:', err)
-              );
-            } else {
-              console.error('Unknown role, defaulting to /services:', role);
-              this.router.navigate(['/services']);
-            }
+            alert('Registration successful! Logging you in...');
+            
+            // Auto-login after registration to get a token
+            this.authService.login(registerData.Email, registerData.Password).subscribe({
+              next: (loginResponse) => {
+                console.log('=== AUTO-LOGIN DEBUG ===');
+                console.log('Login response:', loginResponse);
+                
+                if (loginResponse.success && loginResponse.data) {
+                  const token = loginResponse.data.token;
+                  localStorage.setItem('token', token);
+                  console.log('Token stored from auto-login');
+                  
+                  const userRole = this.authService.getUserRole(token);
+                  localStorage.setItem('userRole', userRole || registerData.Role);
+                  console.log('User role from token:', userRole);
+                  
+                  // Store user info
+                  const userInfo = {
+                    firstName: registerData.FirstName,
+                    lastName: registerData.LastName,
+                    email: registerData.Email,
+                    role: registerData.Role
+                  };
+                  localStorage.setItem('user', JSON.stringify(userInfo));
+                  console.log('Stored user info:', userInfo);
+                  
+                  // Notify sidebar of role change
+                  window.dispatchEvent(new StorageEvent('storage', { key: 'userRole' }));
+                  
+                  // Redirect based on role
+                  const role = (userRole || registerData.Role)?.trim();
+                  console.log('Navigating based on role:', role);
+                  
+                  if (role === 'Coordinator') {
+                    console.log('Redirecting to /dashboard');
+                    this.router.navigate(['/dashboard']).then(
+                      () => {
+                        console.log('Navigation to dashboard successful');
+                        this.isLoading = false;
+                      },
+                      (err) => {
+                        console.error('Navigation to dashboard failed:', err);
+                        this.isLoading = false;
+                      }
+                    );
+                  } else {
+                    console.log('Redirecting to /services');
+                    this.router.navigate(['/services']).then(
+                      () => {
+                        console.log('Navigation to services successful');
+                        this.isLoading = false;
+                      },
+                      (err) => {
+                        console.error('Navigation to services failed:', err);
+                        this.isLoading = false;
+                      }
+                    );
+                  }
+                } else {
+                  console.error('Auto-login failed:', loginResponse.message);
+                  // Fallback to login page
+                  this.router.navigate(['/login']);
+                  this.isLoading = false;
+                }
+              },
+              error: (loginError) => {
+                console.error('Auto-login error:', loginError);
+                // Fallback to login page
+                this.router.navigate(['/login']);
+                this.isLoading = false;
+              }
+            });
           } else {
+            console.error('Registration not successful:', response.message);
             this.apiError = response.message || 'Registration failed';
             this.isLoading = false;
           }
         },
         error: (error) => {
-          console.error('Registration error:', error);
+          console.error('=== REGISTRATION ERROR ===');
+          console.error('Full error:', error);
+          console.error('Error status:', error.status);
+          console.error('Error message:', error.error?.message);
           this.apiError = error.error?.message || 'Registration failed. Please try again.';
           this.isLoading = false;
         }
