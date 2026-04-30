@@ -47,19 +47,35 @@ namespace NDISPortal.API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateSupportWorkerDto body)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Validation failed. Please check your input.",
+                    errors: errors
+                ));
+            }
 
             var service = await _context.Services
                 .FirstOrDefaultAsync(s => s.id == body.AssignedServiceId);
 
             if (service == null)
-                return BadRequest($"Service with ID {body.AssignedServiceId} does not exist.");
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: $"Service with ID {body.AssignedServiceId} does not exist."
+                ));
 
             var exists = await _context.SupportWorkers
                 .AnyAsync(w => w.email == body.Email);
 
             if (exists)
-                return BadRequest("Email already exists.");
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Email already exists."
+                ));
 
             var worker = new SupportWorker
             {
@@ -95,14 +111,27 @@ namespace NDISPortal.API.Controllers
         public async Task<IActionResult> Update(int id, [FromBody] UpdateSupportWorkerDto body)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: "Validation failed. Please check your input.",
+                    errors: errors
+                ));
+            }
 
             var worker = await _context.SupportWorkers
                 .Include(w => w.Service)
                 .FirstOrDefaultAsync(w => w.id == id);
 
             if (worker == null)
-                return NotFound($"Support worker with ID {id} not found.");
+                return NotFound(new ApiResponse<object>(
+                    success: false,
+                    message: $"Support worker with ID {id} not found."
+                ));
 
             // Check if email is being changed and if new email already exists
             if (worker.email != body.Email)
@@ -110,14 +139,20 @@ namespace NDISPortal.API.Controllers
                 var emailExists = await _context.SupportWorkers
                     .AnyAsync(w => w.email == body.Email && w.id != id);
                 if (emailExists)
-                    return BadRequest("Email already exists.");
+                    return BadRequest(new ApiResponse<object>(
+                        success: false,
+                        message: "Email already exists."
+                    ));
             }
 
             // Verify service exists
             var service = await _context.Services
                 .FirstOrDefaultAsync(s => s.id == body.AssignedServiceId);
             if (service == null)
-                return BadRequest($"Service with ID {body.AssignedServiceId} does not exist.");
+                return BadRequest(new ApiResponse<object>(
+                    success: false,
+                    message: $"Service with ID {body.AssignedServiceId} does not exist."
+                ));
 
             // Update worker
             worker.first_name = body.FirstName.Trim();
