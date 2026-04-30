@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ServicesService } from '../../../core/services/services';
+import { SupportWorkersService, SupportWorker } from '../../../core/services/support-workers';
 
 @Component({
   selector: 'app-support-workers',
@@ -12,7 +13,7 @@ import { ServicesService } from '../../../core/services/services';
 })
 export class SupportWorkersComponent implements OnInit {
   // Support workers data
-  workers: any[] = [];
+  workers: SupportWorker[] = [];
 
   // Loading and error states
   isLoading = false;
@@ -47,7 +48,10 @@ export class SupportWorkersComponent implements OnInit {
   showDeleteConfirm = false;
   workerToDelete: any = null;
 
-  constructor(private servicesService: ServicesService) {}
+  constructor(
+    private servicesService: ServicesService,
+    private supportWorkersService: SupportWorkersService
+  ) {}
 
   ngOnInit(): void {
     this.loadWorkers();
@@ -55,8 +59,21 @@ export class SupportWorkersComponent implements OnInit {
   }
 
   loadWorkers(): void {
-    // TODO: Connect to API when ready
-    this.workers = [];
+    this.isLoading = true;
+    this.supportWorkersService.getSupportWorkers().subscribe({
+      next: (data) => {
+        this.workers = data.map(w => ({
+          ...w,
+          assignedService: w.serviceName || w.assignedService
+        }));
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading support workers:', error);
+        this.error = 'Failed to load support workers';
+        this.isLoading = false;
+      }
+    });
   }
 
   loadServices(): void {
@@ -107,9 +124,9 @@ export class SupportWorkersComponent implements OnInit {
   }
 
   // Edit Worker
-  editWorker(worker: any): void {
+  editWorker(worker: SupportWorker): void {
     this.isEditMode = true;
-    this.editingWorkerId = worker.id || null;
+    this.editingWorkerId = worker.id.toString();
     this.newWorker = {
       fullName: worker.fullName,
       email: worker.email,
@@ -132,10 +149,17 @@ export class SupportWorkersComponent implements OnInit {
 
   deleteWorker(): void {
     if (this.workerToDelete) {
-      // TODO: Call API to delete worker
-      this.workers = this.workers.filter(w => w.id !== this.workerToDelete.id);
-      this.showDeleteConfirm = false;
-      this.workerToDelete = null;
+      this.supportWorkersService.deleteSupportWorker(this.workerToDelete.id).subscribe({
+        next: () => {
+          this.workers = this.workers.filter(w => w.id !== this.workerToDelete.id);
+          this.showDeleteConfirm = false;
+          this.workerToDelete = null;
+        },
+        error: (error) => {
+          console.error('Error deleting support worker:', error);
+          alert('Failed to delete support worker');
+        }
+      });
     }
   }
 
@@ -187,36 +211,48 @@ export class SupportWorkersComponent implements OnInit {
       return;
     }
 
-    const workerData: any = {
-      fullName: this.newWorker.fullName?.trim(),
-      email: this.newWorker.email?.trim(),
-      phone: this.newWorker.phone?.trim() || undefined,
-      assignedService: this.newWorker.assignedService,
+    // Split full name into first and last name
+    const fullName = this.newWorker.fullName?.trim() || '';
+    const nameParts = fullName.split(' ');
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || '';
+
+    const workerData = {
+      FirstName: firstName,
+      LastName: lastName,
+      Email: this.newWorker.email?.trim() || '',
+      Phone: this.newWorker.phone?.trim() || '',
+      AssignedServiceId: parseInt(this.newWorker.assignedService, 10),
     };
 
     if (this.isEditMode && this.editingWorkerId) {
-      // TODO: Call API to update worker
-      const index = this.workers.findIndex(w => w.id === this.editingWorkerId);
-      if (index !== -1) {
-        this.workers[index] = {
-          ...this.workers[index],
-          fullName: workerData.fullName!,
-          email: workerData.email!,
-          phone: workerData.phone,
-          assignedService: workerData.assignedService!,
-        };
-      }
-      this.closeModal();
-    } else {
-      // TODO: Call API to create worker
-      this.workers.unshift({
-        id: Date.now().toString(),
-        fullName: workerData.fullName!,
-        email: workerData.email!,
-        phone: workerData.phone,
-        assignedService: workerData.assignedService!,
+      // Update existing worker
+      const workerId = parseInt(this.editingWorkerId, 10);
+      this.supportWorkersService.updateSupportWorker(workerId, workerData).subscribe({
+        next: (updatedWorker) => {
+          const index = this.workers.findIndex(w => w.id === workerId);
+          if (index !== -1) {
+            this.workers[index] = updatedWorker;
+          }
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error('Error updating support worker:', error);
+          alert('Failed to update support worker');
+        }
       });
-      this.closeModal();
+    } else {
+      // Create new worker
+      this.supportWorkersService.createSupportWorker(workerData).subscribe({
+        next: (newWorker) => {
+          this.workers.unshift(newWorker);
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error('Error creating support worker:', error);
+          alert('Failed to create support worker');
+        }
+      });
     }
   }
 

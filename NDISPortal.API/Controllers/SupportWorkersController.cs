@@ -80,5 +80,68 @@ namespace NDISPortal.API.Controllers
 
             return CreatedAtAction(nameof(GetAll), new { id = worker.id }, response);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateSupportWorkerDto body)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var worker = await _context.SupportWorkers
+                .Include(w => w.Service)
+                .FirstOrDefaultAsync(w => w.id == id);
+
+            if (worker == null)
+                return NotFound($"Support worker with ID {id} not found.");
+
+            // Check if email is being changed and if new email already exists
+            if (worker.email != body.Email)
+            {
+                var emailExists = await _context.SupportWorkers
+                    .AnyAsync(w => w.email == body.Email && w.id != id);
+                if (emailExists)
+                    return BadRequest("Email already exists.");
+            }
+
+            // Verify service exists
+            var service = await _context.Services
+                .FirstOrDefaultAsync(s => s.id == body.AssignedServiceId);
+            if (service == null)
+                return BadRequest($"Service with ID {body.AssignedServiceId} does not exist.");
+
+            // Update worker
+            worker.first_name = body.FirstName.Trim();
+            worker.last_name = body.LastName.Trim();
+            worker.email = body.Email.Trim();
+            worker.phone = body.Phone;
+            worker.service_id = body.AssignedServiceId;
+            worker.modified_date = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+
+            var response = new SupportWorkerResponseDto
+            {
+                Id = worker.id,
+                FullName = worker.first_name + " " + worker.last_name,
+                Email = worker.email,
+                Phone = worker.phone,
+                ServiceName = service.name
+            };
+
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var worker = await _context.SupportWorkers.FindAsync(id);
+            if (worker == null)
+                return NotFound($"Support worker with ID {id} not found.");
+
+            _context.SupportWorkers.Remove(worker);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { success = true, message = "Support worker deleted successfully." });
+        }
     }
 }
