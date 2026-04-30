@@ -60,8 +60,20 @@ export class BookingsService {
       .pipe(map(response => response.data));
   }
 
-  updateBookingStatus(id: number, status: string): Observable<Booking> {
-    const statusValue = status === 'Approved' ? 1 : status === 'Cancelled' ? 2 : 0;
+  updateBookingStatus(id: number, status: string | number): Observable<Booking> {
+    // Handle both string status ('Approved', 'Cancelled') and numeric strings/numbers ('2', 2)
+    let statusValue: number;
+    if (typeof status === 'number') {
+      statusValue = status;
+    } else if (status === 'Approved' || status === '1') {
+      statusValue = 1;
+    } else if (status === 'Cancelled' || status === '2') {
+      statusValue = 2;
+    } else if (status === 'Pending' || status === '0') {
+      statusValue = 0;
+    } else {
+      statusValue = parseInt(status, 10) || 0;
+    }
     return this.http.put<ApiResponse<Booking>>(`${this.apiUrl}/${id}/status`, { status: statusValue })
       .pipe(map(response => response.data));
   }
