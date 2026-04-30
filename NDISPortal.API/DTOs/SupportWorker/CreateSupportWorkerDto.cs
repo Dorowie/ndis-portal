@@ -20,7 +20,7 @@ namespace NDISPortal.API.DTOs.SupportWorker
         public string Email { get; set; } = string.Empty;
 
         [Required]
-        [RegularExpression(@"^\d{10,15}$", ErrorMessage = "Phone must be numbers only (10–15 digits)")]
+        [RegularExpression(@"^[\d\s\+\-\(\)]{10,20}$", ErrorMessage = "Phone must be 10-20 characters containing numbers and valid symbols (+, -, space, parentheses)")]
         public string Phone { get; set; } = string.Empty;
 
         [Required]
