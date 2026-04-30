@@ -8,6 +8,17 @@
   margin-bottom: 24px;
 }
 
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-text {
+  flex: 1;
+}
+
 .page-header h1 {
   font-size: 28px;
   font-weight: 700;
@@ -19,6 +30,31 @@
   margin: 0;
   color: #6b7280;
   font-size: 14px;
+}
+
+.ai-recommendation-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #6f2da8 0%, #8b5cf6 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(111, 45, 168, 0.3);
+}
+
+.ai-recommendation-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(111, 45, 168, 0.4);
+}
+
+.ai-recommendation-btn .material-icons {
+  font-size: 20px;
 }
 
 .filter-section {
