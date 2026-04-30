@@ -50,6 +50,7 @@
     <thead>
       <tr>
         <th>SERVICE</th>
+        <th>CATEGORY</th>
         <th>BOOKING DATE</th>
         <th>NOTES</th>
         <th>STATUS</th>
@@ -62,6 +63,12 @@
         <td>
           <div class="service-name" [id]="'service-name-' + booking.booking_id">
             {{ booking.service_name || 'Service' }}
+          </div>
+        </td>
+
+        <td>
+          <div class="category-name" [id]="'category-name-' + booking.booking_id">
+            {{ booking.category_name || '-' }}
           </div>
         </td>
 

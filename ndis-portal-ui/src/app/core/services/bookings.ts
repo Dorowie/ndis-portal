@@ -6,6 +6,7 @@ export interface Booking {
   booking_id: number;
   service_id: number;
   service_name: string;
+  category_name?: string;
   preferred_date: string;
   status: string;
   notes?: string;

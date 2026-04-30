@@ -97,6 +97,7 @@ namespace NDISPortal.API.Controllers
                     booking_id = b.booking_id,
                     service_id = b.service_id,
                     service_name = b.service_name,
+                    category_name = b.category_name,
                     preferred_date = b.preferred_date,
                     status = b.status,
                     notes = b.notes,
