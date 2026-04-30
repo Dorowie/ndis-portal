@@ -1,6 +1,5 @@
 <div class="manage-services-page">
   <div class="page-header">
-    <button class="back-btn" routerLink="/dashboard">←</button>
     <div class="header-content">
       <h1>Manage Services</h1>
       <p>Efficiently organize, update, and monitor clinical and support services across your local NDIS network.</p>
@@ -13,9 +12,19 @@
   <div class="services-card">
     <div class="card-header">
       <h3>Registered Services Registry</h3>
-      <button class="refresh-btn" (click)="loadServices()" [disabled]="loading">
-        ↻ Refresh
-      </button>
+      <div class="header-actions">
+        <select 
+          class="filter-select" 
+          [ngModel]="currentFilter" 
+          (ngModelChange)="onFilterChange($event)">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+
+        <button class="refresh-btn" (click)="loadServices()" [disabled]="loading">
+          ↻ Refresh
+        </button>
+      </div>
     </div>
 
     <div *ngIf="loading" class="loading-state">

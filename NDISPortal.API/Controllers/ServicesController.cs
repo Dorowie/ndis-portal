@@ -47,6 +47,34 @@ namespace NDISPortal.API.Controllers
             ));
         }
 
+        // GET /api/services/inactive - Get all inactive services (public)
+        [HttpGet("inactive")]
+        [Authorize(Roles = "Coordinator")]
+        public async Task<IActionResult> GetInactiveServices()
+        {
+            // Filter specifically for is_active being false
+            var services = await _context.Services
+                .Where(s => !s.is_active)
+                .OrderBy(s => s.id)
+                .Select(s => new ServiceResponseDto
+                {
+                    Id = s.id,
+                    CategoryId = s.category_id,
+                    Name = s.name,
+                    Description = s.description,
+                    IsActive = s.is_active,
+                    CategoryName = s.Category != null ? s.Category.name : string.Empty
+                })
+                .ToListAsync();
+
+            return Ok(new ApiResponse<List<ServiceResponseDto>>(
+                success: true,
+                data: services,
+                message: "Inactive services retrieved successfully.",
+                count: services.Count
+            ));
+        }
+
         // 2. GET /api/services/{id} - Get service by ID (public)
         [HttpGet("{id}")]
         [AllowAnonymous]

@@ -19,6 +19,7 @@ interface ManageService {
   styleUrl: './manage-services.component.css',
 })
 export class ManageServicesComponent implements OnInit {
+  currentFilter: 'Active' | 'Inactive' = 'Active';
   private servicesService = inject(ServicesService);
 
   services: ManageService[] = [];
@@ -49,19 +50,28 @@ export class ManageServicesComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    this.servicesService.getServices().subscribe({
+    // Determine which API call to make
+    const request$ = this.currentFilter === 'Active' 
+      ? this.servicesService.getServices() 
+      : this.servicesService.getInactiveServices();
+
+    request$.subscribe({
       next: (data) => {
-        this.services = data
-          .filter(s => s.is_active !== false)
-          .map(apiService => this.mapApiServiceToManage(apiService));
+        // Map the data - we no longer filter here because the API handled it
+        this.services = data.map(apiService => this.mapApiServiceToManage(apiService));
         this.loading = false;
       },
       error: (err) => {
         console.error('Failed to load services:', err);
-        this.errorMessage = 'Failed to load services. Please try again.';
+        this.errorMessage = `Failed to load ${this.currentFilter.toLowerCase()} services.`;
         this.loading = false;
       }
     });
+  }
+
+  onFilterChange(newFilter: 'Active' | 'Inactive'): void {
+    this.currentFilter = newFilter;
+    this.loadServices();
   }
 
   private mapApiServiceToManage(apiService: ApiService): ManageService {

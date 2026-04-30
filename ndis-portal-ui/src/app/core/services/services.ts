@@ -58,4 +58,12 @@ export class ServicesService {
     return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/${id}`)
       .pipe(map(response => response.data));
   }
+
+  getInactiveServices(): Observable<ServiceItem[]> {
+  return this.http.get<ApiResponse<ServiceItem[]>>(`${this.apiUrl}/inactive`)
+    .pipe(map(response => response.data.map(service => ({
+      ...service,
+      id: service.id || service.service_id || 0
+    }))));
+}
 }
