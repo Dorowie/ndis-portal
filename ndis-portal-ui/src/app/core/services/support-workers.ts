@@ -43,18 +43,22 @@ export class SupportWorkersService {
   constructor(private http: HttpClient) {}
 
   getSupportWorkers(): Observable<SupportWorker[]> {
-    return this.http.get<SupportWorker[]>(this.apiUrl);
+    return this.http.get<ApiResponse<SupportWorker[]>>(this.apiUrl)
+      .pipe(map(response => response.data));
   }
 
   createSupportWorker(worker: SupportWorkerCreateDto): Observable<SupportWorker> {
-    return this.http.post<SupportWorker>(this.apiUrl, worker);
+    return this.http.post<ApiResponse<SupportWorker>>(this.apiUrl, worker)
+      .pipe(map(response => response.data));
   }
 
   updateSupportWorker(id: number, worker: SupportWorkerUpdateDto): Observable<SupportWorker> {
-    return this.http.put<SupportWorker>(`${this.apiUrl}/${id}`, worker);
+    return this.http.put<ApiResponse<SupportWorker>>(`${this.apiUrl}/${id}`, worker)
+      .pipe(map(response => response.data));
   }
 
   deleteSupportWorker(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/${id}`)
+      .pipe(map(response => response.data));
   }
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NDISPortal.API.Data;
 using NDISPortal.API.Models;
 using NDISPortal.API.DTOs.SupportWorker;
+using NDISPortal.API.DTOs;
 
 namespace NDISPortal.API.Controllers
 {
@@ -33,7 +34,12 @@ namespace NDISPortal.API.Controllers
                 })
                 .ToListAsync();
 
-            return Ok(workers);
+            return Ok(new ApiResponse<List<SupportWorkerResponseDto>>(
+                success: true,
+                data: workers,
+                message: "Support workers retrieved successfully.",
+                count: workers.Count
+            ));
         }
 
 
@@ -78,7 +84,11 @@ namespace NDISPortal.API.Controllers
                 ServiceName = service.name
             };
 
-            return CreatedAtAction(nameof(GetAll), new { id = worker.id }, response);
+            return StatusCode(201, new ApiResponse<SupportWorkerResponseDto>(
+                success: true,
+                data: response,
+                message: "Support worker created successfully."
+            ));
         }
 
         [HttpPut("{id}")]
@@ -128,7 +138,11 @@ namespace NDISPortal.API.Controllers
                 ServiceName = service.name
             };
 
-            return Ok(response);
+            return Ok(new ApiResponse<SupportWorkerResponseDto>(
+                success: true,
+                data: response,
+                message: "Support worker updated successfully."
+            ));
         }
 
         [HttpDelete("{id}")]
@@ -136,12 +150,18 @@ namespace NDISPortal.API.Controllers
         {
             var worker = await _context.SupportWorkers.FindAsync(id);
             if (worker == null)
-                return NotFound($"Support worker with ID {id} not found.");
+                return NotFound(new ApiResponse<object>(
+                    success: false,
+                    message: $"Support worker with ID {id} not found."
+                ));
 
             _context.SupportWorkers.Remove(worker);
             await _context.SaveChangesAsync();
 
-            return Ok(new { success = true, message = "Support worker deleted successfully." });
+            return Ok(new ApiResponse<object>(
+                success: true,
+                message: "Support worker deleted successfully."
+            ));
         }
     }
 }
