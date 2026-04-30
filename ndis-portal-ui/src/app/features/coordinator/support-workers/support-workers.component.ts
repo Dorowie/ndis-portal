@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ServicesService } from '../../../core/services/services';
 
 @Component({
   selector: 'app-support-workers',
@@ -46,7 +47,7 @@ export class SupportWorkersComponent implements OnInit {
   showDeleteConfirm = false;
   workerToDelete: any = null;
 
-  constructor() {}
+  constructor(private servicesService: ServicesService) {}
 
   ngOnInit(): void {
     this.loadWorkers();
@@ -59,8 +60,15 @@ export class SupportWorkersComponent implements OnInit {
   }
 
   loadServices(): void {
-    // TODO: Connect to API when ready
-    this.services = [];
+    this.servicesService.getServices().subscribe({
+      next: (data) => {
+        this.services = data;
+      },
+      error: (error) => {
+        console.error('Error loading services:', error);
+        this.services = [];
+      }
+    });
   }
 
   openModal(): void {
@@ -148,6 +156,13 @@ export class SupportWorkersComponent implements OnInit {
       isValid = false;
     }
 
+    if (this.newWorker.phone && this.newWorker.phone.trim()) {
+      if (!this.isValidPhone(this.newWorker.phone)) {
+        this.formErrors['phone'] = 'Phone number must contain only numbers and valid characters (+, -, space)';
+        isValid = false;
+      }
+    }
+
     if (!this.newWorker.assignedService) {
       this.formErrors['assignedService'] = 'Assigned Service is required';
       isValid = false;
@@ -159,6 +174,12 @@ export class SupportWorkersComponent implements OnInit {
   isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  }
+
+  isValidPhone(phone: string): boolean {
+    // Allow numbers, spaces, plus sign, hyphens, and parentheses
+    const phoneRegex = /^[\d\s\+\-\(\)]+$/;
+    return phoneRegex.test(phone);
   }
 
   saveWorker(): void {

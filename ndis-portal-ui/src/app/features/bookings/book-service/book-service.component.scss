@@ -120,6 +120,8 @@
   color: var(--brand-purple);
   text-decoration: none;
   font-weight: 700;
+  display: block;
+  margin-bottom: 16px;
 
   &:hover {
     text-decoration: underline;

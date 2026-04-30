@@ -10,6 +10,7 @@
     <div *ngIf="apiError" class="error-message" id="booking-api-error">
       {{ apiError }}
     </div>
+    <a class="back-link" id="link-back-to-services" routerLink="/services">← Back to Services</a>
 
     <!-- Service Selection - Show dropdown if not pre-selected, read-only if pre-selected -->
     <div class="input-group" *ngIf="!isPreselected">
@@ -93,8 +94,6 @@
     </div>
 
     <div class="actions">
-      <a class="back-link" id="link-back-to-services" routerLink="/services">← Back to Services</a>
-
       <button
         id="btn-booking-submit"
         type="submit"

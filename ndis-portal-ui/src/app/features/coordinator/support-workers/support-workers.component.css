@@ -414,6 +414,10 @@ td:nth-child(5) {
   margin-bottom: 6px;
 }
 
+.form-group.has-error label {
+  color: #ef4444;
+}
+
 .form-group small {
   display: block;
   font-size: 12px;
