@@ -187,13 +187,23 @@ Since `appsettings.json` is ignored by git for security reasons, you need to cre
 1. Press `Ctrl+Shift+B` or click **Build** → **Build Solution**
 2. Check for any errors in the Error List window
 
-**Step 6: Run the API**
-1. Press `F5` or click the green **Start** button
-2. Visual Studio will launch the API at `http://localhost:5131`
-3. Swagger UI will open automatically for testing
+**Step 6: Run the API (IMPORTANT - Use HTTP Profile)**
+
+The Angular frontend is configured to connect to the API on HTTP port 5130. You must run the API using the HTTP profile:
+
+1. In Visual Studio, look at the dropdown menu at the top (next to the green Start button)
+2. Select **"NDISPortal.API: http"** (NOT "https" or "IIS Express")
+3. Press `F5` or click the green **Start** button
+4. Visual Studio will launch the API at `http://localhost:5130`
+5. Swagger UI will open automatically for testing
+
+**Why this matters:**
+- Angular is configured to use `http://localhost:5130`
+- If you run the API on HTTPS (port 7113), Angular will get CORS errors
+- The CORS policy is configured for both ports, but Angular must match the running API
 
 **Alternative: Run without debugging:**
-- Press `Ctrl+F5` to run without the debugger attached
+- Press `Ctrl+F5` to run without the debugger attached (ensure "http" profile is selected)
 
 **Troubleshooting:**
 - **Packages not restoring?** Go to Tools → Options → NuGet Package Manager → Check package sources
@@ -202,6 +212,8 @@ Since `appsettings.json` is ignored by git for security reasons, you need to cre
 - **Port conflict?** Change port in `Properties/launchSettings.json`
 - **503 errors on login?** Anthropic API key is missing in appsettings.json - AI features won't work but app should still function
 - **500 errors on startup?** appsettings.json is missing - copy from appsettings.example.json and configure it
+- **CORS errors / ERR_CONNECTION_REFUSED?** You're running the API on the wrong profile. Select "NDISPortal.API: http" in Visual Studio's dropdown menu (NOT "https" or "IIS Express")
+- **Redirect from HTTP to HTTPS?** The API is running on HTTPS profile. Change to HTTP profile to match Angular's configuration
 
 
 
