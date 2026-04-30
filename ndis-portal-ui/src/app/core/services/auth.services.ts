@@ -8,7 +8,7 @@ import { LoginRequest, RegisterRequest, AuthResponse } from '../models/auth.mode
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:5130/api/auth';
+  private readonly apiUrl = 'https://localhost:7113/api/auth';
 
   login(email: string, password: string): Observable<AuthResponse> {
     const payload: LoginRequest = { email, password };

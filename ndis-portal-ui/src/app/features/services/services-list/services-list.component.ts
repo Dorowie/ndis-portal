@@ -98,6 +98,10 @@ export class ServicesListComponent implements OnInit {
     }
   }
 
+  selectCategory(category: string): void {
+    this.selectedCategory = category;
+  }
+
   openRecommendationModal(): void {
     this.recommendationModal.openModal();
   }

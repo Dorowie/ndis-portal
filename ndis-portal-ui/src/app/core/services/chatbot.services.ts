@@ -22,7 +22,7 @@ export interface BotResponse {
 })
 export class ChatbotService {
   private http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:5130/api/chat'; 
+  private readonly apiUrl = 'https://localhost:7113/api/chat'; 
 
   /**
    * Sends the user message and history to the backend.
