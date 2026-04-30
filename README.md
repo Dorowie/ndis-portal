@@ -153,13 +153,30 @@ Follow these steps to set up the .NET API using Visual Studio 2022:
 4. Click **Clone**
 5. In Solution Explorer, open `NDISPortal.API` folder
 
-**Step 3: Verify Connection String**
-Open `appsettings.json` and confirm:
+**Step 3: Configure appsettings.json**
+
+Since `appsettings.json` is ignored by git for security reasons, you need to create it from the example file:
+
+1. In the `NDISPortal.API` folder, locate `appsettings.example.json`
+2. Copy it and rename the copy to `appsettings.json`
+3. Open `appsettings.json` and configure the following:
+
+**Connection String:**
 ```json
 "ConnectionStrings": {
   "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=ndis_portal_db;Trusted_Connection=True;TrustServerCertificate=True;"
 }
 ```
+
+**Anthropic API Key (for AI features):**
+```json
+"Anthropic": {
+  "ApiKey": "YOUR_ANTHROPIC_API_KEY_HERE"
+}
+```
+- Replace `YOUR_ANTHROPIC_API_KEY_HERE` with your actual Anthropic API key
+- If you don't have one, the AI features will return 503 errors, but the rest of the app will work
+- Alternatively, use user secrets: `dotnet user-secrets set "Anthropic:ApiKey" "your-key-here" --project NDISPortal.API/NDISPortal.API.csproj`
 
 **Step 4: Restore NuGet Packages (via Visual Studio)**
 1. In Visual Studio, go to **Tools** → **NuGet Package Manager** → **Package Manager Console**
@@ -183,6 +200,8 @@ Open `appsettings.json` and confirm:
 - **Build errors?** Clean solution (Build → Clean Solution) then rebuild
 - **Database connection failed?** Verify LocalDB is running in SQL Server Configuration Manager
 - **Port conflict?** Change port in `Properties/launchSettings.json`
+- **503 errors on login?** Anthropic API key is missing in appsettings.json - AI features won't work but app should still function
+- **500 errors on startup?** appsettings.json is missing - copy from appsettings.example.json and configure it
 
 
 
