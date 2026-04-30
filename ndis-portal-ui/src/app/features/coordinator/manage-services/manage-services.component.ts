@@ -49,7 +49,7 @@ export class ManageServicesComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    this.servicesService.getServices().subscribe({
+    this.servicesService.getServices(true).subscribe({
       next: (data) => {
         this.services = data.map(apiService => this.mapApiServiceToManage(apiService));
         this.loading = false;

@@ -28,8 +28,9 @@ export class ServicesService {
 
   constructor(private http: HttpClient) {}
 
-  getServices(): Observable<ServiceItem[]> {
-    return this.http.get<ApiResponse<ServiceItem[]>>(this.apiUrl)
+  getServices(includeInactive: boolean = false): Observable<ServiceItem[]> {
+    const url = includeInactive ? `${this.apiUrl}?includeInactive=true` : this.apiUrl;
+    return this.http.get<ApiResponse<ServiceItem[]>>(url)
       .pipe(map(response => response.data.map(service => ({
         ...service,
         id: service.id || service.service_id || 0
