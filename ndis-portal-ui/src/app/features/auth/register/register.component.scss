@@ -277,6 +277,81 @@ $brand-purple: #6f2da8;
   }
 }
 
+// Field error styles
+.field-error {
+  display: block;
+  font-size: 0.75rem;
+  color: #dc2626;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.field-error-summary {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+
+  span {
+    display: block;
+    font-size: 0.8rem;
+    color: #dc2626;
+
+    &:not(:last-child) {
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.input-group {
+  &.has-error {
+    .custom-input-wrapper {
+      background: #fef2f2;
+      border: 1px solid #dc2626;
+      border-radius: 8px;
+
+      input {
+        background: transparent;
+
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+          -webkit-box-shadow: 0 0 0 30px #fef2f2 inset !important;
+        }
+      }
+    }
+
+    .custom-select-wrapper {
+      background: #fef2f2;
+      border: 1px solid #dc2626;
+      border-radius: 8px;
+
+      select {
+        background: transparent;
+      }
+    }
+
+    label {
+      color: #dc2626;
+    }
+  }
+}
+
+.checkbox-group {
+  &.has-error {
+    label {
+      color: #dc2626;
+    }
+
+    .field-error {
+      margin-top: 8px;
+      margin-left: 26px;
+    }
+  }
+}
+
 @media (max-width: 992px) {
   .register-layout {
     flex-direction: column;

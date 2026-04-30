@@ -22,29 +22,37 @@
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" id="register-form">
         <div *ngIf="apiError" class="error-message" id="register-api-error">{{ apiError }}</div>
 
+        <div *ngIf="getFieldError('firstName') || getFieldError('lastName')" class="field-error-summary">
+          <span *ngIf="getFieldError('firstName')">{{ getFieldError('firstName') }}</span>
+          <span *ngIf="getFieldError('lastName')">{{ getFieldError('lastName') }}</span>
+        </div>
+
         <div class="name-group">
-          <div class="input-group">
+          <div class="input-group" [class.has-error]="getFieldError('firstName')">
             <label for="first-name">First Name</label>
             <div class="custom-input-wrapper">
               <input type="text" id="first-name" formControlName="firstName" placeholder="Enter first name" />
             </div>
+            <span class="field-error" *ngIf="getFieldError('firstName')">{{ getFieldError('firstName') }}</span>
           </div>
-          <div class="input-group">
+          <div class="input-group" [class.has-error]="getFieldError('lastName')">
             <label for="last-name">Last Name</label>
             <div class="custom-input-wrapper">
               <input type="text" id="last-name" formControlName="lastName" placeholder="Enter last name" />
             </div>
+            <span class="field-error" *ngIf="getFieldError('lastName')">{{ getFieldError('lastName') }}</span>
           </div>
         </div>
 
-        <div class="input-group">
+        <div class="input-group" [class.has-error]="getFieldError('email')">
           <label for="register-email">Email Address</label>
           <div class="custom-input-wrapper">
             <input type="email" id="register-email" formControlName="email" placeholder="name@example.com" />
           </div>
+          <span class="field-error" *ngIf="getFieldError('email')">{{ getFieldError('email') }}</span>
         </div>
 
-        <div class="input-group">
+        <div class="input-group" [class.has-error]="getFieldError('role')">
           <label for="register-role">Role</label>
           <div class="custom-select-wrapper">
             <select id="register-role" formControlName="role">
@@ -56,9 +64,10 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </span>
           </div>
+          <span class="field-error" *ngIf="getFieldError('role')">{{ getFieldError('role') }}</span>
         </div>
 
-        <div class="input-group">
+        <div class="input-group" [class.has-error]="getFieldError('password')">
           <label for="register-password">Password</label>
           <div class="password-input-container">
             <div class="custom-input-wrapper">
@@ -74,14 +83,16 @@
               <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
             </button>
           </div>
+          <span class="field-error" *ngIf="getFieldError('password')">{{ getFieldError('password') }}</span>
         </div>
 
-        <div class="checkbox-group">
+        <div class="checkbox-group" [class.has-error]="getFieldError('agreeToTerms')">
           <input type="checkbox" id="terms" formControlName="agreeToTerms" />
           <label for="terms">
             By checking this, you agree to our <span>Terms of Service</span>. All NDIS
             data is stored securely in accordance with Australian privacy standards.
           </label>
+          <span class="field-error" *ngIf="getFieldError('agreeToTerms')">{{ getFieldError('agreeToTerms') }}</span>
         </div>
 
         <button id="btn-register-submit" type="submit" class="submit-btn" [disabled]="registerForm.invalid">

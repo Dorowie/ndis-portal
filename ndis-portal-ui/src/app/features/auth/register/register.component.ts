@@ -16,6 +16,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
   showPassword = false;
   apiError: string | null = null;
+  fieldErrors: { [key: string]: string } = {};
   isLoading = false;
 
   constructor(
@@ -38,7 +39,37 @@ export class RegisterComponent {
     this.showPassword = !this.showPassword;
   }
 
+  getFieldError(fieldName: string): string {
+    const control = this.registerForm.get(fieldName);
+    if (control && control.touched && control.invalid) {
+      if (control.errors?.['required']) {
+        return `${this.formatFieldName(fieldName)} is required`;
+      }
+      if (control.errors?.['email']) {
+        return 'Please enter a valid email address';
+      }
+      if (control.errors?.['minlength']) {
+        return `Password must be at least ${control.errors?.['minlength'].requiredLength} characters`;
+      }
+    }
+    return this.fieldErrors[fieldName] || '';
+  }
+
+  formatFieldName(fieldName: string): string {
+    const names: { [key: string]: string } = {
+      firstName: 'First name',
+      lastName: 'Last name',
+      email: 'Email',
+      role: 'Role',
+      password: 'Password',
+      agreeToTerms: 'Terms agreement'
+    };
+    return names[fieldName] || fieldName;
+  }
+
   onSubmit() {
+    this.fieldErrors = {};
+    
     if (this.registerForm.valid) {
       this.isLoading = true;
       this.apiError = null;
@@ -145,13 +176,49 @@ export class RegisterComponent {
           console.error('Full error:', error);
           console.error('Error status:', error.status);
           console.error('Error message:', error.error?.message);
-          this.apiError = error.error?.message || 'Registration failed. Please try again.';
+          console.error('Error errors:', error.error?.errors);
+          
+          // Handle field-specific errors from API
+          if (error.error?.errors && Array.isArray(error.error.errors)) {
+            const fieldErrorMap: { [key: string]: string } = {};
+            error.error.errors.forEach((err: any) => {
+              if (err.field) {
+                fieldErrorMap[err.field.toLowerCase()] = err.message;
+              }
+            });
+            this.fieldErrors = fieldErrorMap;
+            this.apiError = 'Please correct the highlighted fields below.';
+          } else if (error.error?.errors && typeof error.error.errors === 'object') {
+            // Handle object-style errors { field: [messages] }
+            const fieldErrorMap: { [key: string]: string } = {};
+            Object.keys(error.error.errors).forEach(key => {
+              const messages = error.error.errors[key];
+              fieldErrorMap[key.toLowerCase()] = Array.isArray(messages) ? messages[0] : messages;
+            });
+            this.fieldErrors = fieldErrorMap;
+            this.apiError = 'Please correct the highlighted fields below.';
+          } else {
+            this.apiError = error.error?.message || 'Registration failed. Please try again.';
+          }
+          
           this.isLoading = false;
         }
       });
 
     } else {
       this.registerForm.markAllAsTouched();
+      // Collect validation errors
+      const errors: { [key: string]: string } = {};
+      Object.keys(this.registerForm.controls).forEach(key => {
+        const error = this.getFieldError(key);
+        if (error) {
+          errors[key] = error;
+        }
+      });
+      this.fieldErrors = errors;
+      this.apiError = Object.keys(errors).length > 0 
+        ? 'Please correct the highlighted fields below.' 
+        : 'Please fill in all required fields.';
     }
   }
 }
