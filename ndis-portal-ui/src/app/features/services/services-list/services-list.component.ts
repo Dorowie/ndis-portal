@@ -57,12 +57,9 @@ export class ServicesListComponent implements OnInit {
     this.isLoading = true;
     this.servicesService.getServices().subscribe({
       next: (data) => {
-        console.log('Services from API:', data);
-        console.log('Category names from API:', data.map(s => s.category_name));
         this.services = data.map(service => {
           const categoryName = service.category_name || 'Support Coordination';
           const style = CATEGORY_STYLES[categoryName] || { accent: '#7d7d7d', icon: 'assignment' };
-          console.log(`Service: ${service.name}, Category: ${categoryName}, Match: ${CATEGORY_STYLES[categoryName] ? 'Yes' : 'No'}`);
           return {
             ...service,
             accent: style.accent,

@@ -49,9 +49,11 @@ export class ManageServicesComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    this.servicesService.getServices(true).subscribe({
+    this.servicesService.getServices().subscribe({
       next: (data) => {
-        this.services = data.map(apiService => this.mapApiServiceToManage(apiService));
+        this.services = data
+          .filter(s => s.is_active !== false)
+          .map(apiService => this.mapApiServiceToManage(apiService));
         this.loading = false;
       },
       error: (err) => {

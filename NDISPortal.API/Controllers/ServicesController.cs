@@ -22,18 +22,11 @@ namespace NDISPortal.API.Controllers
         // 1. GET /api/services - Get all active services (public)
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetServices([FromQuery] bool includeInactive = false)
+        public async Task<IActionResult> GetServices()
         {
-            var query = _context.Services
+            var services = await _context.Services
                 .Include(s => s.Category)
-                .AsQueryable();
-
-            if (!includeInactive)
-            {
-                query = query.Where(s => s.is_active);
-            }
-
-            var services = await query
+                .Where(s => s.is_active)
                 .OrderBy(s => s.id)
                 .Select(s => new ServiceResponseDto
                 {
