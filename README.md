@@ -350,8 +350,8 @@ Place the following CSV files in your local machine (You may create them using N
 
 **services_import.csv**
 ```
-name, category_id, description
-Daily Assistance, 1, Help participants with daily activities
+name, category_name, description
+Daily Assistance, Daily Personal Activities, Help participants with daily activities
 ```
 
 **bookings_import.csv**
