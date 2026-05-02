@@ -15,6 +15,7 @@ import { RegisterRequest } from '../../../core/models/auth.model';
 export class RegisterComponent {
   registerForm: FormGroup;
   showPassword = false;
+  showTermsModal = false;
   apiError: string | null = null;
   fieldErrors: { [key: string]: string } = {};
   isLoading = false;
@@ -40,6 +41,25 @@ export class RegisterComponent {
       const hasNumbers = /\d/.test(control.value);
       return hasNumbers ? { hasNumber: true } : null;
     };
+  }
+
+  openTermsModal(event: Event) {
+    event.preventDefault();
+    this.showTermsModal = true;
+  }
+
+  closeTermsModal() {
+    this.showTermsModal = false;
+  }
+
+  acceptTerms() {
+    this.registerForm.get('agreeToTerms')?.setValue(true);
+    this.closeTermsModal();
+  }
+
+  declineTerms() {
+    this.registerForm.get('agreeToTerms')?.setValue(false);
+    this.closeTermsModal();
   }
 
   togglePassword() {

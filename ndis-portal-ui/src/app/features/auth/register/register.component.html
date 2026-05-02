@@ -84,8 +84,9 @@
         <div class="checkbox-group" [class.has-error]="getFieldError('agreeToTerms')">
           <input type="checkbox" id="terms" formControlName="agreeToTerms" />
           <label for="terms">
-            By checking this, you agree to our <span>Terms of Service</span>. All NDIS
-            data is stored securely in accordance with Australian privacy standards.
+            By checking this, you agree to our 
+            <span class="terms-link" (click)="openTermsModal($event)">Terms of Service</span>. 
+            All NDIS data is stored securely in accordance with Australian privacy standards.
           </label>
           <span class="field-error" *ngIf="getFieldError('agreeToTerms')">{{ getFieldError('agreeToTerms') }}</span>
         </div>
@@ -98,6 +99,69 @@
       <div class="login-link">
         Already have an account? <a id="link-back-to-login" routerLink="/login">Back to Login</a>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showTermsModal" (click)="closeTermsModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Terms and Conditions</h3>
+      <button class="close-x" (click)="closeTermsModal()">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+
+      <section>
+        <h3>1. Nature of the Service</h3>
+        <p>This application acts as a digital intermediary to facilitate service bookings between Participants and Coordinators.</p>
+        <ul>
+          <li><strong>Booking Assistance Only:</strong> The platform provides a booking interface and an automated chatbot to assist in the selection and scheduling of services.</li>
+          <li><strong>No Professional Advice:</strong> Any suggestions or information provided by the chatbot or the "Service Recommendation" feature are for informational and convenience purposes only. They do not constitute medical, clinical, legal, or official NDIS plan management advice.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>2. Data Privacy & AI Communications</h3>
+        <p>We prioritize the privacy of your sensitive information.</p>
+        <ul>
+          <li><strong>Non-Recording of Conversations:</strong> We do not record or store the transcripts of your live interactions with the chatbot. Once a session is closed, the specific conversational flow is purged from our active records.</li>
+          <li><strong>Data Storage:</strong> Personal data required for account management and booking (such as names, contact details, and booking history) is stored using industry-standard encryption and security protocols.</li>
+          <li><strong>Purpose of Use:</strong> Data is used strictly for the functional purpose of managing your bookings and improving the user experience. We do not sell user data to third parties.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>3. Limitation of Liability</h3>
+        <ul>
+          <li><strong>Third-Party Services:</strong> The app facilitates the booking, but the actual services are provided by independent coordinators or entities. We are not responsible for the quality, safety, or legality of the services performed following a booking.</li>
+          <li><strong>No Guarantee of Accuracy:</strong> While our recommendation engine strives for accuracy, users are responsible for verifying that a service meets their specific NDIS plan requirements before finalizing a booking.]</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>4. User Conduct & Responsibilities</h3>
+        <ul>
+          <li><strong>Account Security:</strong> Users are responsible for maintaining the confidentiality of their login credentials.</li>
+          <li><strong>Accurate Information:</strong> Participants must provide accurate information regarding their requirements to ensure coordinators can fulfill bookings effectively.</li>
+          <li><strong>Prohibited Use:</strong> Users may not use the app to harass others, upload malicious code, or attempt to bypass the platform's security architecture.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>5. Cancellations and Modifications</h3>
+        <p>All bookings made through the app are subject to the specific cancellation policies of the assigned Coordinator. Users should review these policies within the app before confirming a request.</p>
+      </section>
+
+      <section>
+        <h3>6. Termination of Access</h3>
+        <p>We reserve the right to suspend or terminate accounts that violate these terms, provide fraudulent information, or engage in behavior that compromises the safety of the NDIS community within the app.</p>
+      </section>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn-decline" (click)="declineTerms()">Decline</button>
+      <button type="button" class="btn-accept" (click)="acceptTerms()">Accept & Close</button>
     </div>
   </div>
 </div>
