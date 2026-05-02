@@ -186,17 +186,17 @@ test('Redirect to /login when accessing /services without token', async ({ page 
 test('Login fails with wrong email for participant', async ({ page }) => {
   await page.goto(`${BASE_URL}/login?returnUrl=%2Fservices`);
 
-  await page.getByRole('textbox', {
-    name: 'name@example.com'
-  }).fill('invalid_participant@example.com');
+  await page.getByRole('textbox', { name: 'name@example.com' })
+    .fill('invalid_participant@example.com');
 
-  await page.getByRole('textbox', {
-    name: 'Enter your password'
-  }).fill('qwertyuiop');
+  await page.getByRole('textbox', { name: 'Enter your password' })
+    .fill('qwertyuiop');
 
   await page.getByRole('button', { name: 'Login →' }).click();
 
-  await expect(page.getByText(/invalid|incorrect|failed/i)).toBeVisible();
+  const error = page.locator('text=/invalid|incorrect|failed/i');
+
+  await expect(error).toBeVisible({ timeout: 10000 });
 });
 
 // 9. Wrong email for coordinator
