@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="18"
-  DTS:VersionGUID="{234E4699-6713-47A9-8CDC-05C4E99D3758}">
+  DTS:VersionBuild="27"
+  DTS:VersionGUID="{841DE858-0783-4516-9575-5C7A1FB628F2}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -33,7 +33,7 @@
           DTS:RowDelimiter=""
           DTS:TextQualifier="_x003C_none_x003E_"
           DTS:CodePage="1252"
-          DTS:ConnectionString="C:\Users\Jonh Axcel\Desktop\SSIS\Export\booking_report_20260502.csv">
+          DTS:ConnectionString="C:\Users\Jonh Axcel\Desktop\SSIS\Export\booking_report_20260503.csv">
           <DTS:FlatFileColumns>
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -165,6 +165,18 @@
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.ndis_portal_db]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{805C18DE-84F8-435D-AA2C-C6B77A2E6280}"
+      DTS:ObjectName="localhost.ndis_portal_db">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=ndis_portal_db;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{805C18DE-84F8-435D-AA2C-C6B77A2E6280}localhost.ndis_portal_db;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db]"
       DTS:CreationName="OLEDB"
       DTS:DTSID="{434B3EA1-30A3-4283-B518-69F0E826C580}"
@@ -173,7 +185,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=ndis_portal_db;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{434B3EA1-30A3-4283-B518-69F0E826C580}MSI\SQLEXPRESS.ndis_portal_db;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=MSI\SQLEXPRESS;Initial Catalog=ndis_portal_db;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package1-{434B3EA1-30A3-4283-B518-69F0E826C580}MSI\SQLEXPRESS.ndis_portal_db;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -187,7 +199,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="ReportFilePath">
       <DTS:VariableValue
-        DTS:DataType="8">C:\Users\Jonh Axcel\Desktop\SSIS\Export\booking_report_20260502.csv</DTS:VariableValue>
+        DTS:DataType="8">C:\Users\Jonh Axcel\Desktop\SSIS\Export\booking_report_20260503.csv</DTS:VariableValue>
     </DTS:Variable>
   </DTS:Variables>
   <DTS:Executables>
@@ -273,6 +285,12 @@
                       cachedName="status"
                       externalMetadataColumnId="Package\Data Flow Task\CSV FILE.Inputs[Flat File Destination Input].ExternalColumns[status]"
                       lineageId="Package\Data Flow Task\NDIS PORTAL DB.Outputs[OLE DB Source Output].Columns[status]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\CSV FILE.Inputs[Flat File Destination Input].Columns[created_at]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="created_at"
+                      externalMetadataColumnId="Package\Data Flow Task\CSV FILE.Inputs[Flat File Destination Input].ExternalColumns[created_at]"
+                      lineageId="Package\Data Flow Task\NDIS PORTAL DB.Outputs[OLE DB Source Output].Columns[created_at]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -349,8 +367,8 @@
     b.status,
     b.created_date AS created_at
 FROM bookings b
-JOIN Users u ON b.user_id = u.id
-JOIN Services s ON b.service_id = s.id
+JOIN users u ON b.user_id = u.id
+JOIN services s ON b.service_id = s.id
 JOIN service_categories sc ON s.category_id = sc.id
 ORDER BY b.created_date DESC;</property>
                 <property
@@ -378,8 +396,8 @@ ORDER BY b.created_date DESC;</property>
               <connections>
                 <connection
                   refId="Package\Data Flow Task\NDIS PORTAL DB.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.ndis_portal_db]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.ndis_portal_db]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>

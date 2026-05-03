@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="14"
-  DTS:VersionGUID="{26B8C453-9BEE-49DA-93AB-E3B67C750DA7}">
+  DTS:VersionBuild="22"
+  DTS:VersionGUID="{F6255662-F4EC-4721-8D2F-BE93D48644D3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -152,6 +152,23 @@
               DTS:DTSID="{DA15BEA3-D95E-40B6-9C6B-727DE9CCE5F7}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.ndis_portal_db]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A185D5DB-2147-45CF-9B38-85818817CC4A}"
+      DTS:ObjectName="localhost.ndis_portal_db">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;User ID=admin;Initial Catalog=ndis_portal_db;Provider=MSOLEDBSQL.1;Application Name=SSIS-Package1-{A185D5DB-2147-45CF-9B38-85818817CC4A}localhost.ndis_portal_db;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAvpcpusFddE2KXDRlFn1fVQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADpjcbcfle6KiXRjShWhhNokVdTG+qsR4pOERfehdXf6gAAAAAOgAAAAAIAACAAAADxOk/0Yjo/lr4pY8Iyd0E/dnBLs4vIFr8HjZvWu/mGtyAAAAACjh1uBCouMgdjl/VkjXCq2RIgn8KHqMDpfD8InFR+o0AAAAB4n4uvpF37vguTcFf/wqs5YpctsPGW1mlYJOVYFofEZGCFmJpeg/y4tIAi5dPnpRlxORnzJ7LTPUsOjUtSnhY9</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -852,8 +869,8 @@ where [refTable].[name] = ?</property>
               <connections>
                 <connection
                   refId="Package\Data Flow Task\Lookup services.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.ndis_portal_db]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.ndis_portal_db]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -1010,8 +1027,8 @@ where [refTable].[email] = ?</property>
               <connections>
                 <connection
                   refId="Package\Data Flow Task\Lookup users.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.ndis_portal_db]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.ndis_portal_db]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -1148,7 +1165,7 @@ where [refTable].[email] = ?</property>
                 <property
                   dataType="System.String"
                   description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions"></property>
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
@@ -1157,8 +1174,8 @@ where [refTable].[email] = ?</property>
               <connections>
                 <connection
                   refId="Package\Data Flow Task\OLE DB Destination.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.ndis_portal_db]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.ndis_portal_db]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2273,7 +2290,7 @@ where [refTable].[email] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2283,7 +2300,7 @@ where [refTable].[email] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -2296,7 +2313,7 @@ where [refTable].[email] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2306,7 +2323,7 @@ where [refTable].[email] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

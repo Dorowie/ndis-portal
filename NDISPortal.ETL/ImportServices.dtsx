@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="32"
-  DTS:VersionGUID="{2A0F11EE-C64A-4DF0-96DA-9C7CFE1242D1}">
+  DTS:VersionBuild="34"
+  DTS:VersionGUID="{447A5301-0D0D-4892-B6D7-DD038F0E3EC5}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -176,6 +176,18 @@
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.ndis_portal_db]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3AA2FC19-E670-40AB-8C92-8FA32543034B}"
+      DTS:ObjectName="localhost.ndis_portal_db">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Initial Catalog=ndis_portal_db;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{3AA2FC19-E670-40AB-8C92-8FA32543034B}localhost.ndis_portal_db;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db.admin]"
       DTS:CreationName="OLEDB"
       DTS:DTSID="{FD1C9F7B-F837-49C4-BDD5-D927F881F272}"
@@ -273,8 +285,8 @@ where [refTable].[name] = ?</property>
               <connections>
                 <connection
                   refId="Package\Data Flow Task\Category Lookup.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db.admin]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db.admin]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.ndis_portal_db]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.ndis_portal_db]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -851,8 +863,8 @@ where [refTable].[name] = ?</property>
               <connections>
                 <connection
                   refId="Package\Data Flow Task\NDIS PORTAL DB.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db.admin]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\SQLEXPRESS.ndis_portal_db.admin]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.ndis_portal_db]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.ndis_portal_db]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1178,13 +1190,13 @@ where [refTable].[name] = ?</property>
           Id="Package\Data Flow Task\NDIS PORTAL DB"
           TopLeft="214,490" />
         <NodeLayout
-          Size="129,42"
-          Id="Package\Data Flow Task\Error CSV"
-          TopLeft="432,465" />
-        <NodeLayout
           Size="163,42"
           Id="Package\Data Flow Task\Category Lookup"
           TopLeft="231,331" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\Data Flow Task\Service CSV"
+          TopLeft="238,170" />
         <NodeLayout
           Size="158,42"
           Id="Package\Data Flow Task\Derived Column"
@@ -1197,62 +1209,10 @@ where [refTable].[name] = ?</property>
           Size="123,42"
           Id="Package\Data Flow Task\Error Col"
           TopLeft="438,379" />
-        <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Derived Column Output1]"
-          TopLeft="498,421">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,44"
-              Start="0,0"
-              End="0,36.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,36.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Data Flow Task.Paths[Derived Column Output]"
-          TopLeft="310,452">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-11,38"
-              Start="0,0"
-              End="-11,30.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,15" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,15"
-                    Point2="0,19"
-                    Point3="-4,19" />
-                  <mssgle:LineSegment
-                    End="-7,19" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-7,19"
-                    Point2="-11,19"
-                    Point3="-11,23" />
-                  <mssgle:LineSegment
-                    End="-11,30.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+        <NodeLayout
+          Size="129,42"
+          Id="Package\Data Flow Task\Error CSV"
+          TopLeft="432,465" />
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[Data Conversion Output]"
           TopLeft="323,289.5">
@@ -1347,10 +1307,6 @@ where [refTable].[name] = ?</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="141,42"
-          Id="Package\Data Flow Task\Service CSV"
-          TopLeft="238,170" />
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[Flat File Source Output]"
           TopLeft="308.5,212">
@@ -1377,6 +1333,62 @@ where [refTable].[name] = ?</property>
                     Point3="14.5,21.75" />
                   <mssgle:LineSegment
                     End="14.5,28" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Derived Column Output1]"
+          TopLeft="498,421">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Derived Column Output]"
+          TopLeft="310,452">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-11,38"
+              Start="0,0"
+              End="-11,30.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15"
+                    Point2="0,19"
+                    Point3="-4,19" />
+                  <mssgle:LineSegment
+                    End="-7,19" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-7,19"
+                    Point2="-11,19"
+                    Point3="-11,23" />
+                  <mssgle:LineSegment
+                    End="-11,30.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
