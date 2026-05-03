@@ -1,15 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { loginAs } from './helpers/auth.helper';
 
 test.describe('Services - Participant', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:4200/');
-    
-
-    // Login as participant
-    await page.getByRole('textbox', { name: 'name@example.com' }).fill('ptest@ndisportal.com');
-    await page.getByRole('textbox', { name: 'Enter your password' }).fill('ptest@123');
-    await page.getByRole('button', { name: 'Login →' }).click();
-    await expect(page.locator('#router-content-area')).toBeVisible();
+    await loginAs(page, 'participant');
   });
 
   // Services list loads with cards after login - Participant
@@ -60,13 +54,7 @@ test.describe('Services - Participant', () => {
 
 test.describe('Services - Coordinator', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:4200/');
-
-    // Login as Coordinator
-    await page.getByRole('textbox', { name: 'name@example.com' }).fill('ctest@ndisportal.com');
-    await page.getByRole('textbox', { name: 'Enter your password' }).fill('ctest@123');
-    await page.getByRole('button', { name: 'Login →' }).click();
-    await expect(page.locator('#router-content-area')).toBeVisible();
+    await loginAs(page, 'coordinator');
    });
 
     

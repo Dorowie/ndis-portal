@@ -1,15 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { loginAs } from './helpers/auth.helper';
 
 test.describe('Chatbot', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:4200/');
-
-    // Login
-    await page.getByRole('textbox', { name: 'name@example.com' }).fill('ptest@ndisportal.com');
-    await page.getByRole('textbox', { name: 'Enter your password' }).fill('ptest@123');
-    await page.getByRole('button', { name: 'Login' }).click();
-
+    await loginAs(page, 'participant');
       });
 
     // 1. Chat button is visible after login
