@@ -62,10 +62,10 @@ export class AllBookingsComponent implements OnInit {
     const status = this.getStatusText(apiBooking.status);
     return {
       id: apiBooking.booking_id,
-      participantName: 'Participant',
-      ndisNumber: `#${apiBooking.booking_id.toString().padStart(9, '0')}`,
+      participantName: apiBooking.participant_name || 'Unknown User',
+      ndisNumber: `#${apiBooking.user_id?.toString().padStart(9, '0') || apiBooking.booking_id.toString().padStart(9, '0')}`,
       serviceName: apiBooking.service_name,
-      categoryName: 'Support Service',
+      categoryName: apiBooking.category_name || 'Support Service',
       bookingDate: this.formatDate(apiBooking.preferred_date),
       timeRange: this.formatTimeRange(apiBooking.preferred_date),
       notes: apiBooking.notes,

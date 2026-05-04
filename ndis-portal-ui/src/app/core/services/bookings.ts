@@ -4,6 +4,8 @@ import { Observable, map } from 'rxjs';
 
 export interface Booking {
   booking_id: number;
+  user_id?: number;
+  participant_name?: string;
   service_id: number;
   service_name: string;
   category_name?: string;
