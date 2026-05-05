@@ -63,8 +63,7 @@ export class CoordinatorDashboardComponent implements OnInit {
       bookingDate: apiBooking.preferred_date,
       date: apiBooking.preferred_date,
       status: apiBooking.status,
-      participantName: 'Participant',
-      userName: 'Participant',
+      participantName: apiBooking.participant_name,
       categoryName: 'Support Service'
     };
   }

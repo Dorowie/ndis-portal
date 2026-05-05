@@ -59,20 +59,21 @@ export class AllBookingsComponent implements OnInit {
   }
 
   private mapApiBookingToAllBooking(apiBooking: ApiBooking): AllBooking {
-    const status = this.getStatusText(apiBooking.status);
-    return {
-      id: apiBooking.booking_id,
-      participantName: 'Participant',
-      ndisNumber: `#${apiBooking.booking_id.toString().padStart(9, '0')}`,
-      serviceName: apiBooking.service_name,
-      categoryName: 'Support Service',
-      bookingDate: this.formatDate(apiBooking.preferred_date),
-      timeRange: this.formatTimeRange(apiBooking.preferred_date),
-      notes: apiBooking.notes,
-      status: status,
-      avatarColor: this.avatarColors[apiBooking.booking_id % this.avatarColors.length]
-    };
-  }
+  const status = this.getStatusText(apiBooking.status);
+
+  return {
+    id: apiBooking.booking_id,
+    participantName: apiBooking.participant_name || 'Participant',
+    ndisNumber: `#${apiBooking.booking_id.toString().padStart(9, '0')}`,
+    serviceName: apiBooking.service_name,
+    categoryName: apiBooking.category_name || 'Support Service',
+    bookingDate: this.formatDate(apiBooking.preferred_date),
+    timeRange: this.formatTimeRange(apiBooking.preferred_date),
+    notes: apiBooking.notes,
+    status: status,
+    avatarColor: this.avatarColors[apiBooking.booking_id % this.avatarColors.length]
+  };
+}
 
   private getStatusText(status: string | number): string {
     if (status === 0 || status === '0' || String(status).toLowerCase().includes('pending')) {
