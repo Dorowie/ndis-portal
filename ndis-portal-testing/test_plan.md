@@ -112,10 +112,10 @@ Testing for the NDIS Portal is conducted using a combination of database validat
 
 | Environment | URL | Purpose |
 |---|---|---|
-| DEV | dev.ndis-portal.com | Developer testing |
-| SIT | sit.ndis-portal.com | System integration testing |
-| UAT | uat.ndis-portal.com | User acceptance testing |
-| PROD | ndis-portal.com | Live system |
+| DEV | http://localhost:4200 | Developer testing |
+| SIT | http://localhost:4200 | System integration testing |
+| UAT | http://localhost:4200 | User acceptance testing |
+| PROD | http://localhost:4200| Live system |
 
 **Test Data:**
 - Use synthetic or anonymized data only  
@@ -136,7 +136,6 @@ Testing for the NDIS Portal is conducted using a combination of database validat
 - [ ] All critical (P1) and major (P2) test cases passed  
 - [ ] No open Critical or High severity defects  
 - [ ] UAT sign-off completed  
-- [ ] Test summary report submitted  
 
 ---
 
