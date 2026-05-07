@@ -39,7 +39,12 @@ export class ChatbotComponent implements AfterViewChecked {
     this.showTooltip = false;
   }
   
-  
+  formatBotReply(reply: string): string {
+    return reply
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // bold text
+      .replace(/^- /gm, '• ') // convert dash bullets to bullet symbol
+      .replace(/\n/g, '<br>'); // keep line breaks
+  }
 
   sendMessage() {
     if (this.isOverWordLimit || this.currentWordCount === 0) return;
@@ -71,7 +76,10 @@ export class ChatbotComponent implements AfterViewChecked {
     this.chatbotService.sendMessageToApi(payload).subscribe({
       next: (response) => {
         this.isTyping = false;
-        this.messages.push({ text: response.reply, sender: 'bot' });
+        this.messages.push({ 
+          text: this.formatBotReply(response.reply), 
+          sender: 'bot' 
+        });
         this.scrollToBottom();
       },
       error: (err) => {

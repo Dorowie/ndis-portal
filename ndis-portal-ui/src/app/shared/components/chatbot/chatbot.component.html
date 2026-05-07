@@ -19,11 +19,11 @@
               <img src="assets/icon-chat.png" alt="Bot" class="msg-avatar" [id]="'chat-bot-avatar-' + i">
             }
             <div class="bubble" 
-                 [class.bot-bubble]="msg.sender === 'bot'" 
-                 [class.user-bubble]="msg.sender === 'user'"
-                 [id]="'chat-bubble-' + i">
-              {{ msg.text }}
-            </div>
+              [class.bot-bubble]="msg.sender === 'bot'" 
+              [class.user-bubble]="msg.sender === 'user'"
+              [id]="'chat-bubble-' + i"
+              [innerHTML]="msg.text">
+          </div>
           </div>
         }
 
